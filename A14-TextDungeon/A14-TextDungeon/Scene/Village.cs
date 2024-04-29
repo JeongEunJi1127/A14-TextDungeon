@@ -24,7 +24,7 @@
                             break;
                         case 2:
                             Console.Clear();
-                            Battle.ShowBattle();
+                            Battle.ShowBattle(true);
                             break;
                         default:
                             Console.WriteLine("\n잘못된 입력입니다.\n");
