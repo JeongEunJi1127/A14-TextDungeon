@@ -5,16 +5,24 @@ namespace A14_TextDungeon.Manager
 {
     internal class GameManager
     {
-        public void  Init()
-        {
-            User user = new User("UserName",1,"전사", 10, 5, 100, 1500, false );
+        public static User user;
+        public static Monster minion;
+        public static Monster vacuity;
+        public static Monster siegeMinion;
 
-            Monster minion = new Monster("미니언", 2, 5, 15, false );
-            Monster vacuity = new Monster("공허충", 3, 9, 10, false);
-            Monster siegeMinion = new Monster("대포미니언 ", 5, 8, 25, false);
+        public static float maxHp;
+        public static void Init()
+        {
+            user = new User("UserName", 1, "전사", 10, 5, 100, 1500, false);
+            maxHp = user.HP;
+
+            minion = new Monster("미니언", 2, 5, 15, false);
+            vacuity = new Monster("공허충", 3, 9, 10, false);
+            siegeMinion = new Monster("대포미니언 ", 5, 8, 25, false);
         }
         static void Main(string[] args)
         {
+            Init();
             Village.ShowVillage();
         }
     }
