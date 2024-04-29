@@ -2,6 +2,9 @@
 {
     public class Status
     {
-        
+        public static void ShowStatus()
+        {
+            Console.WriteLine("상태창");
+        }
     }
 }
