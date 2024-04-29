@@ -15,5 +15,23 @@
             HP = hp;
             IsDead = isDead;
         }
+
+        public void TakeDamage(float damage)
+        {
+            // 데미지가 오차값 적용이 되지 않은 상태로 왔다면..
+            
+
+
+            HP -= damage;
+            if (HP < 0)
+            {
+                Die();
+            }
+        }
+
+        public void Die()
+        {
+            IsDead = true;
+        }
     }
 }
