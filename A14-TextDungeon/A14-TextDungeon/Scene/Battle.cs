@@ -9,31 +9,14 @@ namespace A14_TextDungeon.Scene
         public int monsterCount = 0;
 
         // Battle 화면 보여주는 함수
-        public static void ShowBattle()
+        public static void ShowBattle(bool isFirst)
         {
             Console.WriteLine("Battle!!\n");
 
-            // monster 변수에 랜덤한 몬스터 종류 할당
-            Random rand  = new Random();
-
-            for(int i = 0;i<3;i++)
+            // Battle 화면에 처음 들어오면 - 화면으로 돌아올 때마다 랜덤한 몬스터 값이 뽑히는 경우 방지
+            if (isFirst)
             {
-                int monsterNum = rand.Next(0, 3);
-
-                switch (monsterNum)
-                {
-                    case 0:
-                        monsters[i] = GameManager.minion;
-                        break;
-                    case 1:
-                        monsters[i] = GameManager.vacuity;
-                        break;
-                    case 2:
-                        monsters[i] = GameManager.siegeMinion;
-                        break;
-                    default:
-                        break;
-                }
+                RandomMonster();
             }
 
             // 랜덤하게 뽑힌 세마리의 몬스터 
@@ -64,6 +47,7 @@ namespace A14_TextDungeon.Scene
                             break;
                         case 1:
                             // 공격함수
+                            PlayerPhase();
                             break;
                         default :
                             Console.WriteLine("잘못된 입력입니다.");
@@ -76,11 +60,76 @@ namespace A14_TextDungeon.Scene
                 }
             }
         }
+        public static void RandomMonster()
+        {
+            // monster 변수에 랜덤한 몬스터 종류 할당
+            Random rand = new Random();
+
+            for (int i = 0; i < 3; i++)
+            {
+                int monsterNum = rand.Next(0, 3);
+
+                switch (monsterNum)
+                {
+                    case 0:
+                        monsters[i] = GameManager.minion;
+                        break;
+                    case 1:
+                        monsters[i] = GameManager.vacuity;
+                        break;
+                    case 2:
+                        monsters[i] = GameManager.siegeMinion;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
         // Player 페이즈 함수 - 몬스터 죽이면 monsterCount += 1 필요
-        public void PlayerPhase()
+        public static void PlayerPhase()
         {
             Console.WriteLine("Battle!!\n");
+
+            // 각 몬스터 정보 출력 - 죽은 몬스터면 Dead 처리
+            for (int i = 0; i < 3; i++)
+            {
+                if (monsters[i].IsDead)
+                {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine($"{i + 1} LV. {monsters[i].Level} {monsters[i].Name}  Dead");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine($"{i + 1} LV. {monsters[i].Level} {monsters[i].Name}  HP {monsters[i].HP}");
+                }
+            }
+
+            // 플레이어 스탯 보여주기
+            ShowPlayerStat();
+
+            Console.WriteLine("0. 취소\n");
+            Console.WriteLine("대상을 선택해주세요.\n");
+
+            int input;
+            bool isValidNum = int.TryParse (Console.ReadLine(), out input );
+
+            while (true)
+            {
+                if (isValidNum)
+                {
+                    switch( input)
+                    {
+                        case 0: 
+
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요.");
+                }
+            }
         }
 
         // Enemy 페이즈 함수 
