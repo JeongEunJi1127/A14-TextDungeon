@@ -76,5 +76,59 @@ namespace A14_TextDungeon.Scene
             Console.WriteLine($"LV.{GameManager.user.Level}  Chad ({GameManager.user.Job})");
             Console.WriteLine($"HP {GameManager.user.HP}/{GameManager.maxHp}\n");
         }
+
+        //몬스터 턴 실행
+        static void EnemyPhase()
+        {
+            Console.Clear();
+            Console.WriteLine("Battle !!");
+
+            int i = 0;
+            while(true)
+            {
+                //임시 데이터
+                float monsterDamage = (float)Math.Ceiling(monsters[i].AttackPower * 1.1f);
+
+                if (monsters[i].IsDead)
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}의 공격 !");
+                    Console.WriteLine($"{GameManager.user.Name}을(를) 맞췄습니다. [데미지 : {monsterDamage}]");
+                    Console.WriteLine();
+                    Console.WriteLine($"LV.{GameManager.user.Level} {GameManager.user.Name}");
+                    Console.WriteLine($"HP {GameManager.user.HP} -> {GameManager.user.HP - monsterDamage}");
+                    //GameManager.user.HP Set 변경
+                    //GameManager.user.HP -= monsterDamage;
+                    Console.WriteLine("0. 다음");
+                    int input;
+                    bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+
+                    if (isValidNum)
+                    {
+                        switch (input)
+                        {
+                            case 0:
+                                i++;
+                                break;
+                            default:
+                                Console.WriteLine("잘못된 입력입니다.");
+                                break;
+                        }
+                    }                    
+                }
+                if (i == monsters.Length)
+                {
+                    break;
+                }
+            }
+            //플레이어 턴 실행
+            //PlayerPhase
+            Console.Clear();
+            Console.WriteLine("플레이어턴 실행");
+            Thread.Sleep(1000);
+        }
     }
 }
