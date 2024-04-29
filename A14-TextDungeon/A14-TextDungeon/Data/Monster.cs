@@ -16,13 +16,14 @@
             IsDead = isDead;
         }
 
+        public float AttackDamage(float damage)
+        {
+            damage = (float)Math.Ceiling(AttackPower * 1.1f);
+            return damage;
+        }
+
         public void TakeDamage(float damage)
         {
-            //데미지가 오차값 적용이 되지 않은 상태로 왔다면..
-            int range = (int)MathF.Ceiling((damage / 10));
-            Random random = new Random();
-            damage = random.Next((int)(damage - range), (int)(damage + range + 1));
-
             HP -= damage;
             if (HP <= 0)
             {
@@ -33,7 +34,6 @@
 
         public void Die()
         {
-            Console.WriteLine($"\n{Name} die\n");
             IsDead = true;
         }
     }
