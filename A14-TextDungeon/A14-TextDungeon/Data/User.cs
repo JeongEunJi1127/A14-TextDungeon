@@ -25,19 +25,33 @@
             IsDead = isDead;
         }
 
+        public float AttackDamage(float damage)
+        {
+            int range = (int)MathF.Ceiling((damage / 10));
+            Random random = new Random();
+            damage = random.Next((int)(damage - range), (int)(damage + range + 1));
+
+            return damage;
+        }
+
+        public void TakeDamage(float damage)
+        {
+            HP -= damage;
+            if (HP <= 0)
+            {
+                HP = 0;
+                Die();
+            }
+        }
+
         public void LevelUp()
         {
             Console.WriteLine($"[레벨업!]\n현재 플레이어 레벨 : {Level}");
         }
 
-        public bool Die()
+        public void Die()
         {
-            if (HP <= 0)
-            {
-                HP = 0;
-                return true;
-            }
-            return false;
+            IsDead = true;
         }
     }
 }
