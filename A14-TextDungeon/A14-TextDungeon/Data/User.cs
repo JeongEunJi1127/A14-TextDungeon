@@ -7,7 +7,7 @@
         public int Gold { get; private set; }
         public float AttackPower { get; private set; }
         public float Defense { get; private set; }
-        public float HP { get; private set; }
+        public float HP { get; set; }
 
         public string Name { get; private set; }
         public string Job { get; private set; }

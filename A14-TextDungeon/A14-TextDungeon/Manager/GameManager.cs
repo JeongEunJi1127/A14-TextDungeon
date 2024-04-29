@@ -18,7 +18,6 @@ namespace A14_TextDungeon.Manager
             maxHp = user.HP;
 
             minion = new Monster("미니언", 2, 5, 15, false );
-
             vacuity = new Monster("공허충", 3, 9, 10, false);
             siegeMinion = new Monster("대포미니언 ", 5, 8, 25, false);
         }

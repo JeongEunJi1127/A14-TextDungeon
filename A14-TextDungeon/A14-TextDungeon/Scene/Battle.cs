@@ -22,7 +22,7 @@ namespace A14_TextDungeon.Scene
             // 랜덤하게 뽑힌 세마리의 몬스터 
             Console.WriteLine($"LV.{monsters[0].Level} {monsters[0].Name} HP {monsters[0].HP}");
             Console.WriteLine($"LV.{monsters[1].Level} {monsters[1].Name} HP {monsters[1].HP}");
-            Console.WriteLine($"LV.{monsters[2].Level} {monsters[2].Name} HP {monsters[2].HP}\n");
+            Console.WriteLine($"LV.{monsters[2].Level} {monsters[2].Name} HP {monsters[2].HP}");
 
             // 플레이어 레벨 & 직업 & Hp
             ShowPlayerStat();
@@ -46,11 +46,11 @@ namespace A14_TextDungeon.Scene
                             Village.ShowVillage(); 
                             break;
                         case 1:
-                            // 공격함수
+                            Console.Clear();
                             PlayerPhase();
                             break;
                         default :
-                            Console.WriteLine("잘못된 입력입니다.");
+                            Console.WriteLine("1잘못된 입력입니다.");
                             break;
                     }
                 }
@@ -72,13 +72,13 @@ namespace A14_TextDungeon.Scene
                 switch (monsterNum)
                 {
                     case 0:
-                        monsters[i] = GameManager.minion;
+                        monsters[i] = new Monster("미니언", 2, 5, 15, false);
                         break;
                     case 1:
-                        monsters[i] = GameManager.vacuity;
+                        monsters[i] = new Monster("공허충", 3, 9, 10, false);
                         break;
                     case 2:
-                        monsters[i] = GameManager.siegeMinion;
+                        monsters[i] = new Monster("대포미니언 ", 5, 8, 25, false);
                         break;
                     default:
                         break;
@@ -91,20 +91,7 @@ namespace A14_TextDungeon.Scene
         {
             Console.WriteLine("Battle!!\n");
 
-            // 각 몬스터 정보 출력 - 죽은 몬스터면 Dead 처리
-            for (int i = 0; i < 3; i++)
-            {
-                if (monsters[i].IsDead)
-                {
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.WriteLine($"{i + 1} LV. {monsters[i].Level} {monsters[i].Name}  Dead");
-                    Console.ResetColor();
-                }
-                else
-                {
-                    Console.WriteLine($"{i + 1} LV. {monsters[i].Level} {monsters[i].Name}  HP {monsters[i].HP}");
-                }
-            }
+            ShowMonsterStat();
 
             // 플레이어 스탯 보여주기
             ShowPlayerStat();
@@ -119,23 +106,37 @@ namespace A14_TextDungeon.Scene
             {
                 if (isValidNum)
                 {
-                    switch( input)
+                    if (input == 0)
                     {
-                        case 0: 
-
+                        Console.Clear();
+                        ShowBattle(false);
+                    }
+                    else if (1 <= input && input <= 3)
+                    {
+                        if (monsters[input - 1].IsDead)
+                        {
+                            Console.WriteLine("2잘못된 입력입니다.");
+                            Thread.Sleep(1000);
+                        }
+                        else
+                        {
+                            monsters[input - 1].TakeDamage(GameManager.user.AttackPower);
+                            ShowMonsterStat();
+                            Thread.Sleep(2000);
+                            EnemyPhase();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("3잘못된 입력입니다.");
                     }
                 }
                 else
                 {
                     Console.WriteLine("숫자를 입력해주세요.");
                 }
+                break;
             }
-        }
-
-        // Enemy 페이즈 함수 
-        public void EnemyPhase()
-        {
-            Console.WriteLine("Battle!!\n");
         }
 
         // Battle 결과창 보여주는 함수
@@ -172,7 +173,7 @@ namespace A14_TextDungeon.Scene
                             Village.ShowVillage();
                             break;
                         default:
-                            Console.WriteLine("잘못된 입력입니다.");
+                            Console.WriteLine("4잘못된 입력입니다.");
                             break;
                     }
                 }
@@ -186,63 +187,74 @@ namespace A14_TextDungeon.Scene
         // 플레이어 스탯 보여주는 함수
         public static void ShowPlayerStat()
         {
-            Console.WriteLine("[내정보]");
+            Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{GameManager.user.Level}  Chad ({GameManager.user.Job})");
             Console.WriteLine($"HP {GameManager.user.HP}/{GameManager.maxHp}\n");
+        }
+
+        public static void ShowMonsterStat()
+        {
+            // 각 몬스터 정보 출력 - 죽은 몬스터면 Dead 처리
+            for (int i = 0; i < 3; i++)
+            {
+                if (monsters[i].IsDead)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{i + 1} LV. {monsters[i].Level} {monsters[i].Name}  Dead");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine($"{i + 1} LV. {monsters[i].Level} {monsters[i].Name}  HP {monsters[i].HP}");
+                }
+            }
         }
 
         //몬스터 턴 실행
         static void EnemyPhase()
         {
             Console.Clear();
-            Console.WriteLine("Battle !!");
+            Console.WriteLine("Battle!!\n");
 
-            int i = 0;
-            while(true)
+            for (int i = 0; i < 3; i++)
             {
-                //임시 데이터
                 float monsterDamage = (float)Math.Ceiling(monsters[i].AttackPower * 1.1f);
 
-                if (monsters[i].IsDead)
-                {
-                    return;
-                }
-                else
+                if (!monsters[i].IsDead)
                 {
                     Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}의 공격 !");
                     Console.WriteLine($"{GameManager.user.Name}을(를) 맞췄습니다. [데미지 : {monsterDamage}]");
                     Console.WriteLine();
                     Console.WriteLine($"LV.{GameManager.user.Level} {GameManager.user.Name}");
                     Console.WriteLine($"HP {GameManager.user.HP} -> {GameManager.user.HP - monsterDamage}");
-                    //GameManager.user.HP Set 변경
-                    //GameManager.user.HP -= monsterDamage;
+
+                    GameManager.user.HP -= monsterDamage;
+
                     Console.WriteLine("0. 다음");
+
                     int input;
                     bool isValidNum = int.TryParse(Console.ReadLine(), out input);
 
-                    if (isValidNum)
+                    while (true)
                     {
-                        switch (input)
+                        if (isValidNum)
                         {
-                            case 0:
-                                i++;
-                                break;
-                            default:
+                            if (input == 0)
+                            {
+                                Console.Clear();
+                            }
+                            else
+                            {
                                 Console.WriteLine("잘못된 입력입니다.");
-                                break;
+                            }
                         }
-                    }                    
-                }
-                if (i == monsters.Length)
-                {
-                    break;
+                        break;
+                    }
                 }
             }
+
             //플레이어 턴 실행
-            //PlayerPhase
-            Console.Clear();
-            Console.WriteLine("플레이어턴 실행");
-            Thread.Sleep(1000);
+            PlayerPhase();
         }
     }
 }
