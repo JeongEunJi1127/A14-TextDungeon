@@ -11,8 +11,9 @@
 
         public string Name { get; private set; }
         public string Job { get; private set; }
+        public bool IsDead { get; private set; }
 
-        public User(string name, int level, string job, float attackPower, float defense, float hp, int gold)
+        public User(string name, int level, string job, float attackPower, float defense, float hp, int gold, bool isDead)
         {
             Name = name;
             Level = level;
@@ -21,6 +22,7 @@
             Defense = defense;
             HP = hp;
             Gold = gold;
+            IsDead = isDead;
         }
 
         public void LevelUp()
