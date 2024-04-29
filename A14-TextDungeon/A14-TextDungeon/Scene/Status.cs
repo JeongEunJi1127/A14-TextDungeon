@@ -7,24 +7,41 @@ namespace A14_TextDungeon.Scene
         public static void ShowStatus()
         {
             Console.Clear();
-            Console.WriteLine("== 상태 보기 =");
             Console.WriteLine();
-            Console.WriteLine("-");
-            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
-            Console.WriteLine("-");
+            Console.WriteLine("== 상태창 ==");
             Console.WriteLine();
+            Console.WriteLine($"LV. {GameManager.user.Level}");
+            Console.WriteLine($"{GameManager.user.Name} ({GameManager.user.Job})");
+            Console.WriteLine($"공격력 : {GameManager.user.AttackPower}");
+            Console.WriteLine($"공격력 : {GameManager.user.Defense}");
             Console.WriteLine($"체력: {GameManager.user.HP} ");
             Console.WriteLine($"Gold : {GameManager.user.Gold} G");
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
-            string input = Console.ReadLine();
-            switch (input)
+
+            int input;
+            while (true)
             {
-                case "0":
-                    Console.Clear();
-                    break;
+                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+                if (isValidNum)
+                {
+                    switch (input)
+                    {
+                        case 0:
+                            Village.ShowVillage();
+                            break;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요.");
+                }
             }
+
         }
     }
 }
