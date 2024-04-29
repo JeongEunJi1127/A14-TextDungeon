@@ -11,15 +11,18 @@ namespace A14_TextDungeon.Manager
         public static Monster siegeMinion;
 
         public static float maxHp;
-        public static void Init()
+
+        public static void  Init()
         {
-            user = new User("UserName", 1, "전사", 10, 5, 100, 1500, false);
+            user = new User("UserName",1,"전사", 10, 5, 100, 1500, false );
             maxHp = user.HP;
 
-            minion = new Monster("미니언", 2, 5, 15, false);
+            minion = new Monster("미니언", 2, 5, 15, false );
+
             vacuity = new Monster("공허충", 3, 9, 10, false);
             siegeMinion = new Monster("대포미니언 ", 5, 8, 25, false);
         }
+
         static void Main(string[] args)
         {
             Init();
