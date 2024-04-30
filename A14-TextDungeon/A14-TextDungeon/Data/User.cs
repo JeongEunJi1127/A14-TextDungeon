@@ -1,4 +1,7 @@
-﻿namespace A14_TextDungeon.Data
+﻿using A14_TextDungeon.Manager;
+using A14_TextDungeon.Scene;
+
+namespace A14_TextDungeon.Data
 {
     public class User
     {
@@ -8,12 +11,13 @@
         public float AttackPower { get; private set; }
         public float Defense { get; private set; }
         public float HP { get; set; }
+        public int MP { get; set; }
 
         public string Name { get; private set; }
         public string Job { get; private set; }
         public bool IsDead { get; private set; }
 
-        public User(string name, int level, string job, float attackPower, float defense, float hp, int gold, bool isDead)
+        public User(string name, int level, string job, float attackPower, float defense, float hp, int mp, int gold, bool isDead)
         {
             Name = name;
             Level = level;
@@ -21,6 +25,7 @@
             AttackPower = attackPower;
             Defense = defense;
             HP = hp;
+            MP = mp;
             Gold = gold;
             IsDead = isDead;
         }
@@ -53,5 +58,14 @@
         {
             IsDead = true;
         }
+
+       
+        public enum UserJob
+        {
+            Warrior = 1,
+            Rogue = 2,
+        }
+
+        
     }
 }
