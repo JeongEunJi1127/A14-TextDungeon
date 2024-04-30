@@ -8,15 +8,17 @@ namespace A14_TextDungeon.Scene
         public string ItemDescription;
         public ItemType ItemType;
         public int ItemStat;
+        public bool IsEquippd;
 
 
-
-        public Item(string name, int stat, ItemType type, string desription)
+        public Item(string name, int stat, ItemType type, string desription, bool isEquippd = false)
         {
             ItemName = name;
             ItemDescription = desription;
             ItemType = type;
             ItemStat = stat;
+            IsEquippd = isEquippd;
+
         }
 
         public string DisplayItem()
@@ -27,7 +29,7 @@ namespace A14_TextDungeon.Scene
                 case ItemType.Armor:
                     type = "방어력 +";
                     break;
-                case ItemType.Wepon:
+                case ItemType.Weapon:
                     type = "공격력 +";
                     break;
                 case ItemType.Potion:

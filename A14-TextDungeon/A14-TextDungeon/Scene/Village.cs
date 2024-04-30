@@ -1,4 +1,6 @@
-﻿namespace A14_TextDungeon.Scene
+﻿using A14_TextDungeon.Manager;
+
+namespace A14_TextDungeon.Scene
 {
     public class Village
     { 
@@ -9,17 +11,6 @@
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 전투 시작");
             Console.WriteLine("3. 인벤 토리\n");
-
-            Inventory inventory = new Inventory();
-            
-            #region 테스트아이템목록
-            Item testItem1 = new Item("무쇠갑옷", 5, ItemType.Armor, "무쇠로 만들어져 튼튼한 갑옷입니다.");
-            Item testItem2 = new Item("스파르타의 창", 7, ItemType.Wepon, "스파르타의 전사들이 사용했다는 전설의 창입니다.");
-            Item testItem3 = new Item("낡은 검", 2, ItemType.Wepon, "쉽게 볼 수 있는 낡은 검 입니다.");
-            inventory.AddItem(testItem1);
-            inventory.AddItem(testItem2);
-            inventory.AddItem(testItem3);
-            #endregion
 
             while (true)
             {
@@ -41,7 +32,7 @@
                             break;
                         case 3:
                             Console.Clear();
-                            inventory.ShowInventory();
+                            Inventory.ShowInventory();
                             break;
 
                         default:
