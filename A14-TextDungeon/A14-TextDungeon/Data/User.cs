@@ -12,6 +12,7 @@ namespace A14_TextDungeon.Data
         public float Defense { get; private set; }
         public float HP { get; set; }
         public int MP { get; set; }
+
         public string Name { get; private set; }
         public string Job { get; private set; }
         public bool IsDead { get; private set; }
