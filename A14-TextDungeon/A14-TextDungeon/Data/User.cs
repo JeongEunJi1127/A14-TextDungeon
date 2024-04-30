@@ -60,7 +60,11 @@ namespace A14_TextDungeon.Data
         }
 
        
-
+        public enum UserJob
+        {
+            Warrior = 1,
+            Rogue = 2,
+        }
 
         
     }

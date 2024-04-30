@@ -1,5 +1,8 @@
 ﻿using A14_TextDungeon.Data;
 using A14_TextDungeon.Scene;
+using System.Reflection.Emit;
+using System.Runtime.InteropServices;
+using static A14_TextDungeon.Data.User;
 
 namespace A14_TextDungeon.Manager
 {
@@ -105,21 +108,40 @@ namespace A14_TextDungeon.Manager
                 int input;
                 bool isValidNum = int.TryParse(Console.ReadLine(), out input);
 
+                UserJob userJob = (UserJob)input;
+
                 if (isValidNum)
                 {
-                    switch (input)
+                    int level = 1;
+
+                    string job;
+                    float attackPower;
+                    float defense;
+                    float hp;
+                    int mp;
+
+                    int gold = 1500;
+                    bool isdead = false;
+
+                    switch (userJob)
                     {
-                        case 1:
-                            Console.Clear();
-                            user = new User(saveName, 1, "전사", 10, 5, 100, 50, 1500, false);
-                            Init();
-                            Village.ShowVillage();
+                        case UserJob.Warrior:
+                            job = "전사";
+                            attackPower = 10;
+                            defense = 5;
+                            hp = 100;
+                            mp = 50;
+
+                            CreateUser(level, job, attackPower, defense, hp, mp, gold, isdead);
                             break;
-                        case 2:
-                            Console.Clear();
-                            user = new User(saveName, 1, "도적", 10, 5, 100, 50, 1500, false);
-                            Init();
-                            Village.ShowVillage();
+                        case UserJob.Rogue:
+                            job = "도적";
+                            attackPower = 15;
+                            defense = 3;
+                            hp = 80;
+                            mp = 70;
+
+                            CreateUser(level, job, attackPower, defense, hp, mp, gold, isdead);
                             break;
                         default:
                             Console.WriteLine("\n잘못된 입력입니다.\n");
@@ -131,6 +153,14 @@ namespace A14_TextDungeon.Manager
                     Console.WriteLine("\n숫자를 입력해주세요.\n");
                 }
             }
+        }
+
+        public static void CreateUser(int level, string job, float attackPower, float defense, float hp, int mp, int gold, bool isdead)
+        {
+            Console.Clear();
+            user = new User(saveName, level, job, attackPower, defense, hp, mp, gold, isdead);
+            Init();
+            Village.ShowVillage();
         }
 
     }
