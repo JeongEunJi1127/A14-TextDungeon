@@ -12,9 +12,11 @@ namespace A14_TextDungeon.Manager
 
         public static float maxHp;
 
+        public static string saveName;
+
         public static void  Init()
         {
-            user = new User("UserName",1,"전사", 10, 5, 100, 50, 1500, false );
+            //user = new User("UserName",1,"전사", 10, 5, 100, 50, 1500, false );
             maxHp = user.HP;
 
             minion = new Monster("미니언", 2, 5, 15, false );
@@ -24,21 +26,102 @@ namespace A14_TextDungeon.Manager
 
         static void Main(string[] args)
         {
-            string userName = User.SetName();
-            Console.WriteLine("저장된 이름:" + userName);
+            SetName();
 
-            Thread.Sleep(3000);
+           /* Init();
+            Village.ShowVillage();*/
+        } 
 
-
-
-            Init();
-            Village.ShowVillage();
-        }
-
-        public enum UserJob
+        public static void SetName()
         {
-            Warrior = 0,
-            Rogue = 1,
+            Console.Clear();
+            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 이름을 설정해주세요.\n");
+
+            string userName = Console.ReadLine();
+
+            Console.WriteLine($"입력하신 이름은 {userName} 입니다.\n");
+            Console.WriteLine("1. 저장");
+            Console.WriteLine("2. 취소\n");
+
+            SetNameInput(userName);
         }
+
+        public static void SetJob()
+        {
+            Console.Clear();
+            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 직업을 설정해주세요.\n");
+            Console.WriteLine("1. 전사");
+            Console.WriteLine("2. 도적\n");
+
+            SetJobInput();
+        }
+
+        public static void SetNameInput(string userName)
+        {
+            while (true)
+            {
+                int input;
+                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+
+                if (isValidNum)
+                {
+                    switch (input)
+                    {
+                        case 1:
+                            saveName = userName;                            
+                            SetJob();                            
+                            break;
+                        case 2:
+                            SetName();
+                            break;
+                        default:
+                            Console.WriteLine("\n잘못된 입력입니다.\n");
+                            break;
+                    }                    
+                }
+                else
+                {
+                    Console.WriteLine("\n숫자를 입력해주세요.\n");
+                }
+            }
+        }
+
+
+        public static void SetJobInput()
+        {
+            while (true)
+            {
+                Console.WriteLine("원하시는 행동을 입력해주세요.\n");
+                int input;
+                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+
+                if (isValidNum)
+                {
+                    switch (input)
+                    {
+                        case 1:
+                            Console.Clear();
+                            user = new User(saveName, 1, "전사", 10, 5, 100, 50, 1500, false);
+                            Init();
+                            Village.ShowVillage();
+                            break;
+                        case 2:
+                            Console.Clear();
+                            user = new User(saveName, 1, "도적", 10, 5, 100, 50, 1500, false);
+                            Init();
+                            Village.ShowVillage();
+                            break;
+                        default:
+                            Console.WriteLine("\n잘못된 입력입니다.\n");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\n숫자를 입력해주세요.\n");
+                }
+            }
+        }
+
     }
 }
