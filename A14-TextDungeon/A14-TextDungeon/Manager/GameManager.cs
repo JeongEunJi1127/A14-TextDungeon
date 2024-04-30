@@ -14,7 +14,7 @@ namespace A14_TextDungeon.Manager
 
         public static void  Init()
         {
-            user = new User("UserName",1,"전사", 10, 5, 100, 1500, false );
+            user = new User("UserName",1,"전사", 10, 5, 100, 50, 1500, false );
             maxHp = user.HP;
 
             minion = new Monster("미니언", 2, 5, 15, false );
@@ -24,8 +24,21 @@ namespace A14_TextDungeon.Manager
 
         static void Main(string[] args)
         {
+            string userName = User.SetName();
+            Console.WriteLine("저장된 이름:" + userName);
+
+            Thread.Sleep(3000);
+
+
+
             Init();
             Village.ShowVillage();
+        }
+
+        public enum UserJob
+        {
+            Warrior = 0,
+            Rogue = 1,
         }
     }
 }
