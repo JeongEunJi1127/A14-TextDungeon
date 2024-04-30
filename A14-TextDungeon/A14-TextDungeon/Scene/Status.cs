@@ -7,17 +7,14 @@ namespace A14_TextDungeon.Scene
         public static void ShowStatus()
         {
             Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine("== 상태창 ==");
-            Console.WriteLine();
+            Console.WriteLine("\n== 상태창 ==\n");
             Console.WriteLine($"LV. {GameManager.user.Level}");
             Console.WriteLine($"{GameManager.user.Name} ({GameManager.user.Job})");
             Console.WriteLine($"공격력 : {GameManager.user.AttackPower}");
             Console.WriteLine($"공격력 : {GameManager.user.Defense}");
             Console.WriteLine($"체력: {GameManager.user.HP} ");
-            Console.WriteLine($"Gold : {GameManager.user.Gold} G");
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine($"Gold : {GameManager.user.Gold} G\n\n");
+
             Console.WriteLine("0. 나가기");
 
             int input;

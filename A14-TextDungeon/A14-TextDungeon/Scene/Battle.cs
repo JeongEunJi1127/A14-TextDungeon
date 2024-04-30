@@ -1,5 +1,6 @@
 ﻿using A14_TextDungeon.Data;
 using A14_TextDungeon.Manager;
+using A14_TextDungeon.UI;
 
 namespace A14_TextDungeon.Scene
 {
@@ -43,33 +44,7 @@ namespace A14_TextDungeon.Scene
             Console.WriteLine("0. 뒤로 가기\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
-            int input;
-
-            while (true)
-            {
-                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
-                if (isValidNum)
-                {
-                    switch(input)
-                    {
-                        case 0:
-                            Console.Clear();
-                            Village.ShowVillage(); 
-                            break;
-                        case 1:
-                            Console.Clear();
-                            PlayerPhase();
-                            break;
-                        default :
-                            Console.WriteLine("잘못된 입력입니다.");
-                            break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("숫자를 입력해주세요.");
-                }
-            }
+            BattleInput.ShowBattleInput();
         }
         static void RandomMonster()
         {
@@ -98,7 +73,7 @@ namespace A14_TextDungeon.Scene
         }
 
         // Player 페이즈 함수 
-        static void PlayerPhase()
+        public static void PlayerPhase()
         {
             Console.WriteLine("Battle!!\n");
 
@@ -109,45 +84,12 @@ namespace A14_TextDungeon.Scene
 
             Console.WriteLine("0. 취소\n");
             Console.WriteLine("대상을 선택해주세요.\n");
-
-            int input;
             
-            while (true)
-            {
-                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
-                if (isValidNum)
-                {
-                    if (input == 0)
-                    {
-                        Console.Clear();
-                        ShowBattle(false);
-                    }
-                    else if (1 <= input && input <= 3)
-                    {
-                        if (monsters[input - 1].IsDead)
-                        {
-                            Console.WriteLine("잘못된 입력입니다.");
-                        }
-                        else
-                        {
-                            PlayerAttack(input - 1);
-                            Thread.Sleep(1000);
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("잘못된 입력입니다.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("숫자를 입력해주세요.");
-                }
-            }
+            BattleInput.PlayerPhaseInput();
         }
 
         // 플레이어 공격화면
-        static void PlayerAttack(int monsterNum)
+        public static void PlayerAttack(int monsterNum)
         {
             Console.Clear();
             Console.WriteLine("Battle!!\n");
@@ -175,41 +117,11 @@ namespace A14_TextDungeon.Scene
 
             // 입력값
             Console.WriteLine("0. 다음\n");
-            int input;
-
-            while (true)
-            {
-                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
-                if (isValidNum)
-                {
-                    if (input == 0)
-                    {
-                        if (GameEnd())
-                        {
-                            Thread.Sleep(1000);
-                            Village.ShowVillage();
-                        }
-                        else
-                        {
-                            //몬스터 턴 실행
-                            EnemyPhase();
-                        }
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("잘못된 입력입니다.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("숫자를 입력해주세요.");
-                }
-            }
+            BattleInput.PlayerAttackInput();
         }
 
         //몬스터 턴 실행
-        static void EnemyPhase()
+        public static void EnemyPhase()
         {
             Console.Clear();
 
@@ -239,24 +151,8 @@ namespace A14_TextDungeon.Scene
                    
                     // 입력값
                     Console.WriteLine("0. 다음");
-                    int input;
-
-                    while (true)
-                    {
-                        bool isValidNum = int.TryParse(Console.ReadLine(), out input);
-                        if (isValidNum)
-                        {
-                            if (input == 0)
-                            {
-                                Console.Clear();
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("잘못된 입력입니다.");
-                            }
-                        }
-                    }
+                    
+                    BattleInput.EnemyPhaseInput();
                 }
             }
             if (GameEnd())
@@ -299,7 +195,7 @@ namespace A14_TextDungeon.Scene
         }
 
         // 게임 끝났는지 검사
-        static bool GameEnd()
+        public static bool GameEnd()
         {
             if (GameManager.user.IsDead)
             {
@@ -337,28 +233,8 @@ namespace A14_TextDungeon.Scene
 
             // 입력값 받기
             Console.WriteLine("0. 다음\n");
-            int input;
 
-            while (true)
-            {
-                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
-                if (isValidNum)
-                {
-                    switch (input)
-                    {
-                        case 0:
-                            Village.ShowVillage();
-                            break;
-                        default:
-                            Console.WriteLine("잘못된 입력입니다.");
-                            break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("숫자를 입력해주세요.");
-                }
-            }
+            BattleInput.BattleResultInput();
         }
     }
 }
