@@ -14,7 +14,7 @@ namespace A14_TextDungeon.Manager
 
         public static void  Init()
         {
-            user = new User("UserName",1,"전사", 10, 5, 100, 1500, false );
+            user = new User("UserName",1,"전사", 10, 5, 100, 50, 1500, false );
             maxHp = user.HP;
 
             minion = new Monster("미니언", 2, 5, 15, false );

@@ -97,7 +97,28 @@ namespace A14_TextDungeon.Scene
             float damage = GameManager.user.AttackDamage(GameManager.user.AttackPower);
 
             Console.WriteLine($"{GameManager.user.Name}의 공격!");
-            Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 맞췄습니다. [데미지 : {damage}]\n");
+
+            // 회피 기능
+            if (Evasion())
+            {
+                Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
+            }
+            else
+            {
+                // 치명타 기능
+                if (Critical())
+                {
+
+                    damage = (float)Math.Round(damage * 1.6f);
+
+                    Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!\n");
+                }
+                else
+                {
+                    Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 맞췄습니다. [데미지 : {damage}]\n");
+                }
+            }
+
             Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name}");
            
             if (monsters[monsterNum].IsDead)
@@ -119,6 +140,38 @@ namespace A14_TextDungeon.Scene
             Console.WriteLine("0. 다음\n");
             BattleInput.PlayerAttackInput();
         }
+        
+        // 치명타 기능
+        public static bool Critical()
+        {
+            Random random = new Random();
+            int percentage = random.Next(0, 100);
+
+            if (percentage <= 15)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // 회피 기능 - 스킬은 회피 불가능
+        public static bool Evasion()
+        {
+            Random random = new Random();
+            int percentage = random.Next(0, 100);
+
+            if (percentage <= 10)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         //몬스터 턴 실행
         public static void EnemyPhase()
@@ -134,8 +187,7 @@ namespace A14_TextDungeon.Scene
                 {
                     Console.WriteLine("Battle!!\n");
                     Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}의 공격 !");
-                    Console.WriteLine($"{GameManager.user.Name}을(를) 맞췄습니다. [데미지 : {monsterDamage}]");
-                    Console.WriteLine();
+                    Console.WriteLine($"{GameManager.user.Name}을(를) 맞췄습니다. [데미지 : {monsterDamage}]\n");
                     Console.WriteLine($"LV.{GameManager.user.Level} {GameManager.user.Name}");
 
                     float nowHp = GameManager.user.HP;
