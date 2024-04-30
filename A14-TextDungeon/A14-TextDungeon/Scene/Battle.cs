@@ -1,6 +1,7 @@
 ﻿using A14_TextDungeon.Data;
 using A14_TextDungeon.Manager;
 using A14_TextDungeon.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace A14_TextDungeon.Scene
 {
@@ -21,31 +22,17 @@ namespace A14_TextDungeon.Scene
                 RandomMonster();
             }
 
-            // 랜덤하게 뽑힌 세마리의 몬스터 
-            for (int i = 0; i < 3; i++)
-            {
-                if (monsters[i].IsDead)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}  Dead");
-                    Console.ResetColor();
-                }
-                else
-                {
-                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}  HP {monsters[i].HP}");
-                }
-            }
-
-            // 플레이어 레벨 & 직업 & Hp
+            ShowMonsterStat(false);
             ShowPlayerStat();
 
             // 입력값 받기
             Console.WriteLine("1. 공격");
-            Console.WriteLine("0. 뒤로 가기\n");
+            Console.WriteLine("2. 스킬\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
             BattleInput.ShowBattleInput();
         }
+
         static void RandomMonster()
         {
             // monster 변수에 랜덤한 몬스터 종류 할당
@@ -72,14 +59,13 @@ namespace A14_TextDungeon.Scene
             }
         }
 
-        // Player 페이즈 함수 
+        // Player 페이즈 구현 
         public static void PlayerPhase()
         {
-            Console.WriteLine("Battle!!\n");
+            Console.Clear();
+            Console.WriteLine("Battle!! - 나의 턴\n");
 
-            ShowMonsterStat();
-
-            // 플레이어 스탯 보여주기
+            ShowMonsterStat(true);
             ShowPlayerStat();
 
             Console.WriteLine("0. 취소\n");
@@ -88,61 +74,174 @@ namespace A14_TextDungeon.Scene
             BattleInput.PlayerPhaseInput();
         }
 
-        // 플레이어 공격화면
-        public static void PlayerAttack(int monsterNum)
+        // Enemy 페이즈 구현
+        public static void EnemyPhase()
         {
             Console.Clear();
-            Console.WriteLine("Battle!!\n");
 
-            float damage = GameManager.user.AttackDamage(GameManager.user.AttackPower);
-
-            Console.WriteLine($"{GameManager.user.Name}의 공격!");
-
-            // 회피 기능
-            if (Evasion())
+            for (int i = 0; i < monsters.Length; i++)
             {
-                Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
+                // 몬스터 데미지 계산
+                float monsterDamage = monsters[i].AttackDamage(monsters[i].AttackPower);
+
+                if (!monsters[i].IsDead)
+                {
+                    Console.WriteLine("Battle!! - 몬스터 턴\n");
+                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}의 공격 !");
+                    Console.WriteLine($"{GameManager.user.Name}을(를) 맞췄습니다. [데미지 : {monsterDamage}]\n");
+                    Console.WriteLine($"LV.{GameManager.user.Level} {GameManager.user.Name}");
+
+                    float nowHp = GameManager.user.HP;
+                    GameManager.user.TakeDamage(monsterDamage);
+                    Console.WriteLine($"HP {nowHp} -> {GameManager.user.HP}\n");
+
+                    // 게임 끝나면 함수 탈출
+                    if (GameManager.user.IsDead)
+                    {
+                        Thread.Sleep(2000);
+                        break;
+                    }
+
+                    // 입력값
+                    Console.WriteLine("0. 다음");
+
+                    BattleInput.EnemyPhaseInput();
+                }
+            }
+
+            // 전투 종료 조건
+            if (BattleEnd())
+            {
+                Thread.Sleep(1000);
+                Village.ShowVillage();
             }
             else
             {
-                // 치명타 기능
-                if (Critical())
+                //플레이어 턴 실행
+                ShowBattle(false);
+            }
+        }
+
+        // 공격 구현
+        public static void PlayerAttack(int monsterNum)
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!! - 나의 턴\n");
+            Console.WriteLine($"{GameManager.user.Name}의 공격!");
+
+            float damage = GameManager.user.AttackDamage(GameManager.user.AttackPower);
+
+            // 회피 
+            if (IsEvasion())
+            {
+                Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
+                AttackMonster(monsters[monsterNum], 0);
+            }
+            // 회피하지 않고 공격할 수 있으면
+            else
+            {
+                // 치명타 
+                if (IsCritical())
                 {
-
                     damage = (float)Math.Round(damage * 1.6f);
-
                     Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!\n");
                 }
                 else
                 {
                     Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 맞췄습니다. [데미지 : {damage}]\n");
                 }
+                AttackMonster(monsters[monsterNum], damage);
             }
 
-            Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name}");
-           
-            if (monsters[monsterNum].IsDead)
-            {
-                Console.WriteLine($"HP {monsters[monsterNum].HP} -> Dead\n");
-            }
-            else
-            {
-                float nowMonsterHp = monsters[monsterNum].HP;
-                monsters[monsterNum].TakeDamage(damage);
-                if (monsters[monsterNum].IsDead)
-                {
-                    monsterCount++;
-                }
-                Console.WriteLine($"HP {nowMonsterHp} -> {monsters[monsterNum].HP}\n");
-            }
-
-            // 입력값
             Console.WriteLine("0. 다음\n");
             BattleInput.PlayerAttackInput();
         }
+
+        // 몬스터 hp 깎는 함수
+        public static void AttackMonster(Monster monster, float damage)
+        {
+            Console.WriteLine($"LV.{monster.Level} {monster.Name}");
+
+            if (monster.IsDead)
+            {
+                Console.WriteLine($"HP {monster.HP} -> Dead\n");
+            }
+            else
+            {
+                float nowMonsterHp = monster.HP;
+                monster.TakeDamage(damage);
+                if (monster.IsDead)
+                {
+                    monsterCount++;
+                }
+                Console.WriteLine($"HP {nowMonsterHp} -> {monster.HP}\n");
+            }
+        }
+
+        //스킬 공격 구현
+        public static void PlayerSkill(List<int> monsterNum, int skillNum)
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!! - 나의 턴\n");
+            Console.WriteLine($"{GameManager.user.Name}의 스킬 공격!\n");
+
+            float damage = 0.0f;
+
+            // 알파 스트라이크
+            if (skillNum == 1)
+            {
+                GameManager.user.MP -= 10;
+                damage += GameManager.user.AttackPower * 2;
+            }
+            // 더블 스트라이크
+            else if (skillNum == 2)
+            {
+                GameManager.user.MP -= 15;
+                damage += GameManager.user.AttackPower * 1.5f;
+            }
+            
+            foreach(int i in monsterNum)
+            {
+                float skillDamage = damage;
+                // 치명타 
+                if (IsCritical())
+                {
+                    skillDamage = (float)Math.Round(damage * 1.6f);
+                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name} 을(를) 맞췄습니다. [스킬 데미지 : {skillDamage}] - 치명타 공격!!\n");
+                }
+                else
+                {
+                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name} 을(를) 맞췄습니다. [스킬 데미지 : {skillDamage}]\n");
+                }
+
+                AttackMonster(monsters[i], skillDamage);
+            }
+
+            Console.WriteLine("0. 다음\n");
+            BattleInput.PlayerAttackInput();
+        }
+
+        // 스킬창 구현
+        public static void SkillStatus()
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!!\n");
+
+            ShowMonsterStat(true);
+            ShowPlayerStat();
+
+            for(int i = 0; i < GameManager.skills.Length; i++)
+            {
+                Console.WriteLine($"{i+1}. {GameManager.skills[i].Name} - MP {GameManager.skills[i].MP}");
+                Console.WriteLine($"   {GameManager.skills[i].Description}");
+            }
+            Console.WriteLine("0. 취소\n");
+
+            BattleInput.SkillStatusInput();     
+        }
         
-        // 치명타 기능
-        public static bool Critical()
+        // 치명타
+        public static bool IsCritical()
         {
             Random random = new Random();
             int percentage = random.Next(0, 100);
@@ -157,8 +256,8 @@ namespace A14_TextDungeon.Scene
             }
         }
 
-        // 회피 기능 - 스킬은 회피 불가능
-        public static bool Evasion()
+        // 회피 
+        public static bool IsEvasion()
         {
             Random random = new Random();
             int percentage = random.Next(0, 100);
@@ -173,84 +272,55 @@ namespace A14_TextDungeon.Scene
             }
         }
 
-        //몬스터 턴 실행
-        public static void EnemyPhase()
-        {
-            Console.Clear();
-
-            for (int i = 0; i < 3; i++)
-            {
-                // 몬스터 데미지 계산
-                float monsterDamage = monsters[i].AttackDamage(monsters[i].AttackPower);
-
-                if (!monsters[i].IsDead)
-                {
-                    Console.WriteLine("Battle!!\n");
-                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}의 공격 !");
-                    Console.WriteLine($"{GameManager.user.Name}을(를) 맞췄습니다. [데미지 : {monsterDamage}]\n");
-                    Console.WriteLine($"LV.{GameManager.user.Level} {GameManager.user.Name}");
-
-                    float nowHp = GameManager.user.HP;
-                    GameManager.user.TakeDamage(monsterDamage);
-                    Console.WriteLine($"HP {nowHp} -> {GameManager.user.HP}\n");
-
-                    // 게임 끝나면 함수 탈출
-                    if (GameManager.user.IsDead)
-                    {
-                        Thread.Sleep(2000);
-                        break;
-                    }     
-                   
-                    // 입력값
-                    Console.WriteLine("0. 다음");
-                    
-                    BattleInput.EnemyPhaseInput();
-                }
-            }
-            if (GameEnd())
-            {
-                Thread.Sleep(1000);
-                Village.ShowVillage();
-            }
-            else
-            {
-                //플레이어 턴 실행
-                PlayerPhase();
-            }
-        }
-
         // 플레이어 스탯 보여주는 함수
         static void ShowPlayerStat()
         {
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{GameManager.user.Level}  Chad ({GameManager.user.Job})");
-            Console.WriteLine($"HP {GameManager.user.HP}/{GameManager.maxHp}\n");
+            Console.WriteLine($"HP {GameManager.user.HP}/{GameManager.maxHp}");
+            Console.WriteLine($"MP {GameManager.user.MP}/{GameManager.maxMp}\n");
         }
 
         // 몬스터 스탯 보여주는 함수
-        static void ShowMonsterStat()
+        static void ShowMonsterStat(bool showNum)
         {
-            // 각 몬스터 정보 출력 - 죽은 몬스터면 Dead 처리
             for (int i = 0; i < 3; i++)
             {
-                if (monsters[i].IsDead)
+                if (showNum)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"{i + 1} LV.{monsters[i].Level} {monsters[i].Name} Dead");
-                    Console.ResetColor();
+                    if (monsters[i].IsDead)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"{i + 1} LV.{monsters[i].Level} {monsters[i].Name} Dead");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{i + 1} LV.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].HP}");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"{i + 1} LV.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].HP}");
+                    if (monsters[i].IsDead)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}  Dead");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}  HP {monsters[i].HP}");
+                    }
                 }
             }
         }
 
         // 게임 끝났는지 검사
-        public static bool GameEnd()
+        public static bool BattleEnd()
         {
             if (GameManager.user.IsDead)
             {
+                // 파일 리셋 로직 구현 필요
                 BattleResult(false);
                 return true;
             }
@@ -263,9 +333,11 @@ namespace A14_TextDungeon.Scene
         }
 
 
-        // Battle 결과창 보여주는 함수
+        // Battle 결과창 보여주는 함수 - 게임이 끝나면 실행
         static void BattleResult(bool isWin)
         {
+            GameManager.user.MP += 10;
+
             Console.Clear();
             Console.WriteLine("Battle!! - Result\n");
 

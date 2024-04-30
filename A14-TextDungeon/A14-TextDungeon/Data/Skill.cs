@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace A14_TextDungeon.Data
+﻿namespace A14_TextDungeon.Data
 {
-    internal class Class1
-    {
+    internal class Skill { 
+    
+        public string Name {  get; private set; }
+        public string Description { get; private set; }
+        public int MP { get; private set; }
+
+        public Skill(string name, string description, int mp)
+        {
+            Name = name;
+            Description = description;
+            MP = mp;
+        }
     }
 }
