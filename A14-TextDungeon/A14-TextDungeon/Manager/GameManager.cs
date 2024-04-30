@@ -10,7 +10,7 @@ namespace A14_TextDungeon.Manager
         public static Monster vacuity;
         public static Monster siegeMinion;
 
-        public static float maxHp;
+        public static float maxHp;        
 
         public static void  Init()
         {
