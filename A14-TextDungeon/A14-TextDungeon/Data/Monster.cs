@@ -15,5 +15,26 @@
             HP = hp;
             IsDead = isDead;
         }
+
+        public float AttackDamage(float damage)
+        {
+            damage = (float)Math.Ceiling(AttackPower * 1.1f);
+            return damage;
+        }
+
+        public void TakeDamage(float damage)
+        {
+            HP -= damage;
+            if (HP <= 0)
+            {
+                HP = 0;
+                Die();
+            }
+        }
+
+        public void Die()
+        {
+            IsDead = true;
+        }
     }
 }
