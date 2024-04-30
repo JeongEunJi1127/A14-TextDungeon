@@ -24,8 +24,21 @@ namespace A14_TextDungeon.Manager
 
         static void Main(string[] args)
         {
+            string userName = User.SetName();
+            Console.WriteLine("저장된 이름:" + userName);
+
+            Thread.Sleep(3000);
+
+
+
             Init();
             Village.ShowVillage();
+        }
+
+        public enum UserJob
+        {
+            Warrior = 0,
+            Rogue = 1,
         }
     }
 }
