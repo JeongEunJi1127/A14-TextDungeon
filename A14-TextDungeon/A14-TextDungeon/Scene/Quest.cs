@@ -1,6 +1,5 @@
-// Quest.cs
-
 using System;
+using A14_TextDungeon.Scene;
 
 namespace A14_TextDungeon.Manager
 {
@@ -11,7 +10,6 @@ namespace A14_TextDungeon.Manager
         public int TargetCount { get; private set; }
         public int CurrentCount { get; private set; }
         public bool IsCompleted { get; private set; }
-        public bool IsAccepted { get; private set; }
         public string[] Rewards { get; private set; }
 
         public Quest(string name, string description, int targetCount, string[] rewards)
@@ -21,7 +19,6 @@ namespace A14_TextDungeon.Manager
             TargetCount = targetCount;
             CurrentCount = 0;
             IsCompleted = false;
-            IsAccepted = false;
             Rewards = rewards;
         }
 
@@ -63,14 +60,30 @@ namespace A14_TextDungeon.Manager
             questManager.AcceptOrRejectQuest(input); 
         }
 
-        public static void ShowEquipmentQuest()
+        public static void ShowEquipmentQuest(Item item)
         {
-            // 장비 퀘스트에 대한 정보 표시
-        }
 
-        public static void ShowStrengthQuest()
+            if (item.IsEquipped)
+            {
+                Quest quest = new Quest("장비를 장착해보자", "인벤토리에서 아무 장치나 완료해보자!", 1, new string[] { "10골드", "경험치 100" });
+                quest.UpdateProgress(1); // 퀘스트 진행상황 업데이트
+                Console.WriteLine("- 보상 -");
+                if (quest.IsCompleted)
+                {
+                    Console.WriteLine($"퀘스트 \"{quest.Name}\"를 완료했습니다!");
+                    quest.ClaimRewards(); // 보상 획득
+                }
+            }
+        }
+        
+        public static void ShowLevelUpQuest()
         {
-            // 강화 퀘스트에 대한 정보 표시
+            Console.WriteLine("Quest!!\n");
+            Console.WriteLine("더욱 더 강해지기!\n");
+            Console.WriteLine("- 목표 -");
+            Console.WriteLine("캐릭터 레벨을 상승시키세요.");
+            Console.WriteLine("- 보상 -");
+            Console.WriteLine("강화된 무기, 더 강력한 방어구\n");
         }
     }
 }

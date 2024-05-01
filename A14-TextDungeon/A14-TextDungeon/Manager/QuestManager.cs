@@ -36,7 +36,7 @@ namespace A14_TextDungeon.Manager
                         Quest.ShowEquipmentQuest();
                         break;
                     case 3:
-                        Quest.ShowStrengthQuest();
+                        Quest.ShowLevelUpQuest();
                         break;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
