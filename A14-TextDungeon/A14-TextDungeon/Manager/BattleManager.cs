@@ -8,6 +8,9 @@ namespace A14_TextDungeon.Manager
     {
         public static Monster[] monsters = new Monster[3];
         public static int monsterCount = 0;
+        public static int monsterExp = 0;
+        public static int goldReward = 0;
+        static List<Item> rewards = new List<Item>();
 
         // 몬스터 hp 깎는 함수
         public static void AttackMonster(Monster monster, float damage)
@@ -24,7 +27,8 @@ namespace A14_TextDungeon.Manager
                 monster.TakeDamage(damage);
                 if (monster.IsDead)
                 {
-                    BattleManager.monsterCount++;
+                    monsterCount++;
+                    GiveReward(monster);                   
                 }
                 Console.WriteLine($"HP {nowMonsterHp} -> {monster.HP}\n");
             }
@@ -157,5 +161,65 @@ namespace A14_TextDungeon.Manager
             }
             return false;
         }
+
+        //보상
+        public static void GiveReward(Monster monster)
+        {
+            monsterExp += monster.Level;
+            goldReward = monster.Level * 100;
+
+            Random random = new Random();
+            int itemChance = random.Next(1, 101);
+            Console.WriteLine($"\n[RandomNum] {itemChance}\n");
+            if (itemChance <= 30)
+            {
+                // 아이템 없음               
+            }
+            else if (itemChance <= 60)
+            {
+                // 포션 1개
+                rewards.Add(new Item("포션", 5, ItemType.Potion, "HP를 회복해주는 포션이다"));
+                Inventory.AddItem(new Item("포션", 5, ItemType.Potion, "HP를 회복해주는 포션이다"));
+                
+            }
+            else if (itemChance <= 80)
+            {
+                rewards.Add(new Item("포션2", 5, ItemType.Potion, "HP를 회복해주는 포션이다"));
+                Inventory.AddItem(new Item("포션2", 5, ItemType.Potion, "HP를 회복해주는 포션이다"));
+            }
+            else if(itemChance <=100)
+            {
+                switch (monster.Name) 
+                {
+                    case "미니언":
+                        Inventory.AddItem(new Item("미니언의 지팡이", 3, ItemType.Weapon, "미니언이 가지고있던 지팡이이다."));
+                        rewards.Add(new Item("미니언의 지팡이", 3, ItemType.Weapon, "미니언이 가지고있던 지팡이이다."));
+                        break;
+                    case "공허충":
+                        Inventory.AddItem(new Item("공허충 비늘 갑옷", 4, ItemType.Armor, "공허충의 비늘로 만든 갑옷이다."));
+                        rewards.Add(new Item("공허충 비늘 갑옷", 4, ItemType.Armor, "공허충의 비늘로 만든 갑옷이다."));
+                        break;
+                    case "대포미니언":
+                        Inventory.AddItem(new Item("대포미니언의 대포", 6, ItemType.Weapon, "대포미니언이 타고있던 대포이다."));
+                        rewards.Add(new Item("대포미니언의 대포", 6, ItemType.Weapon, "대포미니언이 타고있던 대포이다."));
+                        break;
+
+                }
+            }
+        }
+
+        public static void ShowReward()
+        {
+            Console.WriteLine("\n[보상 목록]\n");
+            Console.WriteLine($"몬스터를 잡고 경험치를 {monsterExp}획득했습니다!\n");
+            Console.WriteLine("\n[획득 아이템]\n");
+            for (int i = 0;i < rewards.Count;i++)
+            {
+                Console.WriteLine($"{rewards[i].ItemName} - 1\n");
+            }
+
+            rewards.Clear();
+        }
+
     }
 }

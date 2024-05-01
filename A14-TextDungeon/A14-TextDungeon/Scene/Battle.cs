@@ -196,13 +196,14 @@ namespace A14_TextDungeon.Scene
             {
                 Console.WriteLine("Victory\n");
                 Console.WriteLine($"던전에서 몬스터 {BattleManager.monsterCount}마리를 잡았습니다.");
+                BattleManager.ShowReward();
             }
             // 지면
             else
             {
                 Console.WriteLine("You Lose");
             }
-
+            GameManager.user.LevelUP(BattleManager.monsterExp);
             ShowPlayerStat();
 
             // 입력값 받기
