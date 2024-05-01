@@ -10,7 +10,8 @@ namespace A14_TextDungeon.Scene
             Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.\n");
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 전투 시작");
-            Console.WriteLine("3. 인벤 토리\n");
+            Console.WriteLine("3. 인벤 토리");
+            Console.WriteLine("5. 회복\n");
 
             while (true)
             {
@@ -33,6 +34,10 @@ namespace A14_TextDungeon.Scene
                         case 3:
                             Console.Clear();
                             Inventory.ShowInventory();
+                            break;
+                        case 5:
+                            Console.Clear();
+                            Rest.ShowRestUI();
                             break;
 
                         default:

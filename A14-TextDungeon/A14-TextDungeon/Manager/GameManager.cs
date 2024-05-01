@@ -17,16 +17,16 @@ namespace A14_TextDungeon.Manager
                 new Skill ("더블 스트라이크", "공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.", 15)
         };   
 
-        public static float maxHp; 
-        public static int maxMp;
+        /*public static float maxHp; 
+        public static int maxMp;*/
 
         // 저장해야 할 파일 초기화 - 유저 정보, 인벤토리 정보, 상점 정보 등?
         public static void  Init()
         {
            
 
-            maxHp = user.HP;
-            maxMp = user.MP;
+           /* maxHp = user.HP;
+            maxMp = user.MP;*/
           
 
             //Item testItem1 = new Item("무쇠갑옷", 5, ItemType.Armor, "무쇠로 만들어져 튼튼한 갑옷입니다.");

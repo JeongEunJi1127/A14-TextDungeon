@@ -143,9 +143,9 @@ namespace A14_TextDungeon.Scene
         public static void ShowPlayerStat()
         {
             Console.WriteLine("\n[내정보]");
-            Console.WriteLine($"LV.{GameManager.user.Level}  Chad ({GameManager.user.Job})");
-            Console.WriteLine($"HP {GameManager.user.HP}/{GameManager.maxHp}");
-            Console.WriteLine($"MP {GameManager.user.MP}/{GameManager.maxMp}\n");
+            Console.WriteLine($"LV.{GameManager.user.Level} {GameManager.user.Name} ({GameManager.user.Job})");
+            Console.WriteLine($"HP {GameManager.user.HP}/{GameManager.user.MaxHP}");
+            Console.WriteLine($"MP {GameManager.user.MP}/{GameManager.user.MaxMP}\n");
         }
 
         // 몬스터 스탯 보여주는 함수

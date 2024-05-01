@@ -79,7 +79,9 @@ namespace A14_TextDungeon.Scene
                 Console.WriteLine($"방어력 : {GameManager.user.Defense}");
             }
 
-            Console.WriteLine($"체력: {GameManager.user.HP} ");
+            Console.WriteLine($"HP: {GameManager.user.HP} / {GameManager.user.MaxHP} ");
+            Console.WriteLine($"MP: {GameManager.user.MP} / {GameManager.user.MaxMP} ");
+
             Console.WriteLine($"Gold : {GameManager.user.Gold} G");
             Console.WriteLine($"EXP : {GameManager.user.Exp}/{GameManager.user.MaxExp}\n\n");
 

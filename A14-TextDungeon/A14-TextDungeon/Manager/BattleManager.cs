@@ -174,17 +174,17 @@ namespace A14_TextDungeon.Manager
             {
                 // 아이템 없음               
             }
-            else if (itemChance <= 60)
+            else if (itemChance <= 55)
             {
                 // 포션 1개
-                rewards.Add(new Item("포션", 5, ItemType.Potion, "HP를 회복해주는 포션이다"));
-                Inventory.AddItem(new Item("포션", 5, ItemType.Potion, "HP를 회복해주는 포션이다"));
+                rewards.Add(new Item("HP회복 포션", 5, ItemType.HPPotion, "HP를 회복해주는 포션이다"));
+                Inventory.AddItem(new Item("HP회복 포션", 5, ItemType.HPPotion, "HP를 회복해주는 포션이다"));
                 
             }
             else if (itemChance <= 80)
             {
-                rewards.Add(new Item("포션2", 5, ItemType.Potion, "HP를 회복해주는 포션이다"));
-                Inventory.AddItem(new Item("포션2", 5, ItemType.Potion, "HP를 회복해주는 포션이다"));
+                rewards.Add(new Item("MP회복 포션", 5, ItemType.MPPotion, "HP를 회복해주는 포션이다"));
+                Inventory.AddItem(new Item("MP회복 포션", 5, ItemType.MPPotion, "HP를 회복해주는 포션이다"));
             }
             else if(itemChance <=100)
             {
