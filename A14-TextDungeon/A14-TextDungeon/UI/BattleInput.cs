@@ -1,6 +1,7 @@
 ﻿using A14_TextDungeon.Data;
 using A14_TextDungeon.Manager;
 using A14_TextDungeon.Scene;
+using static A14_TextDungeon.Data.User;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace A14_TextDungeon.UI
@@ -178,7 +179,7 @@ namespace A14_TextDungeon.UI
                             if (GameManager.user.MP >= 10)
                             {
                                 Console.WriteLine("공격할 몬스터를 선택해주세요.\n");
-                                ChooseMonsterInput();
+                                ChooseMonsterInput(1);
                             }
                             else
                             {
@@ -240,7 +241,59 @@ namespace A14_TextDungeon.UI
             }
         }
 
-        public static void ChooseMonsterInput()
+
+
+        public static void SkillStatusRogueInput()
+        {
+            int input;
+            Console.WriteLine("사용할 스킬을 선택해주세요.\n");
+
+            while (true)
+            {
+                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+                if (isValidNum)
+                {
+                    switch (input)
+                    {
+                        case 0:
+                            Battle.ShowBattle(false);
+                            break;
+                        case 1:
+                            if (GameManager.user.MP >= GameManager.skillList[(int)UserJob.Rogue - 1][0].MP)
+                            {
+                                Console.WriteLine("공격할 몬스터를 선택해주세요.\n");
+                                ChooseMonsterInput(3);
+                            }
+                            else
+                            {
+                                Console.WriteLine("MP가 부족합니다.\n");
+                            }
+                            break;
+                        case 2:
+                            if (GameManager.user.MP >= GameManager.skillList[(int)UserJob.Rogue - 1][1].MP )
+                            {
+                                Console.WriteLine("공격할 몬스터를 선택해주세요.\n");
+                                ChooseMonsterInput(4);
+                            }
+                            else
+                            {
+                                Console.WriteLine("MP가 부족합니다.\n");
+                            }
+                            break;                        
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요.");
+                }
+            }
+        }
+
+
+        public static void ChooseMonsterInput(int skillNum)
         {
             int input;
 
@@ -263,7 +316,7 @@ namespace A14_TextDungeon.UI
                         else
                         {
                             List<int> list = new List<int>() { input - 1 };
-                            BattleManager.PlayerSkill(list, 1);
+                            BattleManager.PlayerSkill(list, skillNum);
                         }
                     }
                     else

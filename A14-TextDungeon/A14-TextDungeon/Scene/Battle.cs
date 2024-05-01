@@ -1,6 +1,7 @@
 ﻿using A14_TextDungeon.Data;
 using A14_TextDungeon.Manager;
 using A14_TextDungeon.UI;
+using static A14_TextDungeon.Data.User;
 
 namespace A14_TextDungeon.Scene
 {
@@ -127,14 +128,45 @@ namespace A14_TextDungeon.Scene
             Battle.ShowMonsterStat(true);
             Battle.ShowPlayerStat();
 
-            for (int i = 0; i < GameManager.skills.Length; i++)
-            {
-                Console.WriteLine($"{i + 1}. {GameManager.skills[i].Name} - MP {GameManager.skills[i].MP}");
-                Console.WriteLine($"   {GameManager.skills[i].Description}");
-            }
-            Console.WriteLine("0. 취소\n");
+            Console.WriteLine("\n[내정보]");
+            Console.WriteLine($"LV.{GameManager.user.Level}  Chad ({GameManager.user.Job})");
+            Console.WriteLine($"HP {GameManager.user.HP}/{GameManager.maxHp}");
+            Console.WriteLine($"MP {GameManager.user.MP}/{GameManager.maxMp}\n");
 
-            BattleInput.SkillStatusInput();
+            int userJob = 0;
+
+            switch (GameManager.user.Job)
+            {
+                case "전사":
+                    userJob = (int)UserJob.Warrior;                    
+                    break;
+                case "도적":
+                    userJob = (int)UserJob.Rogue;                    
+                    break;
+                default:
+                    break;
+            }
+
+            // userJob 값에 따라 스킬 설명이 다르게 출력됨.
+            for (int i = 0; i < GameManager.skillList[userJob - 1].Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {GameManager.skillList[userJob - 1][i].Name} - MP {GameManager.skillList[userJob - 1][i].MP}");
+                Console.WriteLine($"   {GameManager.skillList[userJob - 1][i].Description}");
+            }
+
+            Console.WriteLine("0. 취소\n");
+            
+            switch((UserJob)userJob)
+            {
+                case UserJob.Warrior:
+                    BattleInput.SkillStatusInput();
+                    break;
+                case UserJob.Rogue:
+                    BattleInput.SkillStatusRogueInput();
+                    break;
+            }
+
+            
         }
 
 
