@@ -213,10 +213,18 @@ namespace A14_TextDungeon.Manager
             Console.WriteLine("\n[보상 목록]\n");
             Console.WriteLine($"몬스터를 잡고 경험치를 {monsterExp}획득했습니다!\n");
             Console.WriteLine("\n[획득 아이템]\n");
-            for (int i = 0;i < rewards.Count;i++)
+            if(rewards.Count == 0)
             {
-                Console.WriteLine($"{rewards[i].ItemName} - 1\n");
+                Console.WriteLine("획득한 아이템이 없습니다.");
             }
+            else
+            {
+                for (int i = 0; i < rewards.Count; i++)
+                {
+                    Console.WriteLine($"{rewards[i].ItemName} - 1\n");
+                }
+            }
+            
 
             rewards.Clear();
         }

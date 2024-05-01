@@ -94,6 +94,7 @@ namespace A14_TextDungeon.Data
             Exp += giveExp;
             if(Exp >= MaxExp)
             {
+                Console.WriteLine("레벨업!");
                 Level++;
                 temp = Exp - MaxExp;
                 Exp = temp;

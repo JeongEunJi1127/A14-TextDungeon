@@ -38,21 +38,25 @@ namespace A14_TextDungeon.Scene
             List<Item> items = Inventory.items;
             int weaponAttack = 0;
             int armorDefense = 0;
-
-            for (int i = 0; i < items.Count; i++)
+            if(items != null)
             {
-                if (items[i].IsEquippd)
+                for (int i = 0; i < items.Count; i++)
                 {
-                    if (items[i].ItemType == ItemType.Weapon)
+                    if (items[i].IsEquippd)
                     {
-                        weaponAttack += items[i].ItemStat;
+                        if (items[i].ItemType == ItemType.Weapon)
+                        {
+                            weaponAttack += items[i].ItemStat;
+                        }
+                        else if (items[i].ItemType == ItemType.Armor)
+                        {
+                            armorDefense += items[i].ItemStat;
+                        }
                     }
-                    else if (items[i].ItemType == ItemType.Armor)
-                    {
-                        armorDefense += items[i].ItemStat;
-                    }
-                }              
+                }
             }
+
+            
 
             Console.WriteLine("\n== 상태창 ==\n");
             Console.WriteLine($"LV. {GameManager.user.Level}");
