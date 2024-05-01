@@ -16,6 +16,8 @@ namespace A14_TextDungeon.Data
         public string Name { get; private set; }
         public string Job { get; private set; }
         public bool IsDead { get; private set; }
+        public int Exp {  get; private set; }
+        public int MaxExp {  get; private set; }
 
         public User(string name, int level, string job, float attackPower, float defense, float hp, int mp, int gold, bool isDead)
         {
@@ -28,7 +30,9 @@ namespace A14_TextDungeon.Data
             MP = mp;
             Gold = gold;
             IsDead = isDead;
-        }
+            Exp = 0;
+            MaxExp = CalculateMaxExp();
+        }       
 
         public float AttackDamage(float damage)
         {
@@ -66,6 +70,37 @@ namespace A14_TextDungeon.Data
             Rogue = 2,
         }
 
-        
+        //최대 경험치 계산
+        private int CalculateMaxExp()
+        {
+            switch (Level)
+            {
+                case 1:
+                    return 10;
+                case 2:
+                    return 35;
+                case 3:
+                    return 65;
+                case 4:
+                    return 100;
+                default:
+                    return 0;
+            }
+        }
+
+        public void LevelUP(int giveExp)
+        {
+            int temp;
+            Exp += giveExp;
+            if(Exp >= MaxExp)
+            {
+                Level++;
+                temp = Exp - MaxExp;
+                Exp = temp;
+                MaxExp = CalculateMaxExp();
+                AttackPower += 0.5f;
+                Defense += 1f;
+            }
+        }
     }
 }

@@ -21,8 +21,13 @@ namespace A14_TextDungeon.Scene
         }
 
        
-        public void AddItem(Item item)
+         public static void AddItem(Item item)
         {
+            if (items == null) 
+            { 
+                items = new List<Item>(); 
+            }
+
             items.Add(item);
         }
         public void RemoveItem(Item item)
@@ -36,7 +41,7 @@ namespace A14_TextDungeon.Scene
             Console.WriteLine("\n인벤토리\n");
             Console.WriteLine("[아이템 목록]\n");
 
-            if(items.Count == 0)
+            if(items == null ||items.Count == 0)
             {
                 Console.WriteLine("인벤토리에 아무것도 없군요...");
             }

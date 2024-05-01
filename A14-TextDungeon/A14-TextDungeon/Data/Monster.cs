@@ -33,7 +33,7 @@
         }
 
         public void Die()
-        {
+        {            
             IsDead = true;
         }
     }
