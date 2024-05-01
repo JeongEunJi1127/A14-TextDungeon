@@ -8,7 +8,8 @@ namespace A14_TextDungeon.Scene
     {
         Armor,
         Weapon,
-        Potion
+        HPPotion,
+        MPPotion
     }
 
     public class Inventory
@@ -30,7 +31,7 @@ namespace A14_TextDungeon.Scene
 
             items.Add(item);
         }
-        public void RemoveItem(Item item)
+        public static void RemoveItem(Item item)
         {
             items.Remove(item);
         }
@@ -96,8 +97,6 @@ namespace A14_TextDungeon.Scene
             {
                 item.IsEquippd = true;
             }
-                 
-
         }
         
         //아이템 장착 해제
@@ -112,6 +111,17 @@ namespace A14_TextDungeon.Scene
             return item.IsEquippd; // 장착되지 않은 아이템이라면 false 반환
         }
 
+        //포션 사용
+        public static void RemovePotionFromInventory(ItemType potionType)
+        {
+            // 지정된 유형의 첫 번째 포션이 있는지 찾아 인벤토리에서 제거합니다.
+            Item potionToRemove = items.FirstOrDefault(item => item.ItemType == potionType);
+            if (potionToRemove != null)
+            {
+                items.Remove(potionToRemove);
+            }
+            
+        }
         public static void ShowInventory()
         {
             RefrshInventory(false);

@@ -10,8 +10,11 @@ namespace A14_TextDungeon.Data
         public int Gold { get; set; }
         public float AttackPower { get; private set; }
         public float Defense { get; private set; }
+        public float MaxHP {  get; private set; }
         public float HP { get; set; }
-        public int MP { get; set; }
+        public float MaxMP {  get; private set; }
+        
+        public float MP { get; set; }
 
         public string Name { get; private set; }
         public string Job { get; private set; }
@@ -19,15 +22,17 @@ namespace A14_TextDungeon.Data
         public int Exp {  get; private set; }
         public int MaxExp {  get; private set; }
 
-        public User(string name, int level, string job, float attackPower, float defense, float hp, int mp, int gold, bool isDead)
+        public User(string name, int level, string job, float attackPower, float defense, float maxHp, int maxMp, int gold, bool isDead)
         {
             Name = name;
             Level = level;
             Job = job;
             AttackPower = attackPower;
             Defense = defense;
-            HP = hp;
-            MP = mp;
+            MaxHP = maxHp;
+            HP = maxHp;
+            MaxMP = maxMp;
+            MP = maxMp;
             Gold = gold;
             IsDead = isDead;
             Exp = 0;

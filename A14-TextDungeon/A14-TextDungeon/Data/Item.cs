@@ -32,8 +32,11 @@ namespace A14_TextDungeon.Data
                 case ItemType.Weapon:
                     type = "공격력 +";
                     break;
-                case ItemType.Potion:
+                case ItemType.HPPotion:
                     type = "HP회복 +";
+                    break;
+                case ItemType.MPPotion:
+                    type = "MP회복 +";
                     break;
                 default:
                     type = "";

@@ -11,6 +11,7 @@ namespace A14_TextDungeon.Scene
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine($"2. 전투 시작 (현재 진행 : {BattleManager.stageNum}층)");
             Console.WriteLine("3. 인벤 토리\n");
+            Console.WriteLine("5. 회복\n");
 
             while (true)
             {
@@ -33,6 +34,10 @@ namespace A14_TextDungeon.Scene
                         case 3:
                             Console.Clear();
                             Inventory.ShowInventory();
+                            break;
+                        case 5:
+                            Console.Clear();
+                            Rest.ShowRestUI();
                             break;
 
                         default:

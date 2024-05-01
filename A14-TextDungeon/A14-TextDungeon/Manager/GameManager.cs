@@ -26,16 +26,16 @@ namespace A14_TextDungeon.Manager
         public static List<Skill[]> skillList = new List<Skill[]>();
 
 
-        public static float maxHp; 
-        public static int maxMp;
+        /*public static float maxHp; 
+        public static int maxMp;*/
 
         // 저장해야 할 파일 초기화 - 유저 정보, 인벤토리 정보, 상점 정보 등?
         public static void  Init()
         {
            
 
-            maxHp = user.HP;
-            maxMp = user.MP;
+           /* maxHp = user.HP;
+            maxMp = user.MP;*/
           
 
             //Item testItem1 = new Item("무쇠갑옷", 5, ItemType.Armor, "무쇠로 만들어져 튼튼한 갑옷입니다.");
