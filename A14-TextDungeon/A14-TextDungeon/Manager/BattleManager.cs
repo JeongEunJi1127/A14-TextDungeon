@@ -148,6 +148,18 @@ namespace A14_TextDungeon.Manager
                 GameManager.user.MP -= 15;
                 damage += GameManager.user.AttackPower * 1.5f;
             }
+            else if (skillNum == 3)
+            {
+                GameManager.user.MP -= 10;
+                damage += GameManager.user.AttackPower +10f;
+            }
+            else if (skillNum == 4)
+            {
+                GameManager.user.MP -= 20;
+                damage += GameManager.user.AttackPower * 1.5f;
+
+                GameManager.user.Gold += (int)damage;
+            }
 
             foreach (int i in monsterNum)
             {
