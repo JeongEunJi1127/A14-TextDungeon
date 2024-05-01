@@ -3,6 +3,7 @@ using A14_TextDungeon.Manager;
 using A14_TextDungeon.UI;
 using static A14_TextDungeon.Data.User;
 
+
 namespace A14_TextDungeon.Scene
 {
     public class Battle
@@ -171,6 +172,7 @@ namespace A14_TextDungeon.Scene
                     else
                     {
                         Console.WriteLine($"{i + 1} LV.{BattleManager.monsters[i].Level} {BattleManager.monsters[i].Name} HP {BattleManager.monsters[i].HP}");
+
                     }
                 }
                 else
@@ -217,6 +219,7 @@ namespace A14_TextDungeon.Scene
             Console.WriteLine("0. 다음\n");
 
             BattleInput.BattleResultInput();
+
         }
     }
 }

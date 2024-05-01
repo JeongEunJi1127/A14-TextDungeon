@@ -49,11 +49,15 @@ namespace A14_TextDungeon.Manager
             skillList.Add(warriorSkills);
             skillList.Add(rogueSkills);
 
+
         }
 
         static void Main(string[] args)
         {
+
             UserDataManager.SetName();
         }         
+
+
     }
 }
