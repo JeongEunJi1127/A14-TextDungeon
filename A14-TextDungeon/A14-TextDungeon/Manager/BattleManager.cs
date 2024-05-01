@@ -170,7 +170,6 @@ namespace A14_TextDungeon.Manager
 
             Random random = new Random();
             int itemChance = random.Next(1, 101);
-            Console.WriteLine($"\n[RandomNum] {itemChance}\n");
             if (itemChance <= 30)
             {
                 // 아이템 없음               
