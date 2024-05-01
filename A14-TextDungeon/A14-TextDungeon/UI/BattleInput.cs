@@ -1,5 +1,4 @@
-﻿using A14_TextDungeon.Data;
-using A14_TextDungeon.Manager;
+﻿using A14_TextDungeon.Manager;
 using A14_TextDungeon.Scene;
 using static A14_TextDungeon.Data.User;
 using static System.Net.Mime.MediaTypeNames;
@@ -53,7 +52,7 @@ namespace A14_TextDungeon.UI
                         Console.Clear();
                         Battle.ShowBattle(false);
                     }
-                    else if (1 <= input && input <= 3)
+                    else if (1 <= input && input <= BattleManager.monsters.Count)
                     {
                         if (BattleManager.monsters[input - 1].IsDead)
                         {
@@ -95,8 +94,15 @@ namespace A14_TextDungeon.UI
                         }
                         else
                         {
-                            //몬스터 턴 실행
-                            Battle.EnemyPhase();
+                            if(BattleManager.stageNum == 4)
+                            {
+                                Boss.BossPhase();
+                            }
+                            else
+                            {
+                                //몬스터 턴 실행
+                                Battle.EnemyPhase();
+                            }
                         }
                         break;
                     }
@@ -130,6 +136,36 @@ namespace A14_TextDungeon.UI
                     {
                         Console.WriteLine("잘못된 입력입니다.");
                     }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요.");
+                }
+            }
+        }
+
+        public static void BossPhaseInput()
+        {
+            int input;
+
+            while (true)
+            {
+                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+                if (isValidNum)
+                {
+                    if (input == 0)
+                    {
+                        Battle.PlayerPhase();
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요.");
                 }
             }
         }
@@ -199,7 +235,7 @@ namespace A14_TextDungeon.UI
 
                                 if (cnt < 2)
                                 {
-                                    for (int i = 0; i < BattleManager.monsters.Length; i++)
+                                    for (int i = 0; i < BattleManager.monsters.Count; i++)
                                     {
                                         if (!BattleManager.monsters[i].IsDead)
                                         {
@@ -211,7 +247,7 @@ namespace A14_TextDungeon.UI
                                 {
                                     while (randomNumbers.Count < 2)
                                     {
-                                        int randomNum = random.Next(0, BattleManager.monsters.Length);
+                                        int randomNum = random.Next(0, BattleManager.monsters.Count);
                                         // 살아있는 몬스터 중 랜덤한 몬스터 2마리 뽑기
                                         if (!randomNumbers.Contains(randomNum) && !BattleManager.monsters[randomNum].IsDead)
                                         {
@@ -307,7 +343,7 @@ namespace A14_TextDungeon.UI
                         Console.Clear();
                         Battle.SkillStatus();
                     }
-                    else if (1 <= input && input <= 3)
+                    else if (1 <= input && input <= BattleManager.monsters.Count)
                     {
                         if (BattleManager.monsters[input - 1].IsDead)
                         {
