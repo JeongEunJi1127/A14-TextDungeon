@@ -121,6 +121,8 @@ namespace A14_TextDungeon.Manager
         {
             Console.Clear();
             GameManager.user = new User(saveName, level, job, attackPower, defense, hp, mp, gold, isdead);
+            GameManager.Init();
+            Village.ShowVillage();
         }
     }
 }

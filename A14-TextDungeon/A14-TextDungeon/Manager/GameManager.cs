@@ -23,7 +23,7 @@ namespace A14_TextDungeon.Manager
         // 저장해야 할 파일 초기화 - 유저 정보, 인벤토리 정보, 상점 정보 등?
         public static void  Init()
         {
-            UserDataManager.SetName();
+           
 
             maxHp = user.HP;
             maxMp = user.MP;
@@ -40,8 +40,7 @@ namespace A14_TextDungeon.Manager
 
         static void Main(string[] args)
         {
-            Init();
-            Village.ShowVillage();
+            UserDataManager.SetName();
         }         
     }
 }
