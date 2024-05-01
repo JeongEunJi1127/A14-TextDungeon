@@ -1,14 +1,12 @@
-﻿using A14_TextDungeon.Manager;
-using A14_TextDungeon.Scene;
+﻿using System;
+using A14_TextDungeon.Manager;
 
 namespace A14_TextDungeon.Scene
 {
     public class Village
-    { 
+    {
         public static void ShowVillage()
         {
-            QuestManager questManager = new QuestManager(); // QuestManager 객체 생성
-
             while (true)
             {
                 Console.Clear();
@@ -17,7 +15,7 @@ namespace A14_TextDungeon.Scene
                 Console.WriteLine("2. 전투 시작");
                 Console.WriteLine("3. 인벤 토리");
                 Console.WriteLine("4. 퀘스트 보기\n");
-                
+
                 Console.WriteLine("원하시는 행동을 입력해주세요.\n");
                 int input;
                 bool isValidNum = int.TryParse(Console.ReadLine(), out input);
@@ -40,9 +38,8 @@ namespace A14_TextDungeon.Scene
                             break;
                         case 4:
                             Console.Clear();
-                            questManager.StartQuest();
+                            QuestManager.ShowQuests();
                             break;
-
                         default:
                             Console.WriteLine("\n잘못된 입력입니다.\n");
                             break;

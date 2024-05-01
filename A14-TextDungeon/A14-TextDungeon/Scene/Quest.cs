@@ -1,150 +1,76 @@
+// Quest.cs
+
 using System;
 
-namespace A14_TextDungeon.Scene
+namespace A14_TextDungeon.Manager
 {
     public class Quest
     {
-        // 퀘스트 제목과 설명 속성
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public int TargetCount { get; private set; }
+        public int CurrentCount { get; private set; }
+        public bool IsCompleted { get; private set; }
+        public bool IsAccepted { get; private set; }
+        public string[] Rewards { get; private set; }
 
-        // 퀘스트 상태를 저장하는 변수들
-        public bool Quest1Accepted { get; private set; } = false; // 퀘스트 1이 수락되었는지 여부를 저장하는 변수
-        private int quest1MinionCount = 0; // 퀘스트 1의 미니언 처치 개수를 저장하는 변수
-
-        // 퀘스트 생성자
-        public Quest(string title, string description)
+        public Quest(string name, string description, int targetCount, string[] rewards)
         {
-            Title = title;
+            Name = name;
             Description = description;
+            TargetCount = targetCount;
+            CurrentCount = 0;
+            IsCompleted = false;
+            IsAccepted = false;
+            Rewards = rewards;
         }
 
-        // 퀘스트 상세 정보 출력 메서드
-        public void ShowDetails()
+        public void UpdateProgress(int amount)
         {
-            Console.WriteLine($"퀘스트 제목: {Title}");
-            Console.WriteLine($"퀘스트 설명: {Description}");
-        }
-
-        // 퀘스트 선택 화면 출력 메서드
-        public void ShowQuests()
-        {
-            // 퀘스트 목록 출력
-            Console.WriteLine("Quest!!\n");
-            Console.WriteLine(GetQuestStatusText(1, "마을을 위협하는 미니언 처치"));
-            Console.WriteLine(GetQuestStatusText(2, "장비를 장착해보자"));
-            Console.WriteLine(GetQuestStatusText(3, "더욱 더 강해지기!\n"));
-            Console.WriteLine("원하시는 퀘스트를 선택해주세요.");
-
-            // 입력 처리
-            int input;
-            while (true)
+            CurrentCount += amount;
+            if (CurrentCount >= TargetCount)
             {
-                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
-                if (isValidNum && input >= 1 && input <= 3)
-                {
-                    ShowQuestDetails(input);
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("올바른 번호를 입력해주세요.");
-                }
+                IsCompleted = true;
             }
         }
 
-        // 퀘스트 상태 텍스트 생성 메서드
-        private string GetQuestStatusText(int questNumber, string questName)
+        public void ClaimRewards()
         {
-            // 퀘스트의 상태에 따라 텍스트 반환
-            if (questNumber == 1) // 예시로 퀘스트 1만 처리
+            // 보상을 플레이어에게 주는 로직
+            Console.WriteLine($"퀘스트 \"{Name}\"를 완료하였습니다. 보상을 획득합니다:");
+            foreach (string reward in Rewards)
             {
-                if (Quest1Accepted)
-                {
-                    return $"1. {questName}(진행중)";
-                }
-                else
-                {
-                    return $"{questNumber}. {questName}";
-                }
-            }
-            else
-            {
-                return $"{questNumber}. {questName}";
+                Console.WriteLine(reward);
             }
         }
 
-        // 퀘스트 상세 정보 출력 메서드
-        private void ShowQuestDetails(int questNumber)
+        public void ShowMinionQuest(QuestManager questManager)
         {
-            switch (questNumber)
+            Quest minionQuest = new Quest("마을을 위협하는 미니언 처치",
+                                          "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",
+                                          1,
+                                          new string[] { "쓸만한 방패 x 1", "5G" });
+            Console.WriteLine($"Quest!!\n{minionQuest.Description}\n\n- 미니언 {minionQuest.TargetCount}마리 처치 ({minionQuest.CurrentCount}/{minionQuest.TargetCount})\n");
+            Console.WriteLine("- 보상 -");
+            foreach (string reward in minionQuest.Rewards)
             {
-                case 1:
-                    // 퀘스트 1 상세 정보 출력
-                    Console.WriteLine("\n마을을 위협하는 미니언 처치\n");
-                    Console.WriteLine("이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?");
-                    Console.WriteLine("마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!");
-                    Console.WriteLine("모험가인 자네가 좀 처치해주게!\n");
-                    Console.WriteLine($"- 미니언 5마리 처치 ({quest1MinionCount}/5)\n");
-                    Console.WriteLine(Quest1Accepted ? "1. 이미 수락된 퀘스트입니다." : "1. 수락");
-                    Console.WriteLine("2. 거절\n\n");
-
-                    // 수락 또는 거절 선택
-                    Console.WriteLine("원하시는 행동을 입력해주세요.");
-
-                    int input;
-                    bool isValidNum = int.TryParse(Console.ReadLine(), out input);
-                    if (isValidNum)
-                    {
-                        switch (input)
-                        {
-                            case 1:
-                                if (Quest1Accepted)
-                                {
-                                    Console.WriteLine("\n이미 수락된 퀘스트입니다.\n");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("\n퀘스트를 수락했습니다.\n");
-                                    Quest1Accepted = true;
-                                }
-                                break;
-                            case 2:
-                                Console.WriteLine("\n퀘스트를 거절했습니다.\n");
-                                break;
-                            default:
-                                Console.WriteLine("올바른 번호를 입력해주세요.");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("올바른 번호를 입력해주세요.");
-                    }
-                    break;
-                // 다른 퀘스트들의 상세 정보 추가
-                default:
-                    break;
+                Console.WriteLine(reward);
             }
+            Console.WriteLine("\n1. 수락");
+            Console.WriteLine("2. 거절");
+            Console.WriteLine("\n--------------------");
+            string input = Console.ReadLine();
+            questManager.AcceptOrRejectQuest(input); 
         }
 
-        // 미니언 처치 퀘스트 진행 상황 업데이트 메서드
-        public void UpdateMinionCount()
+        public static void ShowEquipmentQuest()
         {
-            // 퀘스트가 수락되어 있는 경우에만 처리
-            if (Quest1Accepted)
-            {
-                // 미니언 처치 개수 증가
-                quest1MinionCount++;
-                // 현재 진행 상황 출력
-                Console.WriteLine($"미니언 5마리 처치: {quest1MinionCount}/5");
+            // 장비 퀘스트에 대한 정보 표시
+        }
 
-                // 완료 조건 충족 시 보상 받기 활성화
-                if (quest1MinionCount >= 5)
-                {
-                    Console.WriteLine("\n보상을 받을 수 있습니다!");
-                }
-            }
+        public static void ShowStrengthQuest()
+        {
+            // 강화 퀘스트에 대한 정보 표시
         }
     }
 }
