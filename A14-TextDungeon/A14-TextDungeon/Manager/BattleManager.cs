@@ -16,7 +16,8 @@ namespace A14_TextDungeon.Manager
         // 몬스터 경험치
         public static int monsterExp = 0;
         // 골드 보상
-        public static int goldReward = 0;
+        public static int totalGoldReward = 0;
+        static int goldReward = 0;
         static List<Item> rewards = new List<Item>();
 
 
@@ -254,6 +255,7 @@ namespace A14_TextDungeon.Manager
         {
             monsterExp += monster.Level;
             goldReward = monster.Level * 100;
+            totalGoldReward += goldReward;
 
             Random random = new Random();
             int itemChance = random.Next(1, 101);
@@ -298,8 +300,10 @@ namespace A14_TextDungeon.Manager
         public static void ShowReward()
         {
             Console.WriteLine("\n[보상 목록]\n");
-            Console.WriteLine($"몬스터를 잡고 경험치를 {monsterExp}획득했습니다!\n");
-            Console.WriteLine("\n[획득 아이템]\n");
+            Console.WriteLine($"몬스터를 잡고 경험치를 {monsterExp}획득했습니다!");
+            Console.WriteLine($"몬스터를 잡고 골드를 {totalGoldReward}획득했습니다!\n");
+            GameManager.user.Gold += totalGoldReward;
+            Console.WriteLine("\n[획득 아이템]\n");         
             if (rewards.Count == 0)
             {
                 Console.WriteLine("획득한 아이템이 없습니다.");

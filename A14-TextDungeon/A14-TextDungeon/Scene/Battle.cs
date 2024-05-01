@@ -108,12 +108,7 @@ namespace A14_TextDungeon.Scene
             Console.WriteLine("Battle!!\n");
 
             Battle.ShowMonsterStat(true);
-            Battle.ShowPlayerStat();
-
-            Console.WriteLine("\n[내정보]");
-            Console.WriteLine($"LV.{GameManager.user.Level}  Chad ({GameManager.user.Job})");
-            Console.WriteLine($"HP {GameManager.user.HP}/{GameManager.maxHp}");
-            Console.WriteLine($"MP {GameManager.user.MP}/{GameManager.maxMp}\n");
+            Battle.ShowPlayerStat();            
 
             int userJob = 0;
 
