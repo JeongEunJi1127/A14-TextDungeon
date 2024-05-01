@@ -62,18 +62,25 @@ namespace A14_TextDungeon.Manager
 
         public static void ShowEquipmentQuest(Item item)
         {
+            //퀘스트 수락/거절여부 먼저 확인
+            Quest quest = new Quest("장비를 장착해보자", "인벤토리에서 아무 장치나 완료해보자!", 1, new string[] { "10골드", "경험치 100" });
+                    quest.UpdateProgress(1); // 퀘스트 진행상황 업데이트
+                    Console.WriteLine("- 보상 -");
 
-            if (item.IsEquipped)
+            //퀘스트 클리어 여부를 확인할 때 사용
+            foreach(Item itemss in Inventory.items)
             {
-                Quest quest = new Quest("장비를 장착해보자", "인벤토리에서 아무 장치나 완료해보자!", 1, new string[] { "10골드", "경험치 100" });
-                quest.UpdateProgress(1); // 퀘스트 진행상황 업데이트
-                Console.WriteLine("- 보상 -");
-                if (quest.IsCompleted)
+                if (itemss.IsEquippd)
                 {
-                    Console.WriteLine($"퀘스트 \"{quest.Name}\"를 완료했습니다!");
-                    quest.ClaimRewards(); // 보상 획득
+                    
+                    if (quest.IsCompleted)
+                    {
+                        Console.WriteLine($"퀘스트 \"{quest.Name}\"를 완료했습니다!");
+                        quest.ClaimRewards(); // 보상 획득
+                    }
                 }
             }
+            
         }
         
         public static void ShowLevelUpQuest()
