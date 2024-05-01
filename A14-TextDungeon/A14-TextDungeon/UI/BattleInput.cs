@@ -54,13 +54,13 @@ namespace A14_TextDungeon.UI
                     }
                     else if (1 <= input && input <= 3)
                     {
-                        if (Battle.monsters[input - 1].IsDead)
+                        if (BattleManager.monsters[input - 1].IsDead)
                         {
                             Console.WriteLine("잘못된 입력입니다.");
                         }
                         else
                         {
-                            Battle.PlayerAttack(input - 1);
+                            BattleManager.PlayerAttack(input - 1);
                             Thread.Sleep(1000);
                         }
                     }
@@ -87,7 +87,7 @@ namespace A14_TextDungeon.UI
                 {
                     if (input == 0)
                     {
-                        if (Battle.BattleEnd())
+                        if (BattleManager.BattleEnd())
                         {
                             Thread.Sleep(1000);
                             Village.ShowVillage();
@@ -194,13 +194,13 @@ namespace A14_TextDungeon.UI
 
                                 Random random = new Random();
                                 List<int> randomNumbers = new List<int>();
-                                int cnt = Battle.monsters.Count(monster => !monster.IsDead);
+                                int cnt = BattleManager.monsters.Count(monster => !monster.IsDead);
 
                                 if (cnt < 2)
                                 {
-                                    for (int i = 0; i < Battle.monsters.Length; i++)
+                                    for (int i = 0; i < BattleManager.monsters.Length; i++)
                                     {
-                                        if (!Battle.monsters[i].IsDead)
+                                        if (!BattleManager.monsters[i].IsDead)
                                         {
                                             randomNumbers.Add(i);
                                         }
@@ -210,9 +210,9 @@ namespace A14_TextDungeon.UI
                                 {
                                     while (randomNumbers.Count < 2)
                                     {
-                                        int randomNum = random.Next(0, Battle.monsters.Length);
+                                        int randomNum = random.Next(0, BattleManager.monsters.Length);
                                         // 살아있는 몬스터 중 랜덤한 몬스터 2마리 뽑기
-                                        if (!randomNumbers.Contains(randomNum) && !Battle.monsters[randomNum].IsDead)
+                                        if (!randomNumbers.Contains(randomNum) && !BattleManager.monsters[randomNum].IsDead)
                                         {
                                             randomNumbers.Add(randomNum);
                                         }
@@ -220,7 +220,7 @@ namespace A14_TextDungeon.UI
                                     randomNumbers.Sort();
                                 }
                                 Thread.Sleep(1000);
-                                Battle.PlayerSkill(randomNumbers, 2);
+                                BattleManager.PlayerSkill(randomNumbers, 2);
                             }
                             else
                             {
@@ -256,14 +256,14 @@ namespace A14_TextDungeon.UI
                     }
                     else if (1 <= input && input <= 3)
                     {
-                        if (Battle.monsters[input - 1].IsDead)
+                        if (BattleManager.monsters[input - 1].IsDead)
                         {
                             Console.WriteLine("잘못된 입력입니다.");
                         }
                         else
                         {
                             List<int> list = new List<int>() { input - 1 };
-                            Battle.PlayerSkill(list, 1);
+                            BattleManager.PlayerSkill(list, 1);
                         }
                     }
                     else

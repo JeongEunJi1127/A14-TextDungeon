@@ -1,8 +1,9 @@
-﻿using A14_TextDungeon.Manager;
+﻿using A14_TextDungeon.Data;
+using A14_TextDungeon.Manager;
+using A14_TextDungeon.UI;
 
 namespace A14_TextDungeon.Scene
 {
-
     public enum ItemType
     {
         Armor,
@@ -17,7 +18,6 @@ namespace A14_TextDungeon.Scene
         public Inventory()
         {
             items = new List<Item>();
-
         }
 
        
@@ -65,7 +65,7 @@ namespace A14_TextDungeon.Scene
             RefrshInventory(true);
             Console.WriteLine("장착을 원하는 장비의 번호를 입력하세요\n");
             Console.WriteLine("0. 나가기\n");
-            ShowEquipPageInput();
+            InventoryInput.ShowEquipPageInput();
 
             if (items[selectItemIndex].IsEquippd)
             {
@@ -99,71 +99,12 @@ namespace A14_TextDungeon.Scene
             return item.IsEquippd; // 장착되지 않은 아이템이라면 false 반환
         }
 
-
-
         public static void ShowInventory()
         {
             RefrshInventory(false);
             Console.WriteLine("\n1. 장착관리\n");
             Console.WriteLine("0. 나가기\n");
-            ShowInventoryInput();
-        }
-
-        public static void ShowEquipPageInput()
-        {
-            int input;
-            int index;
-            while (true)
-            {
-                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
-                if (isValidNum)
-                {
-                    index = input - 1;
-                    if(input == 0)
-                    {
-                        ShowInventory();
-                    }
-                    else if(index < 0 || index >= items.Count)
-                    {
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Thread.Sleep(1000);
-                        ShowEquipPageInput();
-                    }
-                    else
-                    {
-                        selectItemIndex = index;
-                        break;
-                    }
-                }
-            }
-        }
-
-        private static void ShowInventoryInput()
-        {
-            int input;
-            while (true)
-            {
-                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
-                if (isValidNum)
-                {
-                    switch (input)
-                    {
-                        case 0:
-                            Village.ShowVillage();
-                            break;
-                        case 1:
-                            ShowEquipPage();
-                            break;
-                        default:
-                            Console.WriteLine("잘못된 입력입니다.");
-                            break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("숫자를 입력해주세요.");
-                }
-            }
+            InventoryInput.ShowInventoryInput();
         }
     }   
 }
