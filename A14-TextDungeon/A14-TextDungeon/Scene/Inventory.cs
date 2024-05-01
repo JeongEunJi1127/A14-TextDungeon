@@ -68,18 +68,22 @@ namespace A14_TextDungeon.Scene
         public static void ShowEquipPage()
         {           
             RefrshInventory(true);
-            Console.WriteLine("장착을 원하는 장비의 번호를 입력하세요\n");
+            Console.WriteLine("장착하거나 장착을 해제하고싶은 장비의 번호를 입력하세요\n");
             Console.WriteLine("0. 나가기\n");
             InventoryInput.ShowEquipPageInput();
 
             if (items[selectItemIndex].IsEquippd)
             {
                 UnEquipItem(items[selectItemIndex]);
+                Console.WriteLine($"\n{items[selectItemIndex].ItemName}이(가) 장착 해제되었습니다");
+                Thread.Sleep(1000);
                 ShowEquipPage();
             }
             else
             {
                 EquipItem(items[selectItemIndex]);
+                Console.WriteLine($"\n{items[selectItemIndex].ItemName}이(가) 장착되었습니다");
+                Thread.Sleep(1000);
                 ShowEquipPage();
             }
             
@@ -88,7 +92,11 @@ namespace A14_TextDungeon.Scene
         //아이템 장착
         public static void EquipItem(Item item)
         {
-            item.IsEquippd = true;            
+            if(item.ItemType == ItemType.Weapon ||  item.ItemType == ItemType.Armor)
+            {
+                item.IsEquippd = true;
+            }
+                 
 
         }
         
