@@ -100,7 +100,7 @@ namespace A14_TextDungeon.Manager
                             job = "도적";
                             attackPower = 15;
                             defense = 3;
-                            hp = 80;
+                            hp = 800;
                             mp = 70;
 
                             CreateUser(level, job, attackPower, defense, hp, mp, gold, isdead);

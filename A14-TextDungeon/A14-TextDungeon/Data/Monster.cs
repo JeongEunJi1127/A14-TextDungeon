@@ -36,5 +36,11 @@
         {            
             IsDead = true;
         }
+
+        public void Berserk()
+        {
+            HP = 100;
+            AttackPower += 20;
+        }
     }
 }
