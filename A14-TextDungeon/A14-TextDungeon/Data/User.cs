@@ -7,7 +7,7 @@ namespace A14_TextDungeon.Data
     {
 
         public int Level { get; private set; }
-        public int Gold { get;  set; }
+        public int Gold { get; set; }
         public float AttackPower { get; private set; }
         public float Defense { get; private set; }
         public float MaxHP {  get; private set; }

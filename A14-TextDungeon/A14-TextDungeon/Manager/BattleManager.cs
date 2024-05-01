@@ -6,11 +6,69 @@ namespace A14_TextDungeon.Manager
 {
     internal class BattleManager
     {
-        public static Monster[] monsters = new Monster[3];
-        public static int monsterCount = 0;
+        public static List <Monster>monsters = new List<Monster>();
+        // 지금까지 잡은 몬스터 개수
+        public static int slayedMonster = 0;
+        // 스테이지 넘버
+        public static int stageNum = 1;
+        // 몬스터 개수
+        public static int monsterCount = 1;
+        // 몬스터 경험치
         public static int monsterExp = 0;
+        // 골드 보상
         public static int goldReward = 0;
         static List<Item> rewards = new List<Item>();
+
+
+        // 랜덤한 몬스터 뽑기
+        public static void RandomMonster(int stageNum)
+        {
+            monsters.Clear();
+            // 몬스터 확률
+            int[] percent = { 0, 50 };
+            Random random = new Random();
+
+            if (stageNum == 1)
+            {
+                // 1층 -  3마리, 미니언 & 공허충
+                monsterCount = 3;
+            }
+            else if (stageNum == 2)
+            {
+                // 2층 -  3~4마리, 미니언 & 공허충 & 대포미니언
+                monsterCount = random.Next(3, 5);
+                percent[0] = 40;
+                percent[1] = 80;
+            }
+            else if (stageNum == 3)
+            {
+                // 3층 - 4~5마리, 공허충, 대포 미니언 나올 확률 up
+                monsterCount = random.Next(4, 6);
+                percent[0] = 50;
+                percent[1] = 90;
+            }
+
+            for (int i = 0; i < monsterCount; i++)
+            {
+                int randomMonsterNum = random.Next(0, 100);
+
+                // percent[0] 확률로 대포미니언
+                if (randomMonsterNum < percent[0])
+                {
+                    monsters.Add(new Monster("대포미니언 ", 5, 8, 20, false));
+                }
+                // percent[1] - percent[0] 확률로 공허충
+                else if (randomMonsterNum < percent[1])
+                {
+                    monsters.Add(new Monster("공허충", 3, 6, 10, false));
+                }
+                // 100 - percent[1] - percent[0] 확률로 미니언
+                else
+                {
+                    monsters.Add(new Monster("미니언", 2, 5, 15, false));
+                }
+            }
+        }
 
         // 몬스터 hp 깎는 함수
         public static void AttackMonster(Monster monster, float damage)
@@ -27,7 +85,7 @@ namespace A14_TextDungeon.Manager
                 monster.TakeDamage(damage);
                 if (monster.IsDead)
                 {
-                    monsterCount++;
+                    slayedMonster++;
                     GiveReward(monster);                   
                 }
                 Console.WriteLine($"HP {nowMonsterHp} -> {monster.HP}\n");
@@ -55,7 +113,7 @@ namespace A14_TextDungeon.Manager
                 // 치명타 
                 if (IsCritical())
                 {
-                    damage = (float)Math.Round(damage * 1.6f);
+                    damage = (float)Math.Round(GameManager.user.AttackDamage(GameManager.user.AttackPower * 1.6f));
                     Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!\n");
                 }
                 else
@@ -90,6 +148,18 @@ namespace A14_TextDungeon.Manager
                 GameManager.user.MP -= 15;
                 damage += GameManager.user.AttackPower * 1.5f;
             }
+            else if (skillNum == 3)
+            {
+                GameManager.user.MP -= 10;
+                damage += GameManager.user.AttackPower +10f;
+            }
+            else if (skillNum == 4)
+            {
+                GameManager.user.MP -= 20;
+                damage += GameManager.user.AttackPower * 1.5f;
+
+                GameManager.user.Gold += (int)damage;
+            }
 
             foreach (int i in monsterNum)
             {
@@ -111,7 +181,6 @@ namespace A14_TextDungeon.Manager
             Console.WriteLine("0. 다음\n");
             BattleInput.PlayerAttackInput();
         }
-
 
         // 치명타
         public static bool IsCritical()
@@ -148,16 +217,34 @@ namespace A14_TextDungeon.Manager
         // 게임 끝났는지 검사
         public static bool BattleEnd()
         {
-            if (GameManager.user.IsDead)
+            List<Monster> deadMonsters = monsters.Where(x => x.IsDead).ToList();
+
+            if(stageNum == 4)
             {
-                // 파일 리셋 로직 구현 필요
-                Battle.BattleResult(false);
-                return true;
+                if (GameManager.user.IsDead)
+                {
+                    Boss.BossBattleResult(false);
+                    return true;
+                }
+                else if (deadMonsters.Count == monsters.Count)
+                {
+                    Boss.BossBattleResult(true);
+                    return true;
+                }
             }
-            else if (monsters[0].IsDead && monsters[1].IsDead && monsters[2].IsDead)
+            else
             {
-                Battle.BattleResult(true);
-                return true;
+                if (GameManager.user.IsDead)
+                {
+                    // 파일 리셋 로직 구현 필요
+                    Battle.BattleResult(false);
+                    return true;
+                }
+                else if (deadMonsters.Count == monsters.Count)
+                {
+                    Battle.BattleResult(true);
+                    return true;
+                }
             }
             return false;
         }
@@ -170,6 +257,7 @@ namespace A14_TextDungeon.Manager
 
             Random random = new Random();
             int itemChance = random.Next(1, 101);
+
             if (itemChance <= 30)
             {
                 // 아이템 없음               
@@ -212,7 +300,7 @@ namespace A14_TextDungeon.Manager
             Console.WriteLine("\n[보상 목록]\n");
             Console.WriteLine($"몬스터를 잡고 경험치를 {monsterExp}획득했습니다!\n");
             Console.WriteLine("\n[획득 아이템]\n");
-            if(rewards.Count == 0)
+            if (rewards.Count == 0)
             {
                 Console.WriteLine("획득한 아이템이 없습니다.");
             }
@@ -224,7 +312,6 @@ namespace A14_TextDungeon.Manager
                 }
             }
             
-
             rewards.Clear();
         }
 
