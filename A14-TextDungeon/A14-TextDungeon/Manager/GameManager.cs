@@ -41,9 +41,9 @@ namespace A14_TextDungeon.Manager
             Item testItem1 = new Item("무쇠갑옷", 5, ItemType.Armor, "무쇠로 만들어져 튼튼한 갑옷입니다.");
             Item testItem2 = new Item("스파르타의 창", 7, ItemType.Weapon, "스파르타의 전사들이 사용했다는 전설의 창입니다.");
             Item testItem3 = new Item("낡은 검", 2, ItemType.Weapon, "쉽게 볼 수 있는 낡은 검 입니다.");
-            inventory.AddItem(testItem1);
-            inventory.AddItem(testItem2);
-            inventory.AddItem(testItem3);
+            Inventory.AddItem(testItem1);
+            Inventory.AddItem(testItem2);
+            Inventory.AddItem(testItem3);
 
         }
 

@@ -21,7 +21,7 @@ namespace A14_TextDungeon.Scene
         }
 
        
-        public void AddItem(Item item)
+        public static void AddItem(Item item)
         {
             items.Add(item);
         }
@@ -67,6 +67,7 @@ namespace A14_TextDungeon.Scene
             Console.WriteLine("0. 나가기\n");
             ShowEquipPageInput();
 
+            //items = 인벤토리 스크립트 안에 모여있는 것들(리스트)
             if (items[selectItemIndex].IsEquippd)
             {
                 UnEquipItem(items[selectItemIndex]);
@@ -81,10 +82,20 @@ namespace A14_TextDungeon.Scene
         }
 
         //아이템 장착
+        //장착 퀘스트 클리어 조건
         public static void EquipItem(Item item)
         {
             item.IsEquippd = true;            
-
+            if(QuestManager.quests[1].IsAccepted)
+            {
+                QuestManager.quests[1].IsCompleted = true;
+                //기타 보상에 대한 내용 추가 -> Quest에 함수로 만들어서 빼기
+                foreach(string reward in QuestManager.quests[1].Rewards)
+                {
+                    Item questReward = new Item("이름",5,ItemType.Armor,"설명",true); // 아이템 생성
+                    AddItem(questReward); // 인벤토리에 아이템 추가
+                }
+            }
         }
         
         //아이템 장착 해제
@@ -98,8 +109,6 @@ namespace A14_TextDungeon.Scene
         {           
             return item.IsEquippd; // 장착되지 않은 아이템이라면 false 반환
         }
-
-
 
         public static void ShowInventory()
         {

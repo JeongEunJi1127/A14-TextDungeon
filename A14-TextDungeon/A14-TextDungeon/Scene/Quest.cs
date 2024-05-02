@@ -1,24 +1,29 @@
 using System;
+using A14_TextDungeon.Data;
+using A14_TextDungeon.Manager;
 using A14_TextDungeon.Scene;
 
-namespace A14_TextDungeon.Manager
+namespace A14_TextDungeon
 {
     public class Quest
     {
+        //각각의 것에 있는 것
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int TargetCount { get; private set; }
         public int CurrentCount { get; private set; }
-        public bool IsCompleted { get; private set; }
+        public bool IsAccepted {get; set;}
+        public bool IsCompleted { get; set; }
         public string[] Rewards { get; private set; }
 
-        public Quest(string name, string description, int targetCount, string[] rewards)
+        public Quest(string name, string description, int targetCount, bool IsAccepted, bool IsCompleted, string[] rewards)
         {
             Name = name;
             Description = description;
             TargetCount = targetCount;
             CurrentCount = 0;
             IsCompleted = false;
+            IsAccepted = false;
             Rewards = rewards;
         }
 
@@ -28,69 +33,50 @@ namespace A14_TextDungeon.Manager
             if (CurrentCount >= TargetCount)
             {
                 IsCompleted = true;
+                ClaimRewards(0);
             }
         }
 
-        public void ClaimRewards()
-        {
-            // 보상을 플레이어에게 주는 로직
-            Console.WriteLine($"퀘스트 \"{Name}\"를 완료하였습니다. 보상을 획득합니다:");
-            foreach (string reward in Rewards)
-            {
-                Console.WriteLine(reward);
-            }
-        }
 
-        public void ShowMinionQuest(QuestManager questManager)
+        // 보상을 주는 로직
+        public void ClaimRewards(int stagenum)
         {
-            Quest minionQuest = new Quest("마을을 위협하는 미니언 처치",
-                                          "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",
-                                          1,
-                                          new string[] { "쓸만한 방패 x 1", "5G" });
-            Console.WriteLine($"Quest!!\n{minionQuest.Description}\n\n- 미니언 {minionQuest.TargetCount}마리 처치 ({minionQuest.CurrentCount}/{minionQuest.TargetCount})\n");
+            Console.WriteLine($"퀘스트 \"{QuestManager.quests[stagenum].Name}\"를 완료하였습니다. 보상을 획득합니다:");
             Console.WriteLine("- 보상 -");
-            foreach (string reward in minionQuest.Rewards)
-            {
-                Console.WriteLine(reward);
-            }
-            Console.WriteLine("\n1. 수락");
-            Console.WriteLine("2. 거절");
-            Console.WriteLine("\n--------------------");
-            string input = Console.ReadLine();
-            questManager.AcceptOrRejectQuest(input); 
-        }
+            Console.WriteLine($"{QuestManager.quests[stagenum].Rewards}\n\n");
 
-        public static void ShowEquipmentQuest(Item item)
-        {
-            //퀘스트 수락/거절여부 먼저 확인
-            Quest quest = new Quest("장비를 장착해보자", "인벤토리에서 아무 장치나 완료해보자!", 1, new string[] { "10골드", "경험치 100" });
-                    quest.UpdateProgress(1); // 퀘스트 진행상황 업데이트
-                    Console.WriteLine("- 보상 -");
-
-            //퀘스트 클리어 여부를 확인할 때 사용
-            foreach(Item itemss in Inventory.items)
+            switch(stagenum)
             {
-                if (itemss.IsEquippd)
-                {
+                case 0:
+                    Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {GameManager.user.Gold}G");
+
+                    Item questReward = new Item("쓸만한 갑옷",5,ItemType.Armor,"범부에 불과했던 남자가, 오직 한 사람만을 떠올리며 만든 갑옷이다. 제법 쓸만하다.",true); // 아이템 생성
+
+                    Inventory.AddItem(questReward);
+                    GameManager.user.AddGold(5); // 골드 추가
+                    break;
+                case 1:
+                    Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {GameManager.user.Gold}G");
                     
-                    if (quest.IsCompleted)
-                    {
-                        Console.WriteLine($"퀘스트 \"{quest.Name}\"를 완료했습니다!");
-                        quest.ClaimRewards(); // 보상 획득
-                    }
-                }
+                    Item questReward1 = new Item("여신의 축복",30,ItemType.Potion,"이 갑옷에는 알 수 없는 힘이 깃들어 있다.",true);
+
+                    Inventory.AddItem(questReward1);
+                    GameManager.user.AddGold(5);
+                    break;
+                case 2:
+                    Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {GameManager.user.Gold}G");
+                    
+                    Item questReward2 = new Item("강화된 마체테",5,ItemType.Weapon,"피에 젖어 있다.",true);
+
+                    Inventory.AddItem(questReward2);
+                    GameManager.user.AddGold(5);
+                    break;
             }
-            
-        }
-        
-        public static void ShowLevelUpQuest()
-        {
-            Console.WriteLine("Quest!!\n");
-            Console.WriteLine("더욱 더 강해지기!\n");
-            Console.WriteLine("- 목표 -");
-            Console.WriteLine("캐릭터 레벨을 상승시키세요.");
-            Console.WriteLine("- 보상 -");
-            Console.WriteLine("강화된 무기, 더 강력한 방어구\n");
+
+            //퀘스트 반복
+            //다시 false 넣기
+            QuestManager.quests[stagenum].IsAccepted =false;
+            QuestManager.quests[stagenum].IsCompleted = false;
         }
     }
 }
