@@ -27,7 +27,8 @@
             // 입력값 받기
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
-            Console.WriteLine("3. 도망가기\n");
+            Console.WriteLine("3. 포션 먹기");
+            Console.WriteLine("4. 도망가기\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
             ShowBattleInput();
@@ -204,6 +205,10 @@
                         SkillStatus();
                         return;
                     case 3:
+                        Console.Clear();
+                        Manager.Instance.battleManager.UsePotion();
+                        return;
+                    case 4:
                         Console.Clear();
                         Manager.Instance.battleManager.GiveUP();
                         return;

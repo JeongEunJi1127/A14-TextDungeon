@@ -249,6 +249,86 @@
             }
         }
 
+        // 포션 먹기
+        public void UsePotion()
+        {
+            // 몬스터 잡으면 보상 바로 들어가는지 확인 -> 바로 들어가면 리스트로 관리
+            Manager.Instance.gameManager.battle.ShowPlayerStat();
+
+            Console.WriteLine("1. HP 포션 먹기");
+            Console.WriteLine("2. MP 포션 먹기");
+            Console.WriteLine("0. 뒤로가기");
+
+            while (true)
+            {
+                int input;
+                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+
+                if (isValidNum)
+                {
+                    switch (input)
+                    {
+                        case 0:
+                            Manager.Instance.gameManager.battle.ShowBattle(false);
+                            return;
+                        case 1:
+                            foreach(Item item in Manager.Instance.inventoryManager.items)
+                            {
+                                if(item.Itemtype == Item.ItemType.HPPotion)
+                                {
+                                    Manager.Instance.inventoryManager.RemoveItem(item);
+                                    if (Manager.Instance.gameManager.user.HP + item.ItemStat > Manager.Instance.gameManager.user.MaxHP)
+                                    {
+                                        Console.WriteLine($"HP +{Manager.Instance.gameManager.user.MaxHP - Manager.Instance.gameManager.user.HP}");
+                                        Manager.Instance.gameManager.user.HP = Manager.Instance.gameManager.user.MaxHP;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"HP +{item.ItemStat}");
+                                        Manager.Instance.gameManager.user.HP += item.ItemStat;
+                                    }
+                                    Thread.Sleep(1000);
+                                    Manager.Instance.gameManager.battle.ShowBattle(false);
+                                    return;
+                                }
+                            }
+                            Console.WriteLine("소지중인 HP 포션이 없습니다.");
+                            break;
+                        case 2:
+                            foreach (Item item in Manager.Instance.inventoryManager.items)
+                            {
+                                if (item.Itemtype == Item.ItemType.MPPotion)
+                                {
+                                    Manager.Instance.inventoryManager.RemoveItem(item);
+                                    if (Manager.Instance.gameManager.user.MP + item.ItemStat > Manager.Instance.gameManager.user.MaxMP)
+                                    {
+                                        Console.WriteLine($"MP +{Manager.Instance.gameManager.user.MaxMP - Manager.Instance.gameManager.user.MP}");
+                                        Manager.Instance.gameManager.user.MP = Manager.Instance.gameManager.user.MaxMP;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"MP +{item.ItemStat}");
+                                        Manager.Instance.gameManager.user.MP += item.ItemStat;
+                                    }
+                                    Thread.Sleep(1000);
+                                    Manager.Instance.gameManager.battle.ShowBattle(false);
+                                    return;
+                                }
+                            }
+                            Console.WriteLine("소지중인 MP 포션이 없습니다.");
+                            break;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요");
+                }
+            }
+        }
+
         // 치명타
         public bool IsCritical()
         {
@@ -340,11 +420,11 @@
             else if (itemChance <= 55)
             {
                 // 포션 1개
-                rewards.Add(new Item("HP회복 포션", 5, Item.ItemType.HPPotion, "HP를 회복해주는 포션이다")); 
+                rewards.Add(new Item("HP회복 포션", 30, Item.ItemType.HPPotion, "HP를 회복해주는 포션이다")); 
             }
             else if (itemChance <= 80)
             {
-                rewards.Add(new Item("MP회복 포션", 5, Item.ItemType.MPPotion, "HP를 회복해주는 포션이다"));
+                rewards.Add(new Item("MP회복 포션", 30, Item.ItemType.MPPotion, "HP를 회복해주는 포션이다"));
             }
             else if(itemChance <=100)
             {
