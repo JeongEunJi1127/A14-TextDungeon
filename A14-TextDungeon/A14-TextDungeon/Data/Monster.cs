@@ -41,9 +41,9 @@ namespace A14_TextDungeon.Data
         public void Die()
         {            
             IsDead = true;
-            if(Name == "미니언")
+            if(QuestManager.quests[0].IsAccepted && Name == "미니언")
             {
-                quest.UpdateProgress(1); // 미니언이 죽을 때마다 CurrentCount 증가
+                QuestManager.quests[0].UpdateProgress(1); // 미니언이 죽을 때마다 CurrentCount 증가
             }
         }
 

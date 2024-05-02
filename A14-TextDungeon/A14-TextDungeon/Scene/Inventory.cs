@@ -95,9 +95,11 @@ namespace A14_TextDungeon.Scene
         public static void EquipItem(Item item)
         {
             item.IsEquippd = true;            
-            if(QuestManager.quests[1].IsAccepted)
+           
+             if(QuestManager.quests[1].IsAccepted)
             {
                 QuestManager.quests[1].IsCompleted = true;
+                
                 //기타 보상에 대한 내용 추가 -> Quest에 함수로 만들어서 빼기
                 foreach(string reward in QuestManager.quests[1].Rewards)
                 {

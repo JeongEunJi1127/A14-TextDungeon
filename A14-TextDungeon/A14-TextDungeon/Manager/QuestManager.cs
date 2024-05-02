@@ -1,5 +1,6 @@
 using System;
 using A14_TextDungeon.Scene;
+using A14_TextDungeon.Data;
 
 namespace A14_TextDungeon
 {
