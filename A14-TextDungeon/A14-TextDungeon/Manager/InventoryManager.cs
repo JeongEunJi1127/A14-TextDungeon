@@ -50,7 +50,7 @@
         //아이템 장착
         //장착 퀘스트 클리어 조건
         public void EquipItem(Item item)
-        {
+        {            
             item.IsEquippd = true;
 
             if (Manager.Instance.questManager.quests[1].IsAccepted)
@@ -67,26 +67,36 @@
         //장비아이템 중복 장착 방지 로직
         public void EquippedItemCheck(Item item)
         {
-            Item.ItemType checkItemType = item.Itemtype;
-            if(items.Count == 0 || items == null)
+            if(item.Itemtype == Item.ItemType.HPPotion || item.Itemtype == Item.ItemType.MPPotion)
             {
-                EquipItem(item);
+                Console.WriteLine("아쉽지만 포션은 장착 할 수 없습니다..");
+                Thread.Sleep(1000);
+                RefrshInventory(true);
             }
             else
             {
-                for(int i = 0;i < items.Count;i++)
+                Item.ItemType checkItemType = item.Itemtype;
+                if (items.Count == 0 || items == null)
                 {
-                    if (items[i].Itemtype == checkItemType && items[i].IsEquippd)
+                    EquipItem(item);
+                }
+                else
+                {
+                    for (int i = 0; i < items.Count; i++)
                     {
-                        UnEquipItem(items[i]);
-                        EquipItem(item);
-                    }
-                    else
-                    {
-                        EquipItem(item);
+                        if (items[i].Itemtype == checkItemType && items[i].IsEquippd)
+                        {
+                            UnEquipItem(items[i]);
+                            EquipItem(item);
+                        }
+                        else
+                        {
+                            EquipItem(item);
+                        }
                     }
                 }
             }
+            
         }
 
         //아이템 장착 해제

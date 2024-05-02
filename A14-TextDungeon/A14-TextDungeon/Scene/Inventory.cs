@@ -10,20 +10,32 @@
             ShowEquipPageInput();
             Item selectedItem = Manager.Instance.inventoryManager.items[Manager.Instance.inventoryManager.selectItemIndex];
             //items = 인벤토리 스크립트 안에 모여있는 것들(리스트)
-            if (selectedItem.IsEquippd)
+            if (selectedItem.Itemtype == Item.ItemType.HPPotion || selectedItem.Itemtype == Item.ItemType.MPPotion)
             {
-                Manager.Instance.inventoryManager.UnEquipItem(selectedItem);
-                Console.WriteLine($"\n{selectedItem.ItemName}이(가) 장착 해제되었습니다");
+                Console.WriteLine("아쉽지만 포션은 장착 할 수 없습니다..");
                 Thread.Sleep(1000);
-                ShowEquipPage();
+                Console.Clear();
+                ShowInventory();
             }
             else
             {
-                Manager.Instance.inventoryManager.EquippedItemCheck(selectedItem);
-                Console.WriteLine($"\n{selectedItem.ItemName}이(가) 장착되었습니다");
-                Thread.Sleep(1000);
-                ShowEquipPage();
-            }         
+                if (selectedItem.IsEquippd)
+                {
+                    Manager.Instance.inventoryManager.UnEquipItem(selectedItem);
+                    Console.WriteLine($"\n{selectedItem.ItemName}이(가) 장착 해제되었습니다");
+                    Thread.Sleep(1000);
+                    ShowEquipPage();
+                }
+                else
+                {
+                    Manager.Instance.inventoryManager.EquippedItemCheck(selectedItem);
+                    Console.WriteLine($"\n{selectedItem.ItemName}이(가) 장착되었습니다");
+                    Thread.Sleep(1000);
+                    ShowEquipPage();
+                }
+            }
+
+                
         }
 
         public void ShowInventory()
