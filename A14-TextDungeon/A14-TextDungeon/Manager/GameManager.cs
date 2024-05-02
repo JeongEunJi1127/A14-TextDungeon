@@ -3,6 +3,7 @@
     public class GameManager
     {
         public Battle battle = new Battle();
+        public Quest quest = new Quest();
         public Status status = new Status();
         public Village village = new Village();
         public Boss boss = new Boss();

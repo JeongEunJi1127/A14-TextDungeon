@@ -71,6 +71,8 @@ namespace A14_TextDungeon
                     Manager.Instance.gameManager.village.ShowVillage();
                     return;
                 case "1":
+                    
+                    //if문으로 해서 처리하기
                     Console.WriteLine("\n\n퀘스트를 수락했습니다!");
                     quests[stagenum].IsAccepted = true;
                     Console.WriteLine("돌아가려면 Enter를 누르세요");
@@ -78,6 +80,7 @@ namespace A14_TextDungeon
                     Manager.Instance.gameManager.village.ShowVillage();
                     return;
                 case "2":
+                    //if문으로 해서 처리하기
                     Console.WriteLine("\n\n퀘스트를 거절했습니다.");
                     Console.WriteLine("돌아가려면 Enter를 누르세요");
                     Console.ReadLine();
@@ -106,9 +109,59 @@ namespace A14_TextDungeon
             Console.WriteLine("\n--------------------");
         }
 
+        public void QuestClear(int num)
+        {
+            if(quests[num].IsAccepted)
+            {
+                quests[num].IsCompleted = true;
+                ClaimRewards(num);
+            }
+        }
+
+        // 보상을 주는 로직
+        public void ClaimRewards(int stagenum)
+        {
+            Console.WriteLine($"퀘스트 \"{quests[stagenum].Name}\"를 완료하였습니다. 보상을 획득합니다:");
+            Console.WriteLine("- 보상 -");
+            Console.WriteLine($"{quests[stagenum].Rewards}\n\n");
+
+            switch(stagenum)
+            {
+                case 0:
+                    Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {Manager.Instance.gameManager.user.Gold}G");
+
+                    Item questReward = new Item("쓸만한 갑옷",5,Item.ItemType.Armor,"범부에 불과했던 남자가, 오직 한 사람만을 떠올리며 만든 갑옷이다. 제법 쓸만하다."); // 아이템 생성
+
+                    Manager.Instance.inventoryManager.AddItem(questReward);
+                    Manager.Instance.gameManager.user.AddGold(5); // AddGold()대신, Quest Gold로 넣기
+                    break;
+                case 1:
+                    Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {Manager.Instance.gameManager.user.Gold}G");
+                    
+                    Item questReward1 = new Item("여신의 축복",30,Item.ItemType.HPPotion,"이 갑옷에는 알 수 없는 힘이 깃들어 있다.");
+
+                    Manager.Instance.inventoryManager.AddItem(questReward1);
+                    Manager.Instance.gameManager.user.AddGold(5);
+                    break;
+                case 2:
+                    Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {Manager.Instance.gameManager.user.Gold}G");
+                    
+                    Item questReward2 = new Item("강화된 마체테",5, Item.ItemType.Weapon,"피에 젖어 있다.");
+
+                    Manager.Instance.inventoryManager.AddItem(questReward2);
+                    Manager.Instance.gameManager.user.AddGold(5);
+                    break;
+            }
+            //퀘스트 반복
+            //다시 false 넣기
+            quests[stagenum].IsAccepted =false;
+            quests[stagenum].IsCompleted = false;
+        }
+
         //퀘스트 1: 미니언 잡기
         public void ShowMinionQuest()
         {
+            Console.Clear();
             Console.WriteLine("Quest!!\n\n");
             Console.WriteLine(quests[0].Name,"\n");
             Console.WriteLine(quests[0].Description,"\n");
@@ -126,6 +179,7 @@ namespace A14_TextDungeon
         //퀘스트 2: 장비 장착하기 
         public void ShowEquipmentQuest(Item item)
         {
+            Console.Clear();
             Console.WriteLine("Quest!!\n\n");
             Console.WriteLine(quests[1].Name,"\n");
             Console.WriteLine(quests[1].Description,"\n");
@@ -143,6 +197,7 @@ namespace A14_TextDungeon
         //퀘스트 3: 레벨업 
         public void ShowLevelUpQuest()
         {
+            Console.Clear();
             Console.WriteLine("Quest!!\n\n");
             Console.WriteLine(quests[2].Name,"\n");
             Console.WriteLine(quests[2].Description,"\n");

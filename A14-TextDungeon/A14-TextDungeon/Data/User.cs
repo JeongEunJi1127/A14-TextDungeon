@@ -113,12 +113,8 @@
                 MaxExp = CalculateMaxExp();
                 AttackPower += 0.5f;
                 Defense += 1f;
-            }
-            //QuestManger로 함수 만들어서 빼기
-            if(Manager.Instance.questManager.quests[2].IsAccepted)
-            {
-                Manager.Instance.questManager.quests[2].IsCompleted = true;
-                Manager.Instance.questManager.quests[2].ClaimRewards(2);
+                //QuestManger로 함수 만들어서 빼기
+                Manager.Instance.questManager.LevelQuestClear();
             }
         }
     }

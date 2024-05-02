@@ -47,7 +47,7 @@ namespace A14_TextDungeon
                     Item questReward = new Item("쓸만한 갑옷",5,Item.ItemType.Armor,"범부에 불과했던 남자가, 오직 한 사람만을 떠올리며 만든 갑옷이다. 제법 쓸만하다."); // 아이템 생성
 
                     Manager.Instance.inventoryManager.AddItem(questReward);
-                    Manager.Instance.gameManager.user.AddGold(5); // 골드 추가
+                    Manager.Instance.gameManager.user.AddGold(5); // AddGold()대신, Quest Gold로 넣기
                     break;
                 case 1:
                     Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {Manager.Instance.gameManager.user.Gold}G");
