@@ -91,7 +91,7 @@
                         job = "도적";
                         attackPower = 15;
                         defense = 3;
-                        hp = 800;
+                        hp = 60;
                         mp = 70;
 
                         CreateUser(level, User.UserJob.Rogue, attackPower, defense, hp, mp, gold, isdead);

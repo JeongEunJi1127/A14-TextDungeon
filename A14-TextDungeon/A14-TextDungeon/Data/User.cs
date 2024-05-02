@@ -43,18 +43,28 @@
 
         public float AttackDamage(float damage)
         {
-            int range = (int)MathF.Ceiling((damage / 10));
-            Random random = new Random();
-            damage = random.Next((int)(damage - range), (int)(damage + range + 1));
+            int weaponAttackDamage = 0;
+            for(int i = 0; i < Manager.Instance.inventoryManager.items.Count; i++) 
+            {
+                if (Manager.Instance.inventoryManager.items[i].Itemtype == Item.ItemType.Weapon)
+                {
+                    weaponAttackDamage += Manager.Instance.inventoryManager.items[i].ItemStat;
+                }
+            }
 
+            damage = damage * (1 + weaponAttackDamage);
             return damage;
         }
 
         public void TakeDamage(float damage)
         {
-            HP -= damage;
-            // 방어력 연동
-            HP += Defense;
+            float hitDamage = 0;
+            hitDamage = damage;
+            if(hitDamage <= 0)
+            {
+                hitDamage = 1;
+            }
+            HP -= hitDamage;
             if (HP <= 0)
             {
                 HP = 0;
