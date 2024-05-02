@@ -64,6 +64,30 @@
                 }
             }
         }
+        //장비아이템 중복 장착 방지 로직
+        public void EquippedItemCheck(Item item)
+        {
+            Item.ItemType checkItemType = item.Itemtype;
+            if(items.Count == 0 || items == null)
+            {
+                EquipItem(item);
+            }
+            else
+            {
+                for(int i = 0;i < items.Count;i++)
+                {
+                    if (items[i].Itemtype == checkItemType && items[i].IsEquippd)
+                    {
+                        UnEquipItem(items[i]);
+                        EquipItem(item);
+                    }
+                    else
+                    {
+                        EquipItem(item);
+                    }
+                }
+            }
+        }
 
         //아이템 장착 해제
         public void UnEquipItem(Item item)

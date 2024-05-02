@@ -19,7 +19,7 @@
             }
             else
             {
-                Manager.Instance.inventoryManager.EquipItem(selectedItem);
+                Manager.Instance.inventoryManager.EquippedItemCheck(selectedItem);
                 Console.WriteLine($"\n{selectedItem.ItemName}이(가) 장착되었습니다");
                 Thread.Sleep(1000);
                 ShowEquipPage();
