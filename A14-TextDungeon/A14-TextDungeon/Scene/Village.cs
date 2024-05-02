@@ -25,23 +25,23 @@
                         case 1:
                             Console.Clear();
                             Manager.Instance.gameManager.status.ShowStatus();
-                            break;
+                            return;
                         case 2:
                             Console.Clear();
                             Manager.Instance.gameManager.battle.ShowBattle(true);
-                            break;
+                            return;
                         case 3:
                             Console.Clear();
                             Manager.Instance.gameManager.inventory.ShowInventory();
-                            break;
+                            return;
                         case 4:
                             Console.Clear();
                             Manager.Instance.questManager.ShowQuests();
-                            break;
+                            return;
                         case 5:
                             Console.Clear();
                             Manager.Instance.gameManager.rest.ShowRestUI();
-                            break;
+                            return;
 
                         default:
                             Console.WriteLine("\n잘못된 입력입니다.\n");

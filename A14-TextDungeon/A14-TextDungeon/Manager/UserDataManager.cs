@@ -39,10 +39,10 @@
                     case 1:
                         saveName = userName;
                         SetJob();
-                        break;
+                        return;
                     case 2:
                         SetName();
-                        break;
+                        return;
                     default:
                         Console.WriteLine("\n잘못된 입력입니다.\n");
                         SetNameInput(userName);
@@ -63,12 +63,10 @@
             int input;
             bool isValidNum = int.TryParse(Console.ReadLine(), out input);
 
-            User.UserJob userJob = (User.UserJob)input;
-
             if (isValidNum)
             {
                 int level = 1;
-
+                User.UserJob userJob = (User.UserJob)input;
                 string job;
                 float attackPower;
                 float defense;
@@ -88,7 +86,7 @@
                         mp = 50;
 
                         CreateUser(level, User.UserJob.Warrior, attackPower, defense, hp, mp, gold, isdead);
-                        break;
+                        return;
                     case User.UserJob.Rogue:
                         job = "도적";
                         attackPower = 15;
@@ -97,7 +95,7 @@
                         mp = 70;
 
                         CreateUser(level, User.UserJob.Rogue, attackPower, defense, hp, mp, gold, isdead);
-                        break;
+                        return;
                     default:
                         Console.WriteLine("\n잘못된 입력입니다.\n");
                         SetJobInput();

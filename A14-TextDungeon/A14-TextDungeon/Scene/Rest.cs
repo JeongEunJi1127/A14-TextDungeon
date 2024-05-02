@@ -62,6 +62,7 @@
                     {
                         //나가기
                         Manager.Instance.gameManager.village.ShowVillage();
+                        return;
                     }
                     else if (input == 1)
                     {
@@ -90,6 +91,7 @@
                         Thread.Sleep(1000);
                         Console.Clear();
                         Manager.Instance.gameManager.rest.ShowRestUI();
+                        return;
                     }
                     else if (input == 2)
                     {
@@ -122,6 +124,7 @@
                         Thread.Sleep(1000);
                         Console.Clear();
                         Manager.Instance.gameManager.rest.ShowRestUI();
+                        return;
                     }
                     else if (input == 3)
                     {
@@ -154,6 +157,7 @@
                         Thread.Sleep(1000);
                         Console.Clear();
                         Manager.Instance.gameManager.rest.ShowRestUI();
+                        return;
                     }
                     else
                     {

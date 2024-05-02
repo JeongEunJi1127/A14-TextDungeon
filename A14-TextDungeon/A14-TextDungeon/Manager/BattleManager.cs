@@ -13,8 +13,6 @@
         public int monsterExp = 0;
         // 골드 보상
         public int totalGoldReward = 0;
-        // GameManager user
-        public User user = Manager.Instance.gameManager.user;
 
         // 보상 리스트
         private List<Item> rewards = new List<Item>();
@@ -142,15 +140,15 @@
                 {
                     Console.WriteLine("Battle!! - 몬스터 턴\n");
                     Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}의 공격 !");
-                    Console.WriteLine($"{user.Name}을(를) 맞췄습니다. [데미지 : {monsterDamage}]\n");
-                    Console.WriteLine($"LV.{user.Level} {user.Name}");
+                    Console.WriteLine($"{Manager.Instance.gameManager.user.Name}을(를) 맞췄습니다. [데미지 : {monsterDamage}]\n");
+                    Console.WriteLine($"LV.{Manager.Instance.gameManager.user.Level} {Manager.Instance.gameManager.user.Name}");
 
-                    float nowHp = user.HP;
-                    user.TakeDamage(monsterDamage);
-                    Console.WriteLine($"HP {nowHp} -> {user.HP}\n");
+                    float nowHp = Manager.Instance.gameManager.user.HP;
+                    Manager.Instance.gameManager.user.TakeDamage(monsterDamage);
+                    Console.WriteLine($"HP {nowHp} -> {Manager.Instance.gameManager.user.HP}\n");
 
                     // 게임 끝나면 탈출
-                    if (user.IsDead)
+                    if (Manager.Instance.gameManager.user.IsDead)
                     {
                         Console.WriteLine("당신은 죽었습니다..");
                         Thread.Sleep(2000);
@@ -192,10 +190,10 @@
             }
             else if (skillNum == 4)
             {
-                user.MP -= 20;
-                damage += user.AttackPower * 1.5f;
+                Manager.Instance.gameManager.user.MP -= 20;
+                damage += Manager.Instance.gameManager.user.AttackPower * 1.5f;
 
-                user.Gold += (int)damage;
+                Manager.Instance.gameManager.user.Gold += (int)damage;
             }
 
             foreach (int i in monsterNum)
@@ -352,9 +350,7 @@
                     Console.WriteLine($"{rewards[i].ItemName} - 1\n");
                 }
             }
-            
             rewards.Clear();
         }
-
     }
 }

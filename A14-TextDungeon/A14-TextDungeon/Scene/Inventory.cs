@@ -46,6 +46,7 @@
                 if (input == 0)
                 {
                     Manager.Instance.gameManager.inventory.ShowInventory();
+                    return;
                 }
                 else if (index < 0 || index >= Manager.Instance.inventoryManager.items.Count)
                 {
@@ -71,10 +72,10 @@
                 {
                     case 0:
                         Manager.Instance.gameManager.village.ShowVillage();
-                        break;
+                        return;
                     case 1:
                         Manager.Instance.gameManager.inventory.ShowEquipPage();
-                        break;
+                        return;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
                         ShowInventoryInput();

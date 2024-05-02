@@ -12,7 +12,7 @@ namespace A14_TextDungeon
             new Quest ("[더욱 더 강해지기!]","이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",1,false,false, new string[] { "강화된 마체테 x 1", "5G" })
         };
 
-        public int ShowQuests()
+        public void ShowQuests()
         {
             Item item = new Item("Dummy",2, Item.ItemType.Armor,"Dummy",false);
             while (true)
@@ -32,19 +32,19 @@ namespace A14_TextDungeon
                 {
                     case 0:
                         Manager.Instance.gameManager.village.ShowVillage();
-                        break;
+                        return;
                     case 1:
                         //매개변수? 메소드로 선언? 싱글톤?->하나의 정보를 소지
                         //인스턴스 선언?
                         //퀘스트가 객체여서 list 이름
                         ShowMinionQuest();
-                        break;
+                        return;
                     case 2:
                         ShowEquipmentQuest(item);
-                        break;
+                        return;
                     case 3:
                         ShowLevelUpQuest();
-                        break;
+                        return;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
                         break;
@@ -69,18 +69,18 @@ namespace A14_TextDungeon
             {
                 case "0":
                     Manager.Instance.gameManager.village.ShowVillage();
-                    break;
+                    return;
                 case "1":
                     Console.WriteLine("\n\n퀘스트를 수락했습니다!");
                     quests[stagenum].IsAccepted = true;
                     Console.WriteLine("돌아가려면 Enter를 누르세요");
                     Console.ReadLine();
-                    break;
+                    return;
                 case "2":
                     Console.WriteLine("\n\n퀘스트를 거절했습니다.");
                     Console.WriteLine("돌아가려면 Enter를 누르세요");
                     Console.ReadLine();
-                    break;
+                    return;
                 default:
                     Console.WriteLine("잘못된 선택입니다.");
                     Console.ReadLine();
