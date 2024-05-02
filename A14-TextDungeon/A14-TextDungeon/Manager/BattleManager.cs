@@ -55,17 +55,17 @@
                 // percent[0] 확률로 대포미니언
                 if (randomMonsterNum < percent[0])
                 {
-                    monsters.Add(new Monster("대포미니언 ", 5, 8, 7,20, false));
+                    monsters.Add(new Monster("대포미니언 ", 5, 25, 8,20, false));
                 }
                 // percent[1] - percent[0] 확률로 공허충
                 else if (randomMonsterNum < percent[1])
                 {
-                    monsters.Add(new Monster("공허충", 3, 6, 11, 10, false));
+                    monsters.Add(new Monster("공허충", 3, 20, 7, 10, false));
                 }
                 // 100 - percent[1] - percent[0] 확률로 미니언
                 else
                 {
-                    monsters.Add(new Monster("미니언", 2, 5, 7, 10, false));
+                    monsters.Add(new Monster("미니언", 2, 15, 5, 15, false));
                 }
             }
         }
@@ -114,11 +114,11 @@
                 if (IsCritical())
                 {
                     damage = (float)Math.Round(Manager.Instance.gameManager.user.AttackDamage(Manager.Instance.gameManager.user.AttackPower * 1.6f));
-                    Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!\n");
+                    Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 맞췄습니다. [데미지 : {damage - monsters[monsterNum].Defense}] - 치명타 공격!!\n");
                 }
                 else
                 {
-                    Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 맞췄습니다. [데미지 : {damage}]\n");
+                    Console.WriteLine($"LV.{monsters[monsterNum].Level} {monsters[monsterNum].Name} 을(를) 맞췄습니다. [데미지 : {damage - monsters[monsterNum].Defense}]\n");
                 }
                  AttackMonster(monsters[monsterNum], damage);
             }
@@ -201,11 +201,11 @@
                 if (IsCritical())
                 {
                     skillDamage = (float)Math.Round(damage * 1.6f);
-                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name} 을(를) 맞췄습니다. [스킬 데미지 : {skillDamage}] - 치명타 공격!!\n");
+                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name} 을(를) 맞췄습니다. [스킬 데미지 : {skillDamage - monsters[i].Defense}] - 치명타 공격!!\n");
                 }
                 else
                 {
-                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name} 을(를) 맞췄습니다. [스킬 데미지 : {skillDamage}]\n");
+                    Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name} 을(를) 맞췄습니다. [스킬 데미지 : {skillDamage - monsters[i].Defense}]\n");
                 }
 
                 AttackMonster(monsters[i], skillDamage);

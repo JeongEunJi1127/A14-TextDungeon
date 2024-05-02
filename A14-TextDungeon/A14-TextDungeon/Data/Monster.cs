@@ -21,13 +21,19 @@
 
         public float AttackDamage(float damage)
         {
-            damage = (float)Math.Ceiling(AttackPower * 1.1f);
+            damage = (float)Math.Ceiling(AttackPower- Manager.Instance.gameManager.user.Defense);
             return damage;
         }
 
         public void TakeDamage(float damage)
         {
-            HP -= damage;
+            int hitDamage = 0;
+            hitDamage = (int)(damage - Defense);
+            if(hitDamage <= 0) 
+            {
+                hitDamage = 1;
+            }
+            HP -= hitDamage;
             if (HP <= 0)
             {
                 HP = 0;

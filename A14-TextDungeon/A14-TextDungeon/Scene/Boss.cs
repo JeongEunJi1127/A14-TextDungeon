@@ -7,7 +7,7 @@
         public void BossInit()
         {
             Manager.Instance.battleManager.monsters.Clear();    
-            Manager.Instance.battleManager.monsters.Add(new Monster("세나몬", 10, 10,10, 100, false));
+            Manager.Instance.battleManager.monsters.Add(new Monster("세나몬", 10, 30,15, 100, false));
             bossMon = Manager.Instance.battleManager.monsters[0];
             BossStage();
         }
