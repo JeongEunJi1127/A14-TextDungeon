@@ -19,8 +19,6 @@
         // 골드 보상
         private int goldReward = 0;
 
-        
-
 
         // 랜덤한 몬스터 뽑기
         public void RandomMonster(int stageNum)
@@ -57,17 +55,17 @@
                 // percent[0] 확률로 대포미니언
                 if (randomMonsterNum < percent[0])
                 {
-                    monsters.Add(new Monster("대포미니언 ", 5, 8, 20, false));
+                    monsters.Add(new Monster("대포미니언 ", 5, 8, 7,20, false));
                 }
                 // percent[1] - percent[0] 확률로 공허충
                 else if (randomMonsterNum < percent[1])
                 {
-                    monsters.Add(new Monster("공허충", 3, 6, 10, false));
+                    monsters.Add(new Monster("공허충", 3, 6, 11, 10, false));
                 }
                 // 100 - percent[1] - percent[0] 확률로 미니언
                 else
                 {
-                    monsters.Add(new Monster("미니언", 2, 5, 15, false));
+                    monsters.Add(new Monster("미니언", 2, 5, 7, 10, false));
                 }
             }
         }
@@ -217,6 +215,40 @@
             Manager.Instance.gameManager.battle.PlayerAttackInput();
         }
 
+        // 전투 포기
+        public void GiveUP()
+        {
+            // 몬스터 잡으면 보상 바로 들어가는지 확인 -> 바로 들어가면 리스트로 관리
+            Console.WriteLine("전투를 포기하시겠습니까? HP가 회복되지 않으며 보상을 얻을 수 없습니다.");
+            Console.WriteLine("0. 포기하기 1. 계속하기");
+
+            while (true)
+            {
+                int input;
+                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+
+                if (isValidNum)
+                {
+                    switch (input)
+                    {
+                        case 0:
+                            Manager.Instance.gameManager.village.ShowVillage();
+                            return;
+                        case 1:
+                            Manager.Instance.gameManager.battle.ShowBattle(false);
+                            return;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요");
+                }
+            }
+        }
+
         // 치명타
         public bool IsCritical()
         {
@@ -277,6 +309,12 @@
                 }
                 else if (deadMonsters.Count == monsters.Count)
                 {
+                    // 1~3층에서 클리어 & 플레이어가 모든 몬스터를 죽였을 때 보상 주기
+                    foreach (Item reward in rewards)
+                    {
+                        Manager.Instance.inventoryManager.AddItem(reward);
+                    }
+
                     Manager.Instance.gameManager.battle.BattleResult(true);
                     return true;
                 }
@@ -302,29 +340,23 @@
             else if (itemChance <= 55)
             {
                 // 포션 1개
-                rewards.Add(new Item("HP회복 포션", 5, Item.ItemType.HPPotion, "HP를 회복해주는 포션이다"));
-                Manager.Instance.inventoryManager.AddItem(new Item("HP회복 포션", 5, Item.ItemType.HPPotion, "HP를 회복해주는 포션이다"));
-                
+                rewards.Add(new Item("HP회복 포션", 5, Item.ItemType.HPPotion, "HP를 회복해주는 포션이다")); 
             }
             else if (itemChance <= 80)
             {
                 rewards.Add(new Item("MP회복 포션", 5, Item.ItemType.MPPotion, "HP를 회복해주는 포션이다"));
-                Manager.Instance.inventoryManager.AddItem(new Item("MP회복 포션", 5, Item.ItemType.MPPotion, "HP를 회복해주는 포션이다"));
             }
             else if(itemChance <=100)
             {
                 switch (monster.Name) 
                 {
                     case "미니언":
-                        Manager.Instance.inventoryManager.AddItem(new Item("미니언의 지팡이", 3, Item.ItemType.Weapon, "미니언이 가지고있던 지팡이이다."));
                         rewards.Add(new Item("미니언의 지팡이", 3, Item.ItemType.Weapon, "미니언이 가지고있던 지팡이이다."));
                         break;
                     case "공허충":
-                        Manager.Instance.inventoryManager.AddItem(new Item("공허충 비늘 갑옷", 4, Item.ItemType.Armor, "공허충의 비늘로 만든 갑옷이다."));
                         rewards.Add(new Item("공허충 비늘 갑옷", 4, Item.ItemType.Armor, "공허충의 비늘로 만든 갑옷이다."));
                         break;
                     case "대포미니언":
-                        Manager.Instance.inventoryManager.AddItem(new Item("대포미니언의 대포", 6, Item.ItemType.Weapon, "대포미니언이 타고있던 대포이다."));
                         rewards.Add(new Item("대포미니언의 대포", 6, Item.ItemType.Weapon, "대포미니언이 타고있던 대포이다."));
                         break;
 
