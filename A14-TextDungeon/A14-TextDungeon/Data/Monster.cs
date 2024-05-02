@@ -39,12 +39,18 @@ namespace A14_TextDungeon.Data
         }
 
         public void Die()
-        {
+        {            
             IsDead = true;
             if(Name == "미니언")
             {
                 quest.UpdateProgress(1); // 미니언이 죽을 때마다 CurrentCount 증가
             }
+        }
+
+        public void Berserk()
+        {
+            HP = 100;
+            AttackPower += 20;
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using A14_TextDungeon.Data;
-using A14_TextDungeon.Manager;
+﻿using A14_TextDungeon.Manager;
 using A14_TextDungeon.Scene;
+using static A14_TextDungeon.Data.User;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace A14_TextDungeon.UI
@@ -52,15 +52,15 @@ namespace A14_TextDungeon.UI
                         Console.Clear();
                         Battle.ShowBattle(false);
                     }
-                    else if (1 <= input && input <= 3)
+                    else if (1 <= input && input <= BattleManager.monsters.Count)
                     {
-                        if (Battle.monsters[input - 1].IsDead)
+                        if (BattleManager.monsters[input - 1].IsDead)
                         {
                             Console.WriteLine("잘못된 입력입니다.");
                         }
                         else
                         {
-                            Battle.PlayerAttack(input - 1);
+                            BattleManager.PlayerAttack(input - 1);
                             Thread.Sleep(1000);
                         }
                     }
@@ -87,15 +87,22 @@ namespace A14_TextDungeon.UI
                 {
                     if (input == 0)
                     {
-                        if (Battle.BattleEnd())
+                        if (BattleManager.BattleEnd())
                         {
                             Thread.Sleep(1000);
                             Village.ShowVillage();
                         }
                         else
                         {
-                            //몬스터 턴 실행
-                            Battle.EnemyPhase();
+                            if(BattleManager.stageNum == 4)
+                            {
+                                Boss.BossPhase();
+                            }
+                            else
+                            {
+                                //몬스터 턴 실행
+                                Battle.EnemyPhase();
+                            }
                         }
                         break;
                     }
@@ -129,6 +136,36 @@ namespace A14_TextDungeon.UI
                     {
                         Console.WriteLine("잘못된 입력입니다.");
                     }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요.");
+                }
+            }
+        }
+
+        public static void BossPhaseInput()
+        {
+            int input;
+
+            while (true)
+            {
+                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+                if (isValidNum)
+                {
+                    if (input == 0)
+                    {
+                        Battle.PlayerPhase();
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요.");
                 }
             }
         }
@@ -178,7 +215,7 @@ namespace A14_TextDungeon.UI
                             if (GameManager.user.MP >= 10)
                             {
                                 Console.WriteLine("공격할 몬스터를 선택해주세요.\n");
-                                ChooseMonsterInput();
+                                ChooseMonsterInput(1);
                             }
                             else
                             {
@@ -194,13 +231,13 @@ namespace A14_TextDungeon.UI
 
                                 Random random = new Random();
                                 List<int> randomNumbers = new List<int>();
-                                int cnt = Battle.monsters.Count(monster => !monster.IsDead);
+                                int cnt = BattleManager.monsters.Count(monster => !monster.IsDead);
 
                                 if (cnt < 2)
                                 {
-                                    for (int i = 0; i < Battle.monsters.Length; i++)
+                                    for (int i = 0; i < BattleManager.monsters.Count; i++)
                                     {
-                                        if (!Battle.monsters[i].IsDead)
+                                        if (!BattleManager.monsters[i].IsDead)
                                         {
                                             randomNumbers.Add(i);
                                         }
@@ -210,9 +247,9 @@ namespace A14_TextDungeon.UI
                                 {
                                     while (randomNumbers.Count < 2)
                                     {
-                                        int randomNum = random.Next(0, Battle.monsters.Length);
+                                        int randomNum = random.Next(0, BattleManager.monsters.Count);
                                         // 살아있는 몬스터 중 랜덤한 몬스터 2마리 뽑기
-                                        if (!randomNumbers.Contains(randomNum) && !Battle.monsters[randomNum].IsDead)
+                                        if (!randomNumbers.Contains(randomNum) && !BattleManager.monsters[randomNum].IsDead)
                                         {
                                             randomNumbers.Add(randomNum);
                                         }
@@ -220,7 +257,7 @@ namespace A14_TextDungeon.UI
                                     randomNumbers.Sort();
                                 }
                                 Thread.Sleep(1000);
-                                Battle.PlayerSkill(randomNumbers, 2);
+                                BattleManager.PlayerSkill(randomNumbers, 2);
                             }
                             else
                             {
@@ -240,7 +277,59 @@ namespace A14_TextDungeon.UI
             }
         }
 
-        public static void ChooseMonsterInput()
+
+
+        public static void SkillStatusRogueInput()
+        {
+            int input;
+            Console.WriteLine("사용할 스킬을 선택해주세요.\n");
+
+            while (true)
+            {
+                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+                if (isValidNum)
+                {
+                    switch (input)
+                    {
+                        case 0:
+                            Battle.ShowBattle(false);
+                            break;
+                        case 1:
+                            if (GameManager.user.MP >= GameManager.skillList[(int)UserJob.Rogue - 1][0].MP)
+                            {
+                                Console.WriteLine("공격할 몬스터를 선택해주세요.\n");
+                                ChooseMonsterInput(3);
+                            }
+                            else
+                            {
+                                Console.WriteLine("MP가 부족합니다.\n");
+                            }
+                            break;
+                        case 2:
+                            if (GameManager.user.MP >= GameManager.skillList[(int)UserJob.Rogue - 1][1].MP )
+                            {
+                                Console.WriteLine("공격할 몬스터를 선택해주세요.\n");
+                                ChooseMonsterInput(4);
+                            }
+                            else
+                            {
+                                Console.WriteLine("MP가 부족합니다.\n");
+                            }
+                            break;                        
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요.");
+                }
+            }
+        }
+
+
+        public static void ChooseMonsterInput(int skillNum)
         {
             int input;
 
@@ -254,16 +343,16 @@ namespace A14_TextDungeon.UI
                         Console.Clear();
                         Battle.SkillStatus();
                     }
-                    else if (1 <= input && input <= 3)
+                    else if (1 <= input && input <= BattleManager.monsters.Count)
                     {
-                        if (Battle.monsters[input - 1].IsDead)
+                        if (BattleManager.monsters[input - 1].IsDead)
                         {
                             Console.WriteLine("잘못된 입력입니다.");
                         }
                         else
                         {
                             List<int> list = new List<int>() { input - 1 };
-                            Battle.PlayerSkill(list, 1);
+                            BattleManager.PlayerSkill(list, skillNum);
                         }
                     }
                     else

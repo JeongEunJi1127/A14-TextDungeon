@@ -1,15 +1,15 @@
 ﻿using System;
+using A14_TextDungeon.Scene;
 
-namespace A14_TextDungeon.Scene
+namespace A14_TextDungeon.Data
 {
     public class Item
     {
-        public string ItemName;
-        public string ItemDescription;
-        public ItemType ItemType;
-        public int ItemStat;
-        public bool IsEquippd;
-
+        public string ItemName { get; private set; }
+        public string ItemDescription { get; private set; }
+        public ItemType ItemType { get; private set; }
+        public int ItemStat { get; private set; }
+        public bool IsEquippd { get;  set; }
 
         public Item(string name, int stat, ItemType type, string desription, bool isEquippd = false)
         {
@@ -32,8 +32,11 @@ namespace A14_TextDungeon.Scene
                 case ItemType.Weapon:
                     type = "공격력 +";
                     break;
-                case ItemType.Potion:
+                case ItemType.HPPotion:
                     type = "HP회복 +";
+                    break;
+                case ItemType.MPPotion:
+                    type = "MP회복 +";
                     break;
                 default:
                     type = "";
@@ -43,4 +46,4 @@ namespace A14_TextDungeon.Scene
         }
     }
 }
-  
+

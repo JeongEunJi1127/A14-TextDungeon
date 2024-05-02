@@ -1,4 +1,5 @@
 ﻿using A14_TextDungeon.Manager;
+using A14_TextDungeon.Data;
 
 namespace A14_TextDungeon.Scene
 {
@@ -7,15 +8,7 @@ namespace A14_TextDungeon.Scene
         public static void ShowStatus()
         {
             Console.Clear();
-            Console.WriteLine("\n== 상태창 ==\n");
-            Console.WriteLine($"LV. {GameManager.user.Level}");
-            Console.WriteLine($"{GameManager.user.Name} ({GameManager.user.Job})");
-            Console.WriteLine($"공격력 : {GameManager.user.AttackPower}");
-            Console.WriteLine($"공격력 : {GameManager.user.Defense}");
-            Console.WriteLine($"체력: {GameManager.user.HP} ");
-            Console.WriteLine($"Gold : {GameManager.user.Gold} G\n\n");
-
-            Console.WriteLine("0. 나가기");
+            RefreshPlayerStatus();
 
             int input;
             while (true)
@@ -38,7 +31,61 @@ namespace A14_TextDungeon.Scene
                     Console.WriteLine("숫자를 입력해주세요.");
                 }
             }
+        }
 
+        static void RefreshPlayerStatus()
+        {
+            List<Item> items = Inventory.items;
+            int weaponAttack = 0;
+            int armorDefense = 0;
+            if(items != null)
+            {
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i].IsEquippd)
+                    {
+                        if (items[i].ItemType == ItemType.Weapon)
+                        {
+                            weaponAttack += items[i].ItemStat;
+                        }
+                        else if (items[i].ItemType == ItemType.Armor)
+                        {
+                            armorDefense += items[i].ItemStat;
+                        }
+                    }
+                }
+            }
+
+            
+
+            Console.WriteLine("\n== 상태창 ==\n");
+            Console.WriteLine($"LV. {GameManager.user.Level}");
+            Console.WriteLine($"{GameManager.user.Name} ({GameManager.user.Job})");
+            if( weaponAttack > 0 )
+            {
+                Console.WriteLine($"공격력 : {GameManager.user.AttackPower+ weaponAttack} (+{weaponAttack})");
+            }
+            else
+            {
+                Console.WriteLine($"공격력 : {GameManager.user.AttackPower}");
+            }
+
+            if (armorDefense > 0)
+            {
+                Console.WriteLine($"방어력 : {GameManager.user.Defense + armorDefense} (+{armorDefense})");
+            }
+            else
+            {
+                Console.WriteLine($"방어력 : {GameManager.user.Defense}");
+            }
+
+            Console.WriteLine($"HP: {GameManager.user.HP} / {GameManager.user.MaxHP} ");
+            Console.WriteLine($"MP: {GameManager.user.MP} / {GameManager.user.MaxMP} ");
+
+            Console.WriteLine($"Gold : {GameManager.user.Gold} G");
+            Console.WriteLine($"EXP : {GameManager.user.Exp}/{GameManager.user.MaxExp}\n\n");
+
+            Console.WriteLine("0. 나가기");
         }
     }
 }
