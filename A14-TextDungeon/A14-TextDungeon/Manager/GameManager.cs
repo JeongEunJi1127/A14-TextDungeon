@@ -18,26 +18,17 @@ namespace A14_TextDungeon.Manager
         };
 
         public static Skill[] rogueSkills = new Skill[]
-        {
-                new Skill ("기습", "공격력+10의 피해로 하나의 적을 공격합니다.", 10),
-                new Skill ("도둑질", "공격력 * 1.5 만큼의 피해를 주고 피해량 만큼의 골드를 획득합니다.", 20)
+        {         
+           new Skill ("기습", "공격력+10의 피해로 하나의 적을 공격합니다.", 10),
+           new Skill ("도둑질", "공격력 * 1.5 만큼의 피해를 주고 피해량 만큼의 골드를 획득합니다.", 20)
         };
 
+
         public static List<Skill[]> skillList = new List<Skill[]>();
-
-
-        /*public static float maxHp; 
-        public static int maxMp;*/
 
         // 저장해야 할 파일 초기화 - 유저 정보, 인벤토리 정보, 상점 정보 등?
         public static void  Init()
         {
-           
-
-           /* maxHp = user.HP;
-            maxMp = user.MP;*/
-          
-
             //Item testItem1 = new Item("무쇠갑옷", 5, ItemType.Armor, "무쇠로 만들어져 튼튼한 갑옷입니다.");
             //Item testItem2 = new Item("스파르타의 창", 7, ItemType.Weapon, "스파르타의 전사들이 사용했다는 전설의 창입니다.");
             //Item testItem3 = new Item("낡은 검", 2, ItemType.Weapon, "쉽게 볼 수 있는 낡은 검 입니다.");
@@ -48,8 +39,6 @@ namespace A14_TextDungeon.Manager
 
             skillList.Add(warriorSkills);
             skillList.Add(rogueSkills);
-
-
         }
 
         static void Main(string[] args)

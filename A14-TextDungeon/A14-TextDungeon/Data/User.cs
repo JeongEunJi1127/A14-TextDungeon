@@ -61,6 +61,18 @@ namespace A14_TextDungeon.Data
         public void LevelUp()
         {
             Console.WriteLine($"[레벨업!]\n현재 플레이어 레벨 : {Level}");
+            //inventory처럼 확인하고 -> 굿.......
+            if(QuestManager.quests[2].IsAccepted)
+            {
+                QuestManager.quests[2].IsCompleted = true;
+                 //현호님 질문
+                QuestManager.quests[2].ClaimRewards(2);
+            }
+        }
+
+        public void AddGold(int amount)
+        {
+            Gold += amount;
         }
 
         public void Die()

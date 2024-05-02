@@ -1,4 +1,7 @@
-﻿namespace A14_TextDungeon.Data
+﻿using A14_TextDungeon.Manager;
+using A14_TextDungeon.Scene;
+
+namespace A14_TextDungeon.Data
 {
     public class Monster
     {
@@ -7,6 +10,9 @@
         public float AttackPower { get; private set; }
         public float HP { get; private set; }
         public bool IsDead { get; private set; }
+
+        private Quest quest;
+
         public Monster(string name, int level, float attackPower, float hp, bool isDead)
         {
             Name = name;
@@ -35,6 +41,10 @@
         public void Die()
         {            
             IsDead = true;
+            if(Name == "미니언")
+            {
+                quest.UpdateProgress(1); // 미니언이 죽을 때마다 CurrentCount 증가
+            }
         }
 
         public void Berserk()
