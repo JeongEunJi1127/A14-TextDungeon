@@ -53,6 +53,8 @@
         public void TakeDamage(float damage)
         {
             HP -= damage;
+            // 방어력 연동
+            HP += Defense;
             if (HP <= 0)
             {
                 HP = 0;

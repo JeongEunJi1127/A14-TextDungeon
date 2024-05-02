@@ -26,7 +26,8 @@
 
             // 입력값 받기
             Console.WriteLine("1. 공격");
-            Console.WriteLine("2. 스킬\n");
+            Console.WriteLine("2. 스킬");
+            Console.WriteLine("3. 도망가기\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
             ShowBattleInput();
@@ -196,11 +197,15 @@
                 {
                     case 1:
                         Console.Clear();
-                        Manager.Instance.gameManager.battle.PlayerPhase();
+                        PlayerPhase();
                         return;
                     case 2:
                         Console.Clear();
-                        Manager.Instance.gameManager.battle.SkillStatus();
+                        SkillStatus();
+                        return;
+                    case 3:
+                        Console.Clear();
+                        Manager.Instance.battleManager.GiveUP();
                         return;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
