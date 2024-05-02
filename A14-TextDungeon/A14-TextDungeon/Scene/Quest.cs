@@ -66,7 +66,6 @@ namespace A14_TextDungeon
                     Manager.Instance.gameManager.user.AddGold(5);
                     break;
             }
-
             //퀘스트 반복
             //다시 false 넣기
             Manager.Instance.questManager.quests[stagenum].IsAccepted =false;

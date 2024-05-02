@@ -75,11 +75,14 @@ namespace A14_TextDungeon
                     quests[stagenum].IsAccepted = true;
                     Console.WriteLine("돌아가려면 Enter를 누르세요");
                     Console.ReadLine();
+                    Manager.Instance.gameManager.village.ShowVillage();
                     return;
                 case "2":
                     Console.WriteLine("\n\n퀘스트를 거절했습니다.");
                     Console.WriteLine("돌아가려면 Enter를 누르세요");
                     Console.ReadLine();
+                    Manager.Instance.gameManager.village.ShowVillage();
+                    //함수를 끝낼 때는 return;
                     return;
                 default:
                     Console.WriteLine("잘못된 선택입니다.");
@@ -135,28 +138,6 @@ namespace A14_TextDungeon
             DisplayQuestOptions(1);
             string input = Console.ReadLine();
             AcceptOrRejectQuest(input,1); 
-        }
-
-        public void ClearEquipmentQuest()
-        {
-            // 퀘스트 클리어 여부를 확인할 때 사용
-            foreach (Item item in Manager.Instance.inventoryManager.items)
-            {
-                if (item.IsEquippd)
-                {
-                    // 해당 아이템과 관련된 퀘스트를 찾기
-                    foreach (Quest quest in quests)
-                    {
-                        if (quest.Name == "[장비를 장착해보자!]")
-                        {
-                            if (quest.IsCompleted == true)
-                            {
-                                quest.ClaimRewards(1); // 보상 획득
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         //퀘스트 3: 레벨업 
