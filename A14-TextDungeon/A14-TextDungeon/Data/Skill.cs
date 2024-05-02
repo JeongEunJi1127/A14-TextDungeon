@@ -1,6 +1,6 @@
-﻿namespace A14_TextDungeon.Data
+﻿namespace A14_TextDungeon
 {
-    internal class Skill { 
+    public class Skill { 
     
         public string Name {  get; private set; }
         public string Description { get; private set; }

@@ -1,11 +1,8 @@
-﻿using A14_TextDungeon.Manager;
-using A14_TextDungeon.Data;
-
-namespace A14_TextDungeon.Scene
+﻿namespace A14_TextDungeon
 {
     public class Status
     {
-        public static void ShowStatus()
+        public void ShowStatus()
         {
             Console.Clear();
             RefreshPlayerStatus();
@@ -19,8 +16,8 @@ namespace A14_TextDungeon.Scene
                     switch (input)
                     {
                         case 0:
-                            Village.ShowVillage();
-                            break;
+                            Manager.Instance.gameManager.village.ShowVillage();
+                            return;
                         default:
                             Console.WriteLine("잘못된 입력입니다.");
                             break;
@@ -33,9 +30,9 @@ namespace A14_TextDungeon.Scene
             }
         }
 
-        static void RefreshPlayerStatus()
+         void RefreshPlayerStatus()
         {
-            List<Item> items = Inventory.items;
+            List<Item> items = Manager.Instance.inventoryManager.items;
             int weaponAttack = 0;
             int armorDefense = 0;
             if(items != null)
@@ -44,11 +41,11 @@ namespace A14_TextDungeon.Scene
                 {
                     if (items[i].IsEquippd)
                     {
-                        if (items[i].ItemType == ItemType.Weapon)
+                        if (items[i].Itemtype == Item.ItemType.Weapon)
                         {
                             weaponAttack += items[i].ItemStat;
                         }
-                        else if (items[i].ItemType == ItemType.Armor)
+                        else if (items[i].Itemtype == Item.ItemType.Armor)
                         {
                             armorDefense += items[i].ItemStat;
                         }
@@ -56,34 +53,33 @@ namespace A14_TextDungeon.Scene
                 }
             }
 
-            
-
             Console.WriteLine("\n== 상태창 ==\n");
-            Console.WriteLine($"LV. {GameManager.user.Level}");
-            Console.WriteLine($"{GameManager.user.Name} ({GameManager.user.Job})");
+            Console.WriteLine($"LV. {Manager.Instance.gameManager.user.Level}");
+            Console.WriteLine($"{Manager.Instance.gameManager.user.Name} ({Manager.Instance.gameManager.user.Job})");
+
             if( weaponAttack > 0 )
             {
-                Console.WriteLine($"공격력 : {GameManager.user.AttackPower+ weaponAttack} (+{weaponAttack})");
+                Console.WriteLine($"공격력 : {Manager.Instance.gameManager.user.AttackPower+ weaponAttack} (+{weaponAttack})");
             }
             else
             {
-                Console.WriteLine($"공격력 : {GameManager.user.AttackPower}");
+                Console.WriteLine($"공격력 : {Manager.Instance.gameManager.user.AttackPower}");
             }
 
             if (armorDefense > 0)
             {
-                Console.WriteLine($"방어력 : {GameManager.user.Defense + armorDefense} (+{armorDefense})");
+                Console.WriteLine($"방어력 : {Manager.Instance.gameManager.user.Defense + armorDefense} (+{armorDefense})");
             }
             else
             {
-                Console.WriteLine($"방어력 : {GameManager.user.Defense}");
+                Console.WriteLine($"방어력 : {Manager.Instance.gameManager.user.Defense}");
             }
 
-            Console.WriteLine($"HP: {GameManager.user.HP} / {GameManager.user.MaxHP} ");
-            Console.WriteLine($"MP: {GameManager.user.MP} / {GameManager.user.MaxMP} ");
+            Console.WriteLine($"HP: {Manager.Instance.gameManager.user.HP} / {Manager.Instance.gameManager.user.MaxHP} ");
+            Console.WriteLine($"MP: {Manager.Instance.gameManager.user.MP} / {Manager.Instance.gameManager.user.MaxMP} ");
 
-            Console.WriteLine($"Gold : {GameManager.user.Gold} G");
-            Console.WriteLine($"EXP : {GameManager.user.Exp}/{GameManager.user.MaxExp}\n\n");
+            Console.WriteLine($"Gold : {Manager.Instance.gameManager.user.Gold} G");
+            Console.WriteLine($"EXP : {Manager.Instance.gameManager.user.Exp}/{Manager.Instance.gameManager.user.MaxExp}\n\n");
 
             Console.WriteLine("0. 나가기");
         }
