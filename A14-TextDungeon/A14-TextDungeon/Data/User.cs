@@ -1,10 +1,12 @@
-﻿using A14_TextDungeon.Manager;
-using A14_TextDungeon.Scene;
-
-namespace A14_TextDungeon.Data
+﻿namespace A14_TextDungeon
 {
     public class User
     {
+        public enum UserJob
+        {
+            Warrior = 1,
+            Rogue = 2,
+        }
 
         public int Level { get; private set; }
         public int Gold { get; set; }
@@ -17,12 +19,12 @@ namespace A14_TextDungeon.Data
         public float MP { get; set; }
 
         public string Name { get; private set; }
-        public string Job { get; private set; }
+        public UserJob Job { get; private set; }
         public bool IsDead { get; private set; }
         public int Exp {  get; private set; }
         public int MaxExp {  get; private set; }
 
-        public User(string name, int level, string job, float attackPower, float defense, float maxHp, int maxMp, int gold, bool isDead)
+        public User(string name, int level, UserJob job, float attackPower, float defense, float maxHp, int maxMp, int gold, bool isDead)
         {
             Name = name;
             Level = level;
@@ -61,12 +63,11 @@ namespace A14_TextDungeon.Data
         public void LevelUp()
         {
             Console.WriteLine($"[레벨업!]\n현재 플레이어 레벨 : {Level}");
-            //inventory처럼 확인하고 -> 굿.......
-            if(QuestManager.quests[2].IsAccepted)
+            // 퀘스트 스크립트 함수로 빼기
+            if(Manager.Instance.questManager.quests[2].IsAccepted)
             {
-                QuestManager.quests[2].IsCompleted = true;
-                 //현호님 질문
-                QuestManager.quests[2].ClaimRewards(2);
+                Manager.Instance.questManager.quests[2].IsCompleted = true;
+                Manager.Instance.questManager.quests[2].ClaimRewards(2);
             }
         }
 
@@ -78,13 +79,6 @@ namespace A14_TextDungeon.Data
         public void Die()
         {
             IsDead = true;
-        }
-
-       
-        public enum UserJob
-        {
-            Warrior = 1,
-            Rogue = 2,
         }
 
         //최대 경험치 계산

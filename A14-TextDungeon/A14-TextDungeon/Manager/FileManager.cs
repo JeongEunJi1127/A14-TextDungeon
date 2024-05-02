@@ -1,6 +1,6 @@
-﻿namespace A14_TextDungeon.Manager
+﻿namespace A14_TextDungeon
 {
-    internal class FileManager
+    public class FileManager
     {
         // 파일 저장 로직 스크립트
     }

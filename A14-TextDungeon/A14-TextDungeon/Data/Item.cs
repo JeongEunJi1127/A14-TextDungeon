@@ -1,13 +1,18 @@
-﻿using System;
-using A14_TextDungeon.Scene;
-
-namespace A14_TextDungeon.Data
+﻿namespace A14_TextDungeon
 {
     public class Item
     {
+        public enum ItemType
+        {
+            Armor,
+            Weapon,
+            HPPotion,
+            MPPotion
+        }
+
         public string ItemName { get; private set; }
         public string ItemDescription { get; private set; }
-        public ItemType ItemType { get; private set; }
+        public ItemType Itemtype { get; private set; }
         public int ItemStat { get; private set; }
         public bool IsEquippd { get;  set; }
 
@@ -15,16 +20,15 @@ namespace A14_TextDungeon.Data
         {
             ItemName = name;
             ItemDescription = desription;
-            ItemType = type;
+            Itemtype = type;
             ItemStat = stat;
             IsEquippd = isEquippd;
-
         }
 
         public string DisplayItem()
         {
             string type;
-            switch (ItemType)
+            switch (Itemtype)
             {
                 case ItemType.Armor:
                     type = "방어력 +";

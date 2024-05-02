@@ -1,15 +1,10 @@
-﻿using A14_TextDungeon.Data;
-using A14_TextDungeon.Manager;
-using A14_TextDungeon.UI;
-using static A14_TextDungeon.Data.User;
-
-
-namespace A14_TextDungeon.Scene
+﻿namespace A14_TextDungeon
 {
     public class Battle
     {
+        public User user = Manager.Instance.gameManager.user;
         // Battle 첫 화면
-        public static void ShowBattle(bool isFirst)
+        public void ShowBattle(bool isFirst)
         {
             Console.Clear();
             Console.WriteLine("Battle!!\n");
@@ -17,13 +12,13 @@ namespace A14_TextDungeon.Scene
             // Battle 화면으로 돌아올 때마다 랜덤한 몬스터 값이 뽑히는 경우 방지
             if (isFirst)
             {
-                if(BattleManager.stageNum == 4)
+                if(Manager.Instance.battleManager.stageNum == 4)
                 {
-                    Boss.BossInit();
+                    Manager.Instance.gameManager.boss.BossInit();
                 }
                 else
                 {
-                    BattleManager.RandomMonster(BattleManager.stageNum);
+                    Manager.Instance.battleManager.RandomMonster(Manager.Instance.battleManager.stageNum);
                 }
             }
 
@@ -35,11 +30,11 @@ namespace A14_TextDungeon.Scene
             Console.WriteLine("2. 스킬\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
-            BattleInput.ShowBattleInput();
+            ShowBattleInput();
         }
 
         // Player 페이즈 구현 
-        public static void PlayerPhase()
+        public void PlayerPhase()
         {
             Console.Clear();
             Console.WriteLine("Battle!! - 나의 턴\n");
@@ -49,51 +44,22 @@ namespace A14_TextDungeon.Scene
 
             Console.WriteLine("0. 취소\n");
             Console.WriteLine("대상을 선택해주세요.\n");
-            
-            BattleInput.PlayerPhaseInput();
+
+            PlayerPhaseInput();
         }
 
         // Enemy 페이즈 구현
-        public static void EnemyPhase()
+        public void EnemyPhase()
         {
             Console.Clear();
 
-            for (int i = 0; i < BattleManager.monsters.Count; i++)
-            {
-                // 몬스터 데미지 계산
-                float monsterDamage = BattleManager.monsters[i].AttackDamage(BattleManager.monsters[i].AttackPower);
-
-                if (!BattleManager.monsters[i].IsDead)
-                {
-                    Console.WriteLine("Battle!! - 몬스터 턴\n");
-                    Console.WriteLine($"LV.{BattleManager.monsters[i].Level} {BattleManager.monsters[i].Name}의 공격 !");
-                    Console.WriteLine($"{GameManager.user.Name}을(를) 맞췄습니다. [데미지 : {monsterDamage}]\n");
-                    Console.WriteLine($"LV.{GameManager.user.Level} {GameManager.user.Name}");
-
-                    float nowHp = GameManager.user.HP;
-                    GameManager.user.TakeDamage(monsterDamage);
-                    Console.WriteLine($"HP {nowHp} -> {GameManager.user.HP}\n");
-
-                    // 게임 끝나면 탈출
-                    if (GameManager.user.IsDead)
-                    {
-                        Console.WriteLine("당신은 죽었습니다..");
-                        Thread.Sleep(2000);            
-                        break;
-                    }
-
-                    // 입력값
-                    Console.WriteLine("0. 다음");
-
-                    BattleInput.EnemyPhaseInput();
-                }
-            }
+            Manager.Instance.battleManager.EnemyAttack();
 
             // 전투 종료 조건
-            if (BattleManager.BattleEnd())
+            if (Manager.Instance.battleManager.BattleEnd())
             {
                 Thread.Sleep(1000);
-                Village.ShowVillage();
+                Manager.Instance.gameManager.village.ShowVillage();
             }
             else
             {
@@ -103,96 +69,94 @@ namespace A14_TextDungeon.Scene
         }
 
         // 스킬창 구현
-        public static void SkillStatus()
+        public void SkillStatus()
         {
             Console.Clear();
             Console.WriteLine("Battle!!\n");
 
-            Battle.ShowMonsterStat(true);
-            Battle.ShowPlayerStat();            
+            Manager.Instance.gameManager.battle.ShowMonsterStat(true);
+            Manager.Instance.gameManager.battle.ShowPlayerStat();            
 
             int userJob = 0;
 
-            switch (GameManager.user.Job)
+            switch (user.Job)
             {
-                case "전사":
-                    userJob = (int)UserJob.Warrior;                    
+                case User.UserJob.Warrior:
+                    userJob = (int)User.UserJob.Warrior;                    
                     break;
-                case "도적":
-                    userJob = (int)UserJob.Rogue;                    
+                case User.UserJob.Rogue:
+                    userJob = (int)User.UserJob.Rogue;                    
                     break;
                 default:
                     break;
             }
 
             // userJob 값에 따라 스킬 설명이 다르게 출력됨.
-            for (int i = 0; i < GameManager.skillList[userJob - 1].Length; i++)
+            for (int i = 0; i < Manager.Instance.gameManager.skillList[userJob - 1].Length; i++)
             {
-                Console.WriteLine($"{i + 1}. {GameManager.skillList[userJob - 1][i].Name} - MP {GameManager.skillList[userJob - 1][i].MP}");
-                Console.WriteLine($"   {GameManager.skillList[userJob - 1][i].Description}");
+                Console.WriteLine($"{i + 1}. {Manager.Instance.gameManager.skillList[userJob - 1][i].Name} - MP {Manager.Instance.gameManager.skillList[userJob - 1][i].MP}");
+                Console.WriteLine($"   {Manager.Instance.gameManager.skillList[userJob - 1][i].Description}");
             }
 
             Console.WriteLine("0. 취소\n");
             
-            switch((UserJob)userJob)
+            switch((User.UserJob)userJob)
             {
-                case UserJob.Warrior:
-                    BattleInput.SkillStatusInput();
+                case User.UserJob.Warrior:
+                    SkillStatusInput();
                     break;
-                case UserJob.Rogue:
-                    BattleInput.SkillStatusRogueInput();
+                case User.UserJob.Rogue:
+                    SkillStatusRogueInput();
                     break;
             }
-
-            
         }
 
         // 플레이어 스탯 보여주는 함수
-        public static void ShowPlayerStat()
+        public void ShowPlayerStat()
         {
             Console.WriteLine("\n[내정보]");
-            Console.WriteLine($"LV.{GameManager.user.Level} {GameManager.user.Name} ({GameManager.user.Job})");
-            Console.WriteLine($"HP {GameManager.user.HP}/{GameManager.user.MaxHP}");
-            Console.WriteLine($"MP {GameManager.user.MP}/{GameManager.user.MaxMP}\n");
+            Console.WriteLine($"LV.{user.Level} {user.Name} ({user.Job})");
+            Console.WriteLine($"HP {user.HP}/{user.MaxHP}");
+            Console.WriteLine($"MP {user.MP}/{user.MaxMP}\n");
         }
 
         // 몬스터 스탯 보여주는 함수
-        public static void ShowMonsterStat(bool showNum)
+        public void ShowMonsterStat(bool showNum)
         {
-            for (int i = 0; i < BattleManager.monsters.Count; i++)
+            for (int i = 0; i < Manager.Instance.battleManager.monsters.Count; i++)
             {
                 if (showNum)
                 {
-                    if (BattleManager.monsters[i].IsDead)
+                    if (Manager.Instance.battleManager.monsters[i].IsDead)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"{i + 1} LV.{BattleManager.monsters[i].Level} {BattleManager.monsters[i].Name} Dead");
+                        Console.WriteLine($"{i + 1} LV.{Manager.Instance.battleManager.monsters[i].Level} {Manager.Instance.battleManager.monsters[i].Name} Dead");
                         Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine($"{i + 1} LV.{BattleManager.monsters[i].Level} {BattleManager.monsters[i].Name} HP {BattleManager.monsters[i].HP}");
+                        Console.WriteLine($"{i + 1} LV.{Manager.Instance.battleManager.monsters[i].Level} {Manager.Instance.battleManager.monsters[i].Name} HP {Manager.Instance.battleManager.monsters[i].HP}");
 
                     }
                 }
                 else
                 {
-                    if (BattleManager.monsters[i].IsDead)
+                    if (Manager.Instance.battleManager.monsters[i].IsDead)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"LV.{BattleManager.monsters[i].Level} {BattleManager.monsters[i].Name}  Dead");
+                        Console.WriteLine($"LV.{Manager.Instance.battleManager.monsters[i].Level} {Manager.Instance.battleManager.monsters[i].Name}  Dead");
                         Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine($"LV.{BattleManager.monsters[i].Level} {BattleManager.monsters[i].Name}  HP {BattleManager.monsters[i].HP}");
+                        Console.WriteLine($"LV.{Manager.Instance.battleManager.monsters[i].Level} {Manager.Instance.battleManager.monsters[i].Name}  HP {Manager.Instance.battleManager.monsters[i].HP}");
                     }
                 }
             }
         }
 
         // Battle 결과창 보여주는 함수 - 게임이 끝나면 실행
-        public static void BattleResult(bool isWin)
+        public void BattleResult(bool isWin)
         {
             Console.Clear();
             Console.WriteLine("Battle!! - Result\n");
@@ -200,26 +164,378 @@ namespace A14_TextDungeon.Scene
             // 플레이어가 이기면
             if (isWin)
             {
-                BattleManager.stageNum++;
+                Manager.Instance.battleManager.stageNum++;
                 Console.WriteLine("Victory\n");
-                Console.WriteLine($"던전에서 몬스터 {BattleManager.monsterCount}마리를 잡았습니다.");
-                BattleManager.ShowReward();
+                Console.WriteLine($"던전에서 몬스터 {Manager.Instance.battleManager.monsterCount}마리를 잡았습니다.");
+                Manager.Instance.battleManager.ShowReward();
                 Console.WriteLine("\n전투가 끝나 MP를 10 회복합니다.\n");
-                GameManager.user.MP += 10;
+                user.MP += 10;
             }
             // 지면
             else
             {
                 Console.WriteLine("You Lose");
             }
-            GameManager.user.LevelUP(BattleManager.monsterExp);
+            user.LevelUP(Manager.Instance.battleManager.monsterExp);
             ShowPlayerStat();
 
             // 입력값 받기
             Console.WriteLine("0. 다음\n");
 
-            BattleInput.BattleResultInput();
+           BattleResultInput();
 
+        }
+
+        public void ShowBattleInput()
+        {
+            int input;
+
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+            if (isValidNum)
+            {
+                switch (input)
+                {
+                    case 1:
+                        Console.Clear();
+                        Manager.Instance.gameManager.battle.PlayerPhase();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Manager.Instance.gameManager.battle.SkillStatus();
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        ShowBattleInput();
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+                ShowBattleInput();
+            }
+        }
+
+        public void PlayerPhaseInput()
+        {
+            int input;
+
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+            if (isValidNum)
+            {
+                if (input == 0)
+                {
+                    Console.Clear();
+                    Manager.Instance.gameManager.battle.ShowBattle(false);
+                }
+
+                else if (1 <= input && input <= Manager.Instance.battleManager.monsters.Count)
+                {
+                    if (Manager.Instance.battleManager.monsters[input - 1].IsDead)
+                    {
+                        Console.WriteLine("잘못된 입력입니다.");
+                        PlayerPhaseInput();
+                    }
+                    else
+                    {
+                        Manager.Instance.battleManager.PlayerAttack(input - 1);
+                        Thread.Sleep(1000);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    PlayerPhaseInput();
+                }
+            }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+                PlayerPhaseInput();
+            }
+        }
+
+        public void PlayerAttackInput()
+        {
+            int input;
+
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+            if (isValidNum)
+            {
+                if (input == 0)
+                {
+                    if (Manager.Instance.battleManager.BattleEnd())
+                    {
+                        Thread.Sleep(1000);
+                        Manager.Instance.gameManager.village.ShowVillage();
+                    }
+                    else
+                    {
+                        if (Manager.Instance.battleManager.stageNum == 4)
+                        {
+                            Manager.Instance.gameManager.boss.BossPhase();
+                        }
+                        else
+                        {
+                            //몬스터 턴 실행
+                            Manager.Instance.gameManager.battle.EnemyPhase();
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    PlayerAttackInput();
+                }
+            }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+                PlayerAttackInput();
+            }
+        }
+
+        public void EnemyPhaseInput()
+        {
+            int input;
+
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+            if (isValidNum)
+            {
+                if (input == 0)
+                {
+                    Console.Clear();
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    EnemyPhaseInput();
+                }
+            }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+                EnemyPhaseInput();
+            }
+        }
+
+        public void BossPhaseInput()
+        {
+            int input;
+
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+            if (isValidNum)
+            {
+                if (input == 0)
+                {
+                    Manager.Instance.gameManager.battle.PlayerPhase();
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    BossPhaseInput();
+                }
+            }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+                BossPhaseInput();
+            }
+        }
+
+        public void BattleResultInput()
+        {
+            int input;
+
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+            if (isValidNum)
+            {
+                switch (input)
+                {
+                    case 0:
+                        Manager.Instance.gameManager.village.ShowVillage();
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        BattleResultInput();
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+                BattleResultInput();
+            }
+        }
+
+        public void SkillStatusInput()
+        {
+            int input;
+            Console.WriteLine("사용할 스킬을 선택해주세요.\n");
+
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+            if (isValidNum)
+            {
+                switch (input)
+                {
+                    case 0:
+                        Manager.Instance.gameManager.battle.ShowBattle(false);
+                        break;
+                    case 1:
+                        if (Manager.Instance.gameManager.user.MP >= 10)
+                        {
+                            Console.WriteLine("공격할 몬스터를 선택해주세요.\n");
+                            ChooseMonsterInput(1);
+                        }
+                        else
+                        {
+                            Console.WriteLine("MP가 부족합니다.\n");
+                            SkillStatusInput();
+                        }
+                        break;
+                    case 2:
+                        if (Manager.Instance.gameManager.user.MP >= 15)
+                        {
+                            Console.WriteLine("공격할 몬스터를 선택해주세요.\n");
+                            Console.Clear();
+                            Console.WriteLine("몬스터 2마리를 랜덤으로 공격합니다.\n");
+
+                            Random random = new Random();
+                            List<int> randomNumbers = new List<int>();
+                            int cnt = Manager.Instance.battleManager.monsters.Count(monster => !monster.IsDead);
+
+                            if (cnt < 2)
+                            {
+                                for (int i = 0; i < Manager.Instance.battleManager.monsters.Count; i++)
+                                {
+                                    if (!Manager.Instance.battleManager.monsters[i].IsDead)
+                                    {
+                                        randomNumbers.Add(i);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                while (randomNumbers.Count < 2)
+                                {
+                                    int randomNum = random.Next(0, Manager.Instance.battleManager.monsters.Count);
+                                    // 살아있는 몬스터 중 랜덤한 몬스터 2마리 뽑기
+                                    if (!randomNumbers.Contains(randomNum) && !Manager.Instance.battleManager.monsters[randomNum].IsDead)
+                                    {
+                                        randomNumbers.Add(randomNum);
+                                    }
+                                }
+                                randomNumbers.Sort();
+                            }
+                            Thread.Sleep(1000);
+                            Manager.Instance.battleManager.PlayerSkill(randomNumbers, 2);
+                        }
+                        else
+                        {
+                            Console.WriteLine("MP가 부족합니다.\n");
+                            SkillStatusInput();
+                        }
+                        break;
+
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        SkillStatusInput();
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+                SkillStatusInput();
+            }
+        }
+
+        public void SkillStatusRogueInput()
+        {
+            int input;
+            Console.WriteLine("사용할 스킬을 선택해주세요.\n");
+
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+            if (isValidNum)
+            {
+                switch (input)
+                {
+                    case 0:
+                        Manager.Instance.gameManager.battle.ShowBattle(false);
+                        break;
+                    case 1:
+                        if (Manager.Instance.gameManager.user.MP >= Manager.Instance.gameManager.skillList[(int)User.UserJob.Rogue - 1][0].MP)
+                        {
+                            Console.WriteLine("공격할 몬스터를 선택해주세요.\n");
+                            ChooseMonsterInput(3);
+                        }
+                        else
+                        {
+                            Console.WriteLine("MP가 부족합니다.\n");
+                            SkillStatusRogueInput();
+                        }
+                        break;
+                    case 2:
+                        if (Manager.Instance.gameManager.user.MP >= Manager.Instance.gameManager.skillList[(int)User.UserJob.Rogue - 1][1].MP)
+                        {
+                            Console.WriteLine("공격할 몬스터를 선택해주세요.\n");
+                            ChooseMonsterInput(4);
+                        }
+                        else
+                        {
+                            Console.WriteLine("MP가 부족합니다.\n");
+                            SkillStatusRogueInput();
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        SkillStatusRogueInput();
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+                SkillStatusRogueInput();
+            }
+        }
+
+        public void ChooseMonsterInput(int skillNum)
+        {
+            int input;
+
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+            if (isValidNum)
+            {
+                if (input == 0)
+                {
+                    Console.Clear();
+                    Manager.Instance.gameManager.battle.SkillStatus();
+                }
+                else if (1 <= input && input <= Manager.Instance.battleManager.monsters.Count)
+                {
+                    if (Manager.Instance.battleManager.monsters[input - 1].IsDead)
+                    {
+                        Console.WriteLine("잘못된 입력입니다.");
+                        ChooseMonsterInput(skillNum);
+                    }
+                    else
+                    {
+                        List<int> list = new List<int>() { input - 1 };
+                        Manager.Instance.battleManager.PlayerSkill(list, skillNum);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    ChooseMonsterInput(skillNum);
+                }
+            }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+                ChooseMonsterInput(skillNum);
+            }
         }
     }
 }

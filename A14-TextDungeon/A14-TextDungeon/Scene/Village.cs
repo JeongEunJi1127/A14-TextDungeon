@@ -1,18 +1,15 @@
-﻿using System;
-using A14_TextDungeon.Manager;
-
-namespace A14_TextDungeon.Scene
+﻿namespace A14_TextDungeon
 {
     public class Village
     {
-        public static void ShowVillage()
+        public void ShowVillage()
         {
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.\n");
                 Console.WriteLine("1. 상태 보기");
-                Console.WriteLine($"2. 전투 시작 (현재 진행 : {BattleManager.stageNum}층)");
+                Console.WriteLine($"2. 전투 시작 (현재 진행 : {Manager.Instance.battleManager.stageNum}층)");
                 Console.WriteLine("3. 인벤 토리");
                 Console.WriteLine("4. 퀘스트 보기");
                 Console.WriteLine("5. 회복\n");
@@ -27,23 +24,23 @@ namespace A14_TextDungeon.Scene
                     {
                         case 1:
                             Console.Clear();
-                            Status.ShowStatus();
+                            Manager.Instance.gameManager.status.ShowStatus();
                             break;
                         case 2:
                             Console.Clear();
-                            Battle.ShowBattle(true);
+                            Manager.Instance.gameManager.battle.ShowBattle(true);
                             break;
                         case 3:
                             Console.Clear();
-                            Inventory.ShowInventory();
+                            Manager.Instance.gameManager.inventory.ShowInventory();
                             break;
                         case 4:
                             Console.Clear();
-                            QuestManager.ShowQuests();
+                            Manager.Instance.questManager.ShowQuests();
                             break;
                         case 5:
                             Console.Clear();
-                            Rest.ShowRestUI();
+                            Manager.Instance.gameManager.rest.ShowRestUI();
                             break;
 
                         default:
