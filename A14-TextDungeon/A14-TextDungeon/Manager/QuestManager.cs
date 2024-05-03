@@ -117,7 +117,7 @@ namespace A14_TextDungeon
                 Console.WriteLine("2. 거절\n");
             }
             Console.WriteLine("0. 나가기");
-            Console.WriteLine("\n--------------------");
+            Console.WriteLine("--------------------");
         }
 
         public void QuestClear(int num)
@@ -142,7 +142,6 @@ namespace A14_TextDungeon
             {
                  Console.WriteLine($"{s}");
             }
-            Console.WriteLine("\n\n");
 
             switch(stagenum)
             {
@@ -151,27 +150,25 @@ namespace A14_TextDungeon
                     
                     Manager.Instance.inventoryManager.AddItem(questReward);
                     Manager.Instance.gameManager.user.AddGold(5); // AddGold()대신, Quest Gold로 넣기
-                    Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {Manager.Instance.gameManager.user.Gold}G");
                     break;
                 case 1:
                     Item questReward1 = new Item("여신의 축복",30,Item.ItemType.HPPotion,"이 갑옷에는 알 수 없는 힘이 깃들어 있다.");
 
                     Manager.Instance.inventoryManager.AddItem(questReward1);
                     Manager.Instance.gameManager.user.AddGold(5);
-                    Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {Manager.Instance.gameManager.user.Gold}G");
                     break;
                 case 2:
                     Item questReward2 = new Item("강화된 마체테",5, Item.ItemType.Weapon,"피에 젖어 있다.");
 
                     Manager.Instance.inventoryManager.AddItem(questReward2);
                     Manager.Instance.gameManager.user.AddGold(5);
-                    Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {Manager.Instance.gameManager.user.Gold}G");
                     break;
             }
             //퀘스트 반복
             //다시 false 넣기
             quests[stagenum].IsAccepted =false;
             quests[stagenum].IsCompleted = false;
+            Console.ReadLine();
         }
 
         public void InputQuestNumber(int stagenum)
@@ -201,8 +198,8 @@ namespace A14_TextDungeon
                 Console.Clear();
                 Console.WriteLine("Quest!!\n\n");
                 Console.WriteLine(quests[0].Name,"\n");
-                Console.WriteLine(quests[0].Description,"\n");
                 Console.WriteLine($"미니언 {quests[0].TargetCount}마리 처치 ({quests[0].CurrentCount}/{Manager.Instance.questManager.quests[0].TargetCount})\n");
+                Console.WriteLine(quests[0].Description,"\n\n");
                 Console.WriteLine("- 보상 -");
                 foreach (string s in quests[0].Rewards)
                 {
@@ -219,6 +216,7 @@ namespace A14_TextDungeon
             if(quests[1].IsCompleted)
             {
                 ClaimRewards(1);
+                Manager.Instance.questManager.ShowQuests();
             }
             else
             {

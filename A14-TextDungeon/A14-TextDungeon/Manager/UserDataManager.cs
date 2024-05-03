@@ -82,7 +82,7 @@
                         job = "전사";
                         attackPower = 10;
                         defense = 5;
-                        hp = 100;
+                        hp = 10000;
                         mp = 50;
 
                         CreateUser(level, User.UserJob.Warrior, attackPower, defense, hp, mp, gold, isdead);
