@@ -21,8 +21,8 @@
         {
             Console.Clear();
             Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 직업을 설정해주세요.\n");
-            Console.WriteLine("1. 전사");
-            Console.WriteLine("2. 도적\n");
+            Console.WriteLine("1. 전사\tHP:100\tMP:50\t공격력:10   방어력:5");
+            Console.WriteLine("2. 도적\tHP:60\tMP:70\t공격력:15   방어력:3\n");
 
             SetJobInput();
         }
@@ -59,7 +59,7 @@
 
         public void SetJobInput()
         {
-            Console.WriteLine("원하시는 행동을 입력해주세요.\n");
+            Console.WriteLine("원하는 직업을 입력해주세요.\n");
             int input;
             bool isValidNum = int.TryParse(Console.ReadLine(), out input);
 
