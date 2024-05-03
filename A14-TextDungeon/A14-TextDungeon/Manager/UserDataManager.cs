@@ -88,8 +88,8 @@
                 {
                     case User.UserJob.Warrior: 
                     case User.UserJob.Rogue:                        
-                        CreateUser(level, userJob, attackPower, defense, hp, mp, gold, isdead);
-                        return;
+                       CreateUser(level, userJob, attackPower, defense, hp, mp, gold, isdead);
+                        return;                       
                     default:
                         Console.WriteLine("\n잘못된 입력입니다.\n");
                         SetJobInput();

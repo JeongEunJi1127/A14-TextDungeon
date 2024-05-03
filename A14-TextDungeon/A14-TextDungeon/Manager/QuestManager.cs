@@ -7,9 +7,9 @@ namespace A14_TextDungeon
             //quest.Add(newQuest())
             //quests.Add(new Quest("name", "설명", 0, false, false, rewards1배열));
             //string name, string description, int targetCount, bool IsAccepted, bool IsCompleted, string[] rewards
-            new Quest ("[마을을 위협하는 미니언 처치]","이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",1,false,false,new string[] { "쓸만한 방패 x 1", "5G" }),
-            new Quest ("[장비를 장착해보자!]","이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",1,false,false,new string[] { "여신의 축복 x 1", "5G" }),
-            new Quest ("[더욱 더 강해지기!]","이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",1,false,false, new string[] { "강화된 마체테 x 1", "5G" })
+            new Quest ("[마을을 위협하는 미니언 처치]","이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",1,false,false,false, new string[] { "쓸만한 방패 x 1", "5G" }),
+            new Quest ("[장비를 장착해보자!]","???: 이봐, 먼 길을 떠나려는 그대여.\n자네가 향하려는 길은 아주 험하고 위험한 길이라네. 뭐라도 걸치는 게 어떤가?\n목숨이 아깝지 않다면 말이야..",1,false,false,false, new string[] { "여신의 축복 x 1", "5G" }),
+            new Quest ("[더욱 더 강해지기!]","당신의 강함을 증명해 보세요.\n수많은 모험가들이 도전했고 또한 실패했지만, 어쩌면 당신은 다를지도 모르죠.\n행운을 빌어요.",1,false,false, false, new string[] { "강화된 마체테 x 1", "5G" })
         };
 
         public void ShowQuests()
@@ -47,13 +47,18 @@ namespace A14_TextDungeon
                         return;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
+                        ShowQuests();
                         break;
                 }
             }
         }
         public string GetQuestStatusDisplay(int stagenum)
         {
-            if (quests[stagenum].IsAccepted == true)
+            if (quests[stagenum].IsCompleted)
+            {
+                return " (완료)";
+            }
+            else if (quests[stagenum].IsAccepted)
             {
                 return " (진행중)";
             }
@@ -63,28 +68,40 @@ namespace A14_TextDungeon
             }
         }
 
-        public void AcceptOrRejectQuest(string input, int stagenum)
+        public void AcceptOrRejectQuest(int input, int stagenum)
         {
-            switch (input)
+            while(true)
             {
-                case "0":
-                    Manager.Instance.gameManager.village.ShowVillage();
-                    return;
-                case "1":
-                    Console.WriteLine("\n\n퀘스트를 수락했습니다!");
-                    quests[stagenum].IsAccepted = true;
-                    Console.WriteLine("돌아가려면 Enter를 누르세요");
-                    Console.ReadLine();
-                    return;
-                case "2":
-                    Console.WriteLine("\n\n퀘스트를 거절했습니다.");
-                    Console.WriteLine("돌아가려면 Enter를 누르세요");
-                    Console.ReadLine();
-                    return;
-                default:
-                    Console.WriteLine("잘못된 선택입니다.");
-                    Console.ReadLine();
-                    break;
+                switch (input)
+                {
+                    case 0:
+                        Manager.Instance.questManager.ShowQuests();
+                        return;
+                    case 1:
+                        if(!quests[stagenum].IsAccepted)
+                        {
+                            Console.WriteLine("\n\n퀘스트를 수락했습니다!");
+                            quests[stagenum].IsAccepted = true;
+                            Console.WriteLine("돌아가려면 아무 키나 누르세요");
+                            Console.ReadKey();
+                        }
+                        Manager.Instance.questManager.ShowQuests();
+                        return;
+
+                    case 2:
+                        if(!quests[stagenum].IsAccepted)
+                        {
+                            Console.WriteLine("\n\n퀘스트를 거절했습니다.");
+                            Console.WriteLine("돌아가려면 아무 키나 누르세요");
+                            Console.ReadKey();;
+                        }
+                        Manager.Instance.questManager.ShowQuests();
+                        return;
+                    default: 
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Console.ReadKey();
+                        break;
+                }
             }
         }
 
@@ -100,80 +117,152 @@ namespace A14_TextDungeon
                 Console.WriteLine("2. 거절\n");
             }
             Console.WriteLine("0. 나가기");
-            Console.WriteLine("\n--------------------");
+            Console.WriteLine("--------------------");
         }
 
+        public void QuestClear(int num)
+        {
+            if(quests[num].IsAccepted && quests[num].IsWaiting == false)
+            {
+                quests[num].IsCompleted = true;
+                quests[num].IsWaiting = true;
+                Console.WriteLine("\n\n----------------------\n");
+                Console.WriteLine("|||[퀘스트 완료] 퀘스트 창에서 보상을 확인하세요|||");
+                Console.WriteLine("\n----------------------\n\n");
+                Console.ReadLine();
+            }
+        }
+
+        // 보상을 주는 로직
+        public void ClaimRewards(int stagenum)
+        {
+            Console.WriteLine("----------------------\n\n");
+            Console.WriteLine($"[{quests[stagenum].Name}]");
+            Console.WriteLine("퀘스트를 완료하였습니다. 보상을 획득합니다\n");
+            Console.WriteLine("- 보상 -");
+            foreach (string s in quests[stagenum].Rewards)
+            {
+                 Console.WriteLine($"{s}");
+            }
+
+            switch(stagenum)
+            {
+                case 0:
+                    Item questReward = new Item("쓸만한 갑옷",5,Item.ItemType.Armor,"범부에 불과했던 남자가, 오직 한 사람만을 떠올리며 만든 갑옷이다. 제법 쓸만하다."); // 아이템 생성
+                    
+                    Manager.Instance.inventoryManager.AddItem(questReward);
+                    Manager.Instance.gameManager.user.AddGold(5); // AddGold()대신, Quest Gold로 넣기
+                    break;
+                case 1:
+                    Item questReward1 = new Item("여신의 축복",30,Item.ItemType.HPPotion,"이 갑옷에는 알 수 없는 힘이 깃들어 있다.");
+
+                    Manager.Instance.inventoryManager.AddItem(questReward1);
+                    Manager.Instance.gameManager.user.AddGold(5);
+                    break;
+                case 2:
+                    Item questReward2 = new Item("강화된 마체테",5, Item.ItemType.Weapon,"피에 젖어 있다.");
+
+                    Manager.Instance.inventoryManager.AddItem(questReward2);
+                    Manager.Instance.gameManager.user.AddGold(5);
+                    break;
+            }
+            //퀘스트 반복
+            //다시 false 넣기
+            quests[stagenum].IsAccepted =false;
+            quests[stagenum].IsCompleted = false;
+            quests[stagenum].IsWaiting = false;
+            Console.WriteLine("보상을 받으려면 Enter를 누르세요"); 
+            Console.ReadLine();
+            Manager.Instance.gameManager.village.ShowVillage();
+        }
+
+        public void InputQuestNumber(int stagenum)
+        {
+            while(true)
+            {
+                var isSuccess = int.TryParse(Console.ReadLine(),out int input);
+                if(!isSuccess)
+                {
+                    Console.WriteLine("잘못된 입력입니다");
+                }
+                else
+                {
+                    AcceptOrRejectQuest(input, stagenum);
+                }
+            }
+        }
         //퀘스트 1: 미니언 잡기
         public void ShowMinionQuest()
         {
-            Console.WriteLine("Quest!!\n\n");
-            Console.WriteLine(quests[0].Name,"\n");
-            Console.WriteLine(quests[0].Description,"\n");
-            Console.WriteLine($"미니언 {quests[0].TargetCount}마리 처치 ({quests[0].CurrentCount}/{Manager.Instance.questManager.quests[0].TargetCount})\n");
-            Console.WriteLine("- 보상 -");
-            foreach (string s in quests[0].Rewards)
+            if(quests[0].IsCompleted)
             {
-                Console.WriteLine(s);
+                ClaimRewards(0);
             }
-            DisplayQuestOptions(0);
-            string input = Console.ReadLine();
-            AcceptOrRejectQuest(input, 0);
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Quest!!\n\n");
+                Console.WriteLine(quests[0].Name,"\n");
+                Console.WriteLine($"미니언 {quests[0].TargetCount}마리 처치 ({quests[0].CurrentCount}/{Manager.Instance.questManager.quests[0].TargetCount})\n");
+                Console.WriteLine(quests[0].Description,"\n\n");
+                Console.WriteLine("\n- 보상 -");
+                foreach (string s in quests[0].Rewards)
+                {
+                    Console.WriteLine(s);
+                }
+                DisplayQuestOptions(0);
+                InputQuestNumber(0);
+            }
         }
 
         //퀘스트 2: 장비 장착하기 
         public void ShowEquipmentQuest(Item item)
         {
-            Console.WriteLine("Quest!!\n\n");
-            Console.WriteLine(quests[1].Name,"\n");
-            Console.WriteLine(quests[1].Description,"\n");
-            Console.WriteLine($"인벤토리에서 아무 장비나 {quests[0].TargetCount}개 이상 장착하기)\n");
-            Console.WriteLine("- 보상 -");
-            foreach (string s in quests[1].Rewards)
+            if(quests[1].IsCompleted)
             {
-                Console.WriteLine(s);
+                ClaimRewards(1);
+                Manager.Instance.questManager.ShowQuests();
             }
-            DisplayQuestOptions(1);
-            string input = Console.ReadLine();
-            AcceptOrRejectQuest(input,1); 
-        }
-
-        public void ClearEquipmentQuest()
-        {
-            // 퀘스트 클리어 여부를 확인할 때 사용
-            foreach (Item item in Manager.Instance.inventoryManager.items)
+            else
             {
-                if (item.IsEquippd)
+                Console.Clear();
+                Console.WriteLine("Quest!!\n\n");
+                Console.WriteLine(quests[1].Name,"\n");
+                Console.WriteLine($"(인벤토리에서 아무 장비나 {quests[0].TargetCount}개 이상 장착하기)\n");
+                Console.WriteLine(quests[1].Description,"\n");
+                Console.WriteLine("\n- 보상 -");
+                foreach (string s in quests[1].Rewards)
                 {
-                    // 해당 아이템과 관련된 퀘스트를 찾기
-                    foreach (Quest quest in quests)
-                    {
-                        if (quest.Name == "[장비를 장착해보자!]")
-                        {
-                            if (quest.IsCompleted == true)
-                            {
-                                quest.ClaimRewards(1); // 보상 획득
-                            }
-                        }
-                    }
+                    Console.WriteLine(s);
                 }
+                DisplayQuestOptions(1);
+                InputQuestNumber(1);
             }
         }
 
         //퀘스트 3: 레벨업 
         public void ShowLevelUpQuest()
         {
-            Console.WriteLine("Quest!!\n\n");
-            Console.WriteLine(quests[2].Name,"\n");
-            Console.WriteLine(quests[2].Description,"\n");
-            Console.WriteLine($"인벤토리에서 아무 장비나 {quests[2].TargetCount}개 이상 장착하기)\n");
-            Console.WriteLine("- 보상 -");
-            foreach (string s in quests[2].Rewards)
+            if(quests[2].IsCompleted)
             {
-                Console.WriteLine(s);
+                ClaimRewards(2);
             }
-            DisplayQuestOptions(2);
-            string input = Console.ReadLine();
-            AcceptOrRejectQuest(input,2);
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Quest!!\n\n");
+                Console.WriteLine(quests[2].Name,"\n");
+                Console.WriteLine($"({quests[2].TargetCount}레벨업 하기)\n");
+                Console.WriteLine(quests[2].Description,"\n");
+                Console.WriteLine("\n- 보상 -");
+                foreach (string s in quests[2].Rewards)
+                {
+                    Console.WriteLine(s);
+                }
+                DisplayQuestOptions(2);
+                InputQuestNumber(2);
+            }
+            
         }
     }
 }
