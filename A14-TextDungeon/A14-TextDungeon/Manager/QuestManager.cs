@@ -5,7 +5,7 @@ namespace A14_TextDungeon
     public class QuestManager
     {
         public List<Quest> quests = new List<Quest>();
-        
+
         public void ShowQuests()
         {
             Item item = new Item("Dummy", "Dummy", Item.ItemType.Armor, 2, false);
@@ -75,7 +75,7 @@ namespace A14_TextDungeon
 
         public void AcceptOrRejectQuest(int input, int stagenum)
         {
-            while (true)
+            while(true)
             {
                 switch (input)
                 {
@@ -83,6 +83,7 @@ namespace A14_TextDungeon
                         Manager.Instance.questManager.ShowQuests();
                         return;
                     case 1:
+
                         if (!quests[stagenum].IsAccepted)
                         {
                             Console.WriteLine("\n\n퀘스트를 수락했습니다!");
@@ -251,7 +252,7 @@ namespace A14_TextDungeon
         //퀘스트 3: 레벨업 
         public void ShowLevelUpQuest()
         {
-            if (quests[2].IsCompleted)
+            if(quests[2].IsCompleted)
             {
                 ClaimRewards(2);
             }
@@ -270,7 +271,6 @@ namespace A14_TextDungeon
                 DisplayQuestOptions(2);
                 InputQuestNumber(2);
             }
-
         }
     }
 }

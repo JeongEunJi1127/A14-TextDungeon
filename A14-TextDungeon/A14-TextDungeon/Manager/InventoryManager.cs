@@ -1,4 +1,6 @@
-﻿namespace A14_TextDungeon
+﻿
+
+namespace A14_TextDungeon
 {
     public class InventoryManager
     {
@@ -58,6 +60,7 @@
         public void EquipItem(Item item)
         {            
             item.IsEquippd = true;
+
             //장착 퀘스트 클리어 조건
             Manager.Instance.questManager.QuestClear(1);
         }
