@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using A14_TextDungeon.Data;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using static A14_TextDungeon.Item;
 namespace A14_TextDungeon
 {
@@ -16,10 +18,11 @@ namespace A14_TextDungeon
             string inventoryData = JsonConvert.SerializeObject(Manager.Instance.inventoryManager.items);
             File.WriteAllText(path + "\\UserInventoryData.json", inventoryData);
 
-            string storedata = JsonConvert.SerializeObject(Manager.Instance.shopManager.products);
-            File.WriteAllText(path + "\\StoreItemData.json", storedata);
+            string storeData = JsonConvert.SerializeObject(Manager.Instance.shopManager.products);
+            File.WriteAllText(path + "\\StoreItemData.json", storeData);
 
-            // 퀘스트 구현 후 연동 - 진행 중인 퀘스트 정보도 저장해야함
+            string questData = JsonConvert.SerializeObject(Manager.Instance.questManager.quests);
+            File.WriteAllText(path + "\\QuestData.json", questData);
         }
 
         public void LoadData()
@@ -70,8 +73,14 @@ namespace A14_TextDungeon
                     }
                 }
 
-                //퀘스트 구현 후 연동
+                //퀘스트 데이터 Load
+                string questLData = File.ReadAllText(path + "\\QuestData.json");
+                List<Quest> questLoadData = JsonConvert.DeserializeObject<List<Quest>>(questLData);
 
+                foreach (Quest quest in questLoadData)
+                {
+                     Manager.Instance.questManager.AddQuest(quest);
+                }
             }
         }
 
@@ -81,9 +90,11 @@ namespace A14_TextDungeon
             File.Delete(path + "\\UserData.json");
             File.Delete(path + "\\UserInventoryData.json");
             File.Delete(path + "\\StoreItemData.json");
+            File.Delete(path + "\\QuestData.json");
+
             Manager.Instance.shopManager.ClearShop();
             Manager.Instance.inventoryManager.ClearInventory();
-            //퀘스트 구현 후 연동
+            Manager.Instance.questManager.ResetQuest();
 
             LoadData();
         }

@@ -55,23 +55,13 @@
         }
 
         //아이템 장착
-        //장착 퀘스트 클리어 조건
         public void EquipItem(Item item)
         {            
             item.IsEquippd = true;
-
-            if (Manager.Instance.questManager.quests[1].IsAccepted)
-            {
-                Manager.Instance.questManager.quests[1].IsCompleted = true;
-
-                //기타 보상에 대한 내용 추가 -> Quest에 함수로 만들어서 빼기
-                foreach (string reward in Manager.Instance.questManager.quests[1].Rewards)
-                {
-                    // 아이템 추가
-                }
-            }
-            Manager.Instance.fileManager.SaveData();
+            //장착 퀘스트 클리어 조건
+            Manager.Instance.questManager.QuestClear(1);
         }
+
         //장비아이템 중복 장착 방지 로직
         public void EquippedItemCheck(Item item)
         {

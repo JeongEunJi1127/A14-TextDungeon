@@ -73,18 +73,6 @@
             Manager.Instance.fileManager.SaveData();
         }
 
-        public void LevelUp()
-        {
-            Console.WriteLine($"[레벨업!]\n현재 플레이어 레벨 : {Level}");
-            // 퀘스트 스크립트 함수로 빼기
-            if(Manager.Instance.questManager.quests[2].IsAccepted)
-            {
-                Manager.Instance.questManager.quests[2].IsCompleted = true;
-                Manager.Instance.questManager.quests[2].ClaimRewards(2);
-            }
-            Manager.Instance.fileManager.SaveData();
-        }
-
         public void AddGold(int amount)
         {
             Gold += amount;
@@ -127,6 +115,7 @@
                 MaxExp = CalculateMaxExp();
                 AttackPower += 0.5f;
                 Defense += 1f;
+                Manager.Instance.questManager.QuestClear(2);
             }
             Manager.Instance.fileManager.SaveData();
         }
