@@ -76,7 +76,10 @@ namespace A14_TextDungeon
                 //퀘스트 데이터 Load
                 string questLData = File.ReadAllText(path + "\\QuestData.json");
                 List<Quest> questLoadData = JsonConvert.DeserializeObject<List<Quest>>(questLData);
-
+                if (Manager.Instance.questManager.quests != null)
+                {
+                    Manager.Instance.questManager.ResetQuest();
+                }
                 foreach (Quest quest in questLoadData)
                 {
                      Manager.Instance.questManager.AddQuest(quest);

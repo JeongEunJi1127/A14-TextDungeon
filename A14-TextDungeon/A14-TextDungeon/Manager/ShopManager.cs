@@ -6,7 +6,6 @@
         public void AddProduct(ShopProduct product)
         {
             products.Add(product);
-            Manager.Instance.fileManager.SaveData();
         }
         public void RemoveProduct(ShopProduct product)
         {

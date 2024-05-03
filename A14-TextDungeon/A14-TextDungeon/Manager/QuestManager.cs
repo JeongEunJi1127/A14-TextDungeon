@@ -178,10 +178,10 @@ namespace A14_TextDungeon
             quests[stagenum].IsAccepted = false;
             quests[stagenum].IsCompleted = false;
             quests[stagenum].IsWaiting = false;
+            Manager.Instance.fileManager.SaveData();
             Console.WriteLine("보상을 받으려면 Enter를 누르세요");
             Console.ReadLine();
             Manager.Instance.gameManager.village.ShowVillage();
-            Manager.Instance.fileManager.SaveData();
         }
 
         public void InputQuestNumber(int stagenum)
