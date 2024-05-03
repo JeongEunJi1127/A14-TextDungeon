@@ -1,8 +1,5 @@
 ﻿using A14_TextDungeon.Data;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using static A14_TextDungeon.Item;
 namespace A14_TextDungeon
 {
     public class FileManager
@@ -33,7 +30,7 @@ namespace A14_TextDungeon
                 Manager.Instance.userDataManager.SetName();
                 Manager.Instance.gameManager.Init();
                 SaveData();
-                Manager.Instance.gameManager.village.ShowVillage(); 
+                Manager.Instance.gameManager.village.ShowVillage();
                 return;
             }
             else
@@ -46,7 +43,7 @@ namespace A14_TextDungeon
                 // 인벤토리 데이터 Load
                 string inventoryLData = File.ReadAllText(path + "\\UserInventoryData.json");
                 List<Item> inventoryLoadData = JsonConvert.DeserializeObject<List<Item>>(inventoryLData);
-                if(Manager.Instance.inventoryManager.items!= null)
+                if (Manager.Instance.inventoryManager.items != null)
                 {
                     Manager.Instance.inventoryManager.ClearInventory();
                 }
@@ -76,13 +73,14 @@ namespace A14_TextDungeon
                 //퀘스트 데이터 Load
                 string questLData = File.ReadAllText(path + "\\QuestData.json");
                 List<Quest> questLoadData = JsonConvert.DeserializeObject<List<Quest>>(questLData);
+
                 if (Manager.Instance.questManager.quests != null)
                 {
                     Manager.Instance.questManager.ResetQuest();
                 }
                 foreach (Quest quest in questLoadData)
                 {
-                     Manager.Instance.questManager.AddQuest(quest);
+                    Manager.Instance.questManager.AddQuest(quest);
                 }
             }
         }

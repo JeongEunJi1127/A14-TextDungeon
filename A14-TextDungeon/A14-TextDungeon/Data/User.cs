@@ -23,8 +23,8 @@
         public bool IsDead { get; private set; }
         public int Exp {  get; private set; }
         public int MaxExp {  get; private set; }
-
-        public User(string name, int level, UserJob job, float attackPower, float defense, float maxHp, float maxMp, int gold, bool isDead)
+        public int StageNum { get;  set; }
+        public User(string name, int level, UserJob job, float attackPower, float defense, float maxHp, float maxMp, int gold, int stageNum, bool isDead)
         {
             Name = name;
             Level = level;
@@ -37,6 +37,7 @@
             MP = maxMp;
             Gold = gold;
             IsDead = isDead;
+            StageNum = stageNum;
             Exp = 0;
             MaxExp = CalculateMaxExp();
         }       

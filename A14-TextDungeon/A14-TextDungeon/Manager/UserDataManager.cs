@@ -106,7 +106,7 @@
         public void CreateUser(int level, User.UserJob job, float attackPower, float defense, float hp, float mp, int gold, bool isdead)
         {
             Console.Clear();
-            Manager.Instance.gameManager.user = new User(saveName, level, job, attackPower, defense, hp, mp, gold, isdead);
+            Manager.Instance.gameManager.user = new User(saveName, level, job, attackPower, defense, hp, mp, gold, 1, isdead);
             Manager.Instance.fileManager.SaveData();
         }
     }

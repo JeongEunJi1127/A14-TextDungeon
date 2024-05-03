@@ -11,13 +11,13 @@
             // Battle 화면으로 돌아올 때마다 랜덤한 몬스터 값이 뽑히는 경우 방지
             if (isFirst)
             {
-                if (Manager.Instance.battleManager.stageNum == 4)
+                if (Manager.Instance.gameManager.user.StageNum == 4)
                 {
                     Manager.Instance.gameManager.boss.BossInit();
                 }
                 else
                 {
-                    Manager.Instance.battleManager.RandomMonster(Manager.Instance.battleManager.stageNum);
+                    Manager.Instance.battleManager.RandomMonster(Manager.Instance.gameManager.user.StageNum);
                 }
             }
 
@@ -165,7 +165,7 @@
             // 플레이어가 이기면
             if (isWin)
             {
-                Manager.Instance.battleManager.stageNum++;
+                Manager.Instance.gameManager.user.StageNum++;
                 Console.WriteLine("Victory\n");
                 Console.WriteLine($"던전에서 몬스터 {Manager.Instance.battleManager.monsterCount}마리를 잡았습니다.");
                 Manager.Instance.battleManager.ShowReward();
@@ -293,7 +293,7 @@
                     }
                     else
                     {
-                        if (Manager.Instance.battleManager.stageNum == 4)
+                        if (Manager.Instance.gameManager.user.StageNum == 4)
                         {
                             Manager.Instance.gameManager.boss.BossPhase();
                         }

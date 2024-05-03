@@ -5,8 +5,6 @@
         public List <Monster>monsters = new List<Monster>();
         // 지금까지 잡은 몬스터 개수
         public int slayedMonster = 0;
-        // 스테이지 넘버
-        public int stageNum = 1;
         // 몬스터 개수
         public int monsterCount = 1;
         // 몬스터 경험치
@@ -380,7 +378,7 @@
         {
             List<Monster> deadMonsters = monsters.Where(x => x.IsDead).ToList();
 
-            if(stageNum == 4)
+            if(Manager.Instance.gameManager.user.StageNum == 4)
             {
                 if (Manager.Instance.gameManager.user.IsDead)
                 {
