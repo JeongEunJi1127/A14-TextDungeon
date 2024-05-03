@@ -24,7 +24,7 @@
         public int Exp {  get; private set; }
         public int MaxExp {  get; private set; }
 
-        public User(string name, int level, UserJob job, float attackPower, float defense, float maxHp, int maxMp, int gold, bool isDead)
+        public User(string name, int level, UserJob job, float attackPower, float defense, float maxHp, float maxMp, int gold, bool isDead)
         {
             Name = name;
             Level = level;
