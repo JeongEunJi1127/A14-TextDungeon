@@ -86,6 +86,7 @@
                                                   $"MP +{user.MaxMP - user.MP}");
                                 user.HP = user.MaxHP;
                                 user.MP = user.MaxMP;
+                                Manager.Instance.fileManager.SaveData();
                             }
                         }
                         Thread.Sleep(1000);
@@ -119,6 +120,7 @@
                                     Console.WriteLine($"HP +30");
                                     user.HP += 30;
                                 }
+                                Manager.Instance.fileManager.SaveData();
                             }
                         }
                         Thread.Sleep(1000);
@@ -152,6 +154,7 @@
                                     Console.WriteLine($"MP +30");
                                     user.MP += 30;
                                 }
+                                Manager.Instance.fileManager.SaveData();
                             }
                         }
                         Thread.Sleep(1000);

@@ -44,7 +44,7 @@ namespace A14_TextDungeon
                 case 0:
                     Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {Manager.Instance.gameManager.user.Gold}G");
 
-                    Item questReward = new Item("쓸만한 갑옷",5,Item.ItemType.Armor,"범부에 불과했던 남자가, 오직 한 사람만을 떠올리며 만든 갑옷이다. 제법 쓸만하다."); // 아이템 생성
+                    Item questReward = new Item("쓸만한 갑옷","범부에 불과했던 남자가, 오직 한 사람만을 떠올리며 만든 갑옷이다. 제법 쓸만하다.", Item.ItemType.Armor,5); // 아이템 생성
 
                     Manager.Instance.inventoryManager.AddItem(questReward);
                     Manager.Instance.gameManager.user.AddGold(5); // 골드 추가
@@ -52,7 +52,7 @@ namespace A14_TextDungeon
                 case 1:
                     Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {Manager.Instance.gameManager.user.Gold}G");
                     
-                    Item questReward1 = new Item("여신의 축복",30,Item.ItemType.HPPotion,"이 갑옷에는 알 수 없는 힘이 깃들어 있다.");
+                    Item questReward1 = new Item("여신의 축복", "이 갑옷에는 알 수 없는 힘이 깃들어 있다.", Item.ItemType.HPPotion, 30);
 
                     Manager.Instance.inventoryManager.AddItem(questReward1);
                     Manager.Instance.gameManager.user.AddGold(5);
@@ -60,7 +60,7 @@ namespace A14_TextDungeon
                 case 2:
                     Console.WriteLine($"골드 5G를 획득하였습니다. 현재 보유한 골드: {Manager.Instance.gameManager.user.Gold}G");
                     
-                    Item questReward2 = new Item("강화된 마체테",5, Item.ItemType.Weapon,"피에 젖어 있다.");
+                    Item questReward2 = new Item("강화된 마체테", "피에 젖어 있다.", Item.ItemType.Weapon, 5);
 
                     Manager.Instance.inventoryManager.AddItem(questReward2);
                     Manager.Instance.gameManager.user.AddGold(5);

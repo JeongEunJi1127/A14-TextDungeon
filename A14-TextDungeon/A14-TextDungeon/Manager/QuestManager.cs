@@ -14,7 +14,7 @@ namespace A14_TextDungeon
 
         public void ShowQuests()
         {
-            Item item = new Item("Dummy",2, Item.ItemType.Armor,"Dummy",false);
+            Item item = new Item("Dummy", "Dummy", Item.ItemType.Armor,2,false);
             while (true)
             {
                 Console.Clear();

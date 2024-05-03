@@ -72,7 +72,7 @@
             bool isValidNum = int.TryParse(Console.ReadLine(), out input);
 
             if (isValidNum)
-            {                
+            {
                 User selectJob = Manager.Instance.gameManager.jobStat[input - 1];
 
                 int level = selectJob.Level;
@@ -86,9 +86,9 @@
 
                 switch (userJob)
                 {
-                    case User.UserJob.Warrior: 
-                    case User.UserJob.Rogue:                        
-                        CreateUser(level, userJob, attackPower, defense, hp, mp, gold, isdead);
+                    case User.UserJob.Warrior:
+                    case User.UserJob.Rogue:
+                        CreateUser(level, User.UserJob.Rogue, attackPower, defense, hp, mp, gold, isdead);
                         return;
                     default:
                         Console.WriteLine("\n잘못된 입력입니다.\n");
@@ -107,8 +107,7 @@
         {
             Console.Clear();
             Manager.Instance.gameManager.user = new User(saveName, level, job, attackPower, defense, hp, mp, gold, isdead);
-            Manager.Instance.gameManager.Init();
-            Manager.Instance.gameManager.village.ShowVillage();
+            Manager.Instance.fileManager.SaveData();
         }
     }
 }

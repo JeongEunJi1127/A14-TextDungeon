@@ -70,6 +70,7 @@
                 HP = 0;
                 Die();
             }
+            Manager.Instance.fileManager.SaveData();
         }
 
         public void LevelUp()
@@ -81,6 +82,7 @@
                 Manager.Instance.questManager.quests[2].IsCompleted = true;
                 Manager.Instance.questManager.quests[2].ClaimRewards(2);
             }
+            Manager.Instance.fileManager.SaveData();
         }
 
         public void AddGold(int amount)
@@ -91,6 +93,7 @@
         public void Die()
         {
             IsDead = true;
+            Manager.Instance.fileManager.SaveData();
         }
 
         //최대 경험치 계산
@@ -125,6 +128,7 @@
                 AttackPower += 0.5f;
                 Defense += 1f;
             }
+            Manager.Instance.fileManager.SaveData();
         }
     }
 }

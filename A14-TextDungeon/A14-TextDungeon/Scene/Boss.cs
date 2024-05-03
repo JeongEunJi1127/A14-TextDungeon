@@ -132,19 +132,26 @@
                 Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 승리했습니다!");
                 Manager.Instance.battleManager.ShowReward();
                 Console.WriteLine("\n게임을 전부 클리어했습니다.\n");
-                Console.WriteLine("다시 하시겠습니까?\n");
-                Thread.Sleep(10000);
-                //파일 초기화 구현하기
             }
             // 지면
             else
             {
                 Console.WriteLine("You Lose");
                 Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 패배했습니다..");
-                Console.WriteLine("게임을 다시 하시겠습니까?\n");
-                Thread.Sleep(10000);
-                //파일 초기화 구현하기
+                Console.WriteLine("Game Over");
             }
+            Thread.Sleep(1000);
+            Console.WriteLine("게임이 다시 시작됩니다.");
+            Thread.Sleep(1000);
+            Console.WriteLine("3");
+            Thread.Sleep(1000);
+            Console.WriteLine("2");
+            Thread.Sleep(1000);
+            Console.WriteLine("1");
+            Thread.Sleep(1000);
+            Manager.Instance.fileManager.ResetData();
+            Thread.Sleep(2000);
+            return;
         }
     }
 }

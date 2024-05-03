@@ -176,6 +176,18 @@
             else
             {
                 Console.WriteLine("You Lose");
+                Console.WriteLine("Game Over");
+                Thread.Sleep(1000);
+                Console.WriteLine("게임이 다시 시작됩니다.");
+                Thread.Sleep(1000);
+                Console.WriteLine("3");
+                Thread.Sleep(1000);
+                Console.WriteLine("2");
+                Thread.Sleep(1000);
+                Console.WriteLine("1");
+                Thread.Sleep(1000);
+                Manager.Instance.fileManager.ResetData();
+                return;
             }
             Manager.Instance.gameManager.user.LevelUP(Manager.Instance.battleManager.monsterExp);
             ShowPlayerStat();
@@ -184,7 +196,6 @@
             Console.WriteLine("0. 다음\n");
 
             BattleResultInput();
-
         }
 
         public void ShowBattleInput()

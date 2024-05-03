@@ -136,7 +136,7 @@ namespace A14_TextDungeon
                     Console.WriteLine("구매를 완료했습니다.");
                     Thread.Sleep(1000);
                     Manager.Instance.gameManager.user.Gold -= Manager.Instance.shopManager.products[i - 1].Price;
-                    Manager.Instance.inventoryManager.AddItem(Manager.Instance.shopManager.products[i - 1]);
+                    Manager.Instance.inventoryManager.AddItem(new Item(Manager.Instance.shopManager.products[i - 1].ItemName, Manager.Instance.shopManager.products[i - 1].ItemDescription, Manager.Instance.shopManager.products[i - 1].Itemtype, Manager.Instance.shopManager.products[i - 1].ItemStat));
                     Manager.Instance.shopManager.products[i - 1].IsBuy = true;
                     BuyProducts();
                 }
@@ -226,6 +226,7 @@ namespace A14_TextDungeon
                 }
             }
             inventoryProducts.Remove(inventoryProducts[input - 1]);
+            Manager.Instance.fileManager.SaveData();
             SellProducts();
         }
 
@@ -235,41 +236,41 @@ namespace A14_TextDungeon
             {
                 for (int i = 0; i < Manager.Instance.inventoryManager.items.Count; i++)
                 {
+                    string itemName = Manager.Instance.inventoryManager.items[i].ItemName;
+                    string itemDescription = Manager.Instance.inventoryManager.items[i].ItemDescription;
+                    Item.ItemType itemType = Manager.Instance.inventoryManager.items[i].Itemtype;
+                    int itemStat = Manager.Instance.inventoryManager.items[i].ItemStat;
+                    bool isEquippd = Manager.Instance.inventoryManager.items[i].IsEquippd;
+
                     switch (Manager.Instance.inventoryManager.items[i].ItemName)
                     {
                         case "미니언의 지팡이":
-                            inventoryProducts.Add(new ShopProduct(Manager.Instance.inventoryManager.items[i], 300));
+                            inventoryProducts.Add(new ShopProduct(itemName,itemDescription,itemType, itemStat, 300, isEquippd));
                             break;
                         case "공허충 비늘 갑옷":
-                            inventoryProducts.Add(new ShopProduct(Manager.Instance.inventoryManager.items[i], 400));
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 400, isEquippd));
                             break;
                         case "대포미니언의 대포":
-                            inventoryProducts.Add(new ShopProduct(Manager.Instance.inventoryManager.items[i], 500));
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 500, isEquippd));
                             break;
                         case "HP회복 포션":
-                            inventoryProducts.Add(new ShopProduct(Manager.Instance.inventoryManager.items[i], 200));
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 200, isEquippd));
                             break;
                         case "MP회복 포션":
-                            inventoryProducts.Add(new ShopProduct(Manager.Instance.inventoryManager.items[i], 200));
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 200, isEquippd));
                             break;
                         default:
                             for(int j = 0; j < Manager.Instance.shopManager.products.Count; j++)
                             {
                                 if(Manager.Instance.inventoryManager.items[i].ItemName == Manager.Instance.shopManager.products[j].ItemName)
                                 {
-                                    inventoryProducts.Add(new ShopProduct(Manager.Instance.inventoryManager.items[i], Manager.Instance.shopManager.products[j].Price));
+                                    inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, Manager.Instance.shopManager.products[j].Price, isEquippd));
                                 }
                             }
-                            break;
-                            
-                    }
-                    
+                            break;                            
+                    }               
                 }
-
             }
-
         }
-        
-
     }
 }

@@ -5,6 +5,10 @@
         public List<Item> items = new List<Item>();
         public int selectItemIndex = 0;
 
+        public void ClearInventory()
+        {
+            items.Clear();
+        }
         public void AddItem(Item item)
         {
             if (items == null)
@@ -12,10 +16,12 @@
                 items = new List<Item>();
             }
             items.Add(item);
+            Manager.Instance.fileManager.SaveData();
         }
         public void RemoveItem(Item item)
         {
             items.Remove(item);
+            Manager.Instance.fileManager.SaveData();
         }
         public void RefrshInventory(bool isEquipPage)
         {
@@ -45,6 +51,7 @@
                     }
                 }
             }
+            Manager.Instance.fileManager.SaveData();
         }
 
         //아이템 장착
@@ -63,6 +70,7 @@
                     // 아이템 추가
                 }
             }
+            Manager.Instance.fileManager.SaveData();
         }
         //장비아이템 중복 장착 방지 로직
         public void EquippedItemCheck(Item item)
@@ -103,6 +111,7 @@
         public void UnEquipItem(Item item)
         {
             item.IsEquippd = false;
+            Manager.Instance.fileManager.SaveData();
         }
 
         //아이템 장착여부확인
@@ -120,6 +129,7 @@
             {
                 items.Remove(potionToRemove);
             }
+            Manager.Instance.fileManager.SaveData();
         }
     }
 }
