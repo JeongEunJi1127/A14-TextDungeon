@@ -431,10 +431,10 @@
                 switch (monster.Name) 
                 {
                     case "미니언":
-                        rewards.Add(new Item("미니언의 지팡이", 3, Item.ItemType.Weapon, "미니언이 가지고있던 지팡이이다."));
+                        rewards.Add(new ShopProduct(new Item("미니언의 지팡이", 3, Item.ItemType.Weapon, "미니언이 가지고있던 지팡이이다."),100));
                         break;
                     case "공허충":
-                        rewards.Add(new Item("공허충 비늘 갑옷", 4, Item.ItemType.Armor, "공허충의 비늘로 만든 갑옷이다."));
+                        rewards.Add(new ShopProduct(new Item("공허충 비늘 갑옷", 4, Item.ItemType.Armor, "공허충의 비늘로 만든 갑옷이다."),100));
                         break;
                     case "대포미니언":
                         rewards.Add(new Item("대포미니언의 대포", 6, Item.ItemType.Weapon, "대포미니언이 타고있던 대포이다."));

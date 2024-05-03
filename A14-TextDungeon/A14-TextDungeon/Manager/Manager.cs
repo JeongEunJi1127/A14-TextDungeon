@@ -18,5 +18,6 @@
         public UserDataManager userDataManager = new UserDataManager();
         public QuestManager questManager = new QuestManager();
         public InventoryManager inventoryManager = new InventoryManager();
+        public ShopManager shopManager = new ShopManager();
     }
 }

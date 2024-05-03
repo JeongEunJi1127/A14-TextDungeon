@@ -12,7 +12,8 @@
                 Console.WriteLine($"2. 전투 시작 (현재 진행 : {Manager.Instance.battleManager.stageNum}층)");
                 Console.WriteLine("3. 인벤 토리");
                 Console.WriteLine("4. 퀘스트 보기");
-                Console.WriteLine("5. 회복\n");
+                Console.WriteLine("5. 회복");
+                Console.WriteLine("6. 상점\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요.\n");
                 int input;
@@ -41,6 +42,10 @@
                         case 5:
                             Console.Clear();
                             Manager.Instance.gameManager.rest.ShowRestUI();
+                            return;
+                        case 6:
+                            Console.Clear();
+                            Manager.Instance.gameManager.shop.ShowShopProducts();
                             return;
 
                         default:

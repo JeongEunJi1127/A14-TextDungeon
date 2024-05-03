@@ -1,4 +1,4 @@
-﻿namespace A14_TextDungeon
+namespace A14_TextDungeon
 {
     public class GameManager
     {
@@ -8,6 +8,7 @@
         public Boss boss = new Boss();
         public Rest rest = new Rest();
         public Inventory inventory = new Inventory();
+        public Shop shop = new Shop();
 
         public User user;
 
@@ -23,6 +24,11 @@
            new Skill ("도둑질", "공격력 * 1.5 만큼의 피해를 주고 피해량 만큼의 골드를 획득합니다.", 20)
         };
 
+        public User[] jobStat = new User[]
+        {
+            new User("전사", 1 , User.UserJob.Warrior, 10 , 5, 100, 50 , 1500, false),
+            new User("도적", 1 , User.UserJob.Rogue, 15 , 3, 60, 70 , 1500, false)
+        };
         public List<Skill[]> skillList = new List<Skill[]>();
 
         // 저장해야 할 파일 초기화 - 유저 정보, 인벤토리 정보, 상점 정보 등?
@@ -30,11 +36,20 @@
         {
             skillList.Add(warriorSkills);
             skillList.Add(rogueSkills);
+#region 상점 아이템 추가
+            Manager.Instance.shopManager.AddProduct(new ShopProduct(new Item("수련자 갑옷", 5, ItemType.Armor, "수련에 도움을 주는 갑옷입니다."), 1000));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct(new Item("무쇠갑옷", 9, ItemType.Armor, "무쇠로 만들어져 튼튼한 갑옷입니다."), 1500));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct(new Item("스파르타의 갑옷", 15, ItemType.Armor, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다."), 2000));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct(new Item("낡은 검", 2, ItemType.Weapon, "쉽게 볼 수 있는 낡은 검 입니다."), 600));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct(new Item("청동 도끼", 5, ItemType.Weapon, "어디선가 사용됐던거 같은 도끼입니다."), 1500));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct(new Item("스파르타의 창", 7, ItemType.Weapon, "스파르타의 전사들이 사용했다는 전설의 창입니다."), 2000));
+#endregion
         }
 
-         static void Main(string[] args)
+        static void Main(string[] args)
         {
             Manager.Instance.userDataManager.SetName();
         }         
     }
 }
+
