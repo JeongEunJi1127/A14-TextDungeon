@@ -1,25 +1,25 @@
-namespace A14_TextDungeon
+namespace A14_TextDungeon.Data
 {
     public class Quest
     {
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public int TargetCount { get; private set; }
-        public int CurrentCount { get; private set; }
-        public bool IsAccepted {get; set;}
+        public string Name { get;  set; }
+        public string Description { get;  set; }
+        public int TargetCount { get;  set; }
+        public int CurrentCount { get;  set; }
+        public bool IsAccepted { get; set; }
         public bool IsCompleted { get; set; }
-        public bool IsWaiting {get; set;}
-        public string[] Rewards { get; private set; }
+        public bool IsWaiting { get; set; }
+        public List<string> Rewards { get;  set; }
 
-        public Quest(string name, string description, int targetCount, bool IsAccepted, bool IsCompleted, bool IsWaiting, string[] rewards)
+        public Quest(string name, string description, int targetCount, bool isAccepted, bool isCompleted, bool isWaiting, List<string> rewards)
         {
             Name = name;
             Description = description;
             TargetCount = targetCount;
             CurrentCount = 0;
-            IsCompleted = false;
-            IsAccepted = false;
-            IsWaiting = false;
+            IsCompleted = isCompleted;
+            IsAccepted = isAccepted;
+            IsWaiting = isWaiting;
             Rewards = rewards;
         }
 
@@ -31,7 +31,8 @@ namespace A14_TextDungeon
                 IsCompleted = true;
                 Manager.Instance.questManager.QuestClear(0);
             }
+            Manager.Instance.fileManager.SaveData();
         }
-
     }
 }
+

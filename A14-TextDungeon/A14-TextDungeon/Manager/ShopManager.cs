@@ -11,7 +11,9 @@
         {
             products.Remove(product);
         }
-
-
+        public void ClearShop()
+        {
+            products.Clear();
+        }
     }
 }

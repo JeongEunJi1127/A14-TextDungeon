@@ -5,8 +5,6 @@
         public List <Monster>monsters = new List<Monster>();
         // 지금까지 잡은 몬스터 개수
         public int slayedMonster = 0;
-        // 스테이지 넘버
-        public int stageNum = 1;
         // 몬스터 개수
         public int monsterCount = 1;
         // 몬스터 경험치
@@ -149,8 +147,20 @@
                     if (Manager.Instance.gameManager.user.IsDead)
                     {
                         Console.WriteLine("당신은 죽었습니다..");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Game Over");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("게임이 다시 시작됩니다.");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("3");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("2");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("1");
+                        Thread.Sleep(1000);
+                        Manager.Instance.fileManager.ResetData();
                         Thread.Sleep(2000);
-                        break;
+                        return;
                     }
 
                     // 입력값
@@ -287,6 +297,7 @@
                                         Console.WriteLine($"HP +{item.ItemStat}");
                                         Manager.Instance.gameManager.user.HP += item.ItemStat;
                                     }
+                                    Manager.Instance.fileManager.SaveData();
                                     Thread.Sleep(1000);
                                     Manager.Instance.gameManager.battle.ShowBattle(false);
                                     return;
@@ -310,6 +321,7 @@
                                         Console.WriteLine($"MP +{item.ItemStat}");
                                         Manager.Instance.gameManager.user.MP += item.ItemStat;
                                     }
+                                    Manager.Instance.fileManager.SaveData();
                                     Thread.Sleep(1000);
                                     Manager.Instance.gameManager.battle.ShowBattle(false);
                                     return;
@@ -366,7 +378,7 @@
         {
             List<Monster> deadMonsters = monsters.Where(x => x.IsDead).ToList();
 
-            if(stageNum == 4)
+            if(Manager.Instance.gameManager.user.StageNum == 4)
             {
                 if (Manager.Instance.gameManager.user.IsDead)
                 {
@@ -420,24 +432,24 @@
             else if (itemChance <= 55)
             {
                 // 포션 1개
-                rewards.Add(new Item("HP회복 포션", 30, Item.ItemType.HPPotion, "HP를 회복해주는 포션이다")); 
+                rewards.Add(new Item("HP회복 포션", "HP를 회복해주는 포션이다", Item.ItemType.HPPotion, 30)); 
             }
             else if (itemChance <= 80)
             {
-                rewards.Add(new Item("MP회복 포션", 30, Item.ItemType.MPPotion, "HP를 회복해주는 포션이다"));
+                rewards.Add(new Item("MP회복 포션", "MP를 회복해주는 포션이다", Item.ItemType.MPPotion, 30));
             }
             else if(itemChance <=100)
             {
                 switch (monster.Name) 
                 {
                     case "미니언":
-                        rewards.Add(new ShopProduct(new Item("미니언의 지팡이", 3, Item.ItemType.Weapon, "미니언이 가지고있던 지팡이이다."),100));
+                        rewards.Add(new Item("미니언의 지팡이", "미니언이 가지고있던 지팡이이다.", Item.ItemType.Weapon, 3));
                         break;
                     case "공허충":
-                        rewards.Add(new ShopProduct(new Item("공허충 비늘 갑옷", 4, Item.ItemType.Armor, "공허충의 비늘로 만든 갑옷이다."),100));
+                        rewards.Add(new Item("공허충 비늘 갑옷", "공허충의 비늘로 만든 갑옷이다.", Item.ItemType.Armor, 4));
                         break;
                     case "대포미니언":
-                        rewards.Add(new Item("대포미니언의 대포", 6, Item.ItemType.Weapon, "대포미니언이 타고있던 대포이다."));
+                        rewards.Add(new Item("대포미니언의 대포", "대포미니언이 타고있던 대포이다.", Item.ItemType.Weapon, 6));
                         break;
 
                 }

@@ -7,6 +7,10 @@ namespace A14_TextDungeon
         public List<Item> items = new List<Item>();
         public int selectItemIndex = 0;
 
+        public void ClearInventory()
+        {
+            items.Clear();
+        }
         public void AddItem(Item item)
         {
             if (items == null)
@@ -14,10 +18,12 @@ namespace A14_TextDungeon
                 items = new List<Item>();
             }
             items.Add(item);
+            Manager.Instance.fileManager.SaveData();
         }
         public void RemoveItem(Item item)
         {
             items.Remove(item);
+            Manager.Instance.fileManager.SaveData();
         }
         public void RefrshInventory(bool isEquipPage)
         {
@@ -47,6 +53,7 @@ namespace A14_TextDungeon
                     }
                 }
             }
+            Manager.Instance.fileManager.SaveData();
         }
 
         //아이템 장착
@@ -57,6 +64,7 @@ namespace A14_TextDungeon
             //장착 퀘스트 클리어 조건
             Manager.Instance.questManager.QuestClear(1);
         }
+
         //장비아이템 중복 장착 방지 로직
         public void EquippedItemCheck(Item item)
         {
@@ -96,6 +104,7 @@ namespace A14_TextDungeon
         public void UnEquipItem(Item item)
         {
             item.IsEquippd = false;
+            Manager.Instance.fileManager.SaveData();
         }
 
         //아이템 장착여부확인
@@ -113,6 +122,7 @@ namespace A14_TextDungeon
             {
                 items.Remove(potionToRemove);
             }
+            Manager.Instance.fileManager.SaveData();
         }
     }
 }

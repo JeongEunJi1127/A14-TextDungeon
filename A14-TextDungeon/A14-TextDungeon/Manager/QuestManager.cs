@@ -1,25 +1,19 @@
+using A14_TextDungeon.Data;
+
 namespace A14_TextDungeon
 {
     public class QuestManager
     {
-        public List<Quest> quests = new List<Quest>
-        {
-            //quest.Add(newQuest())
-            //quests.Add(new Quest("name", "설명", 0, false, false, rewards1배열));
-            //string name, string description, int targetCount, bool IsAccepted, bool IsCompleted, string[] rewards
-            new Quest ("[마을을 위협하는 미니언 처치]","이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",1,false,false,false, new string[] { "쓸만한 방패 x 1", "5G" }),
-            new Quest ("[장비를 장착해보자!]","???: 이봐, 먼 길을 떠나려는 그대여.\n자네가 향하려는 길은 아주 험하고 위험한 길이라네. 뭐라도 걸치는 게 어떤가?\n목숨이 아깝지 않다면 말이야..",1,false,false,false, new string[] { "여신의 축복 x 1", "5G" }),
-            new Quest ("[더욱 더 강해지기!]","당신의 강함을 증명해 보세요.\n수많은 모험가들이 도전했고 또한 실패했지만, 어쩌면 당신은 다를지도 모르죠.\n행운을 빌어요.",1,false,false, false, new string[] { "강화된 마체테 x 1", "5G" })
-        };
+        public List<Quest> quests = new List<Quest>();
 
         public void ShowQuests()
         {
-            Item item = new Item("Dummy",2, Item.ItemType.Armor,"Dummy",false);
+            Item item = new Item("Dummy", "Dummy", Item.ItemType.Armor, 2, false);
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("Quest!!");
-                Console.WriteLine("1. 마을을 위협하는 미니언 처치"+ GetQuestStatusDisplay(0) );
+                Console.WriteLine("1. 마을을 위협하는 미니언 처치" + GetQuestStatusDisplay(0));
                 Console.WriteLine("2. 장비를 장착해보자" + GetQuestStatusDisplay(1));
                 Console.WriteLine("3. 더욱 더 강해지기!" + GetQuestStatusDisplay(2));
                 Console.WriteLine("\n0. 나가기\n\n");
@@ -52,6 +46,17 @@ namespace A14_TextDungeon
                 }
             }
         }
+
+        public void ResetQuest()
+        {
+            quests.Clear();
+        }
+
+        public void AddQuest(Quest quest)
+        {
+            quests.Add(quest);
+        }
+
         public string GetQuestStatusDisplay(int stagenum)
         {
             if (quests[stagenum].IsCompleted)
@@ -78,10 +83,12 @@ namespace A14_TextDungeon
                         Manager.Instance.questManager.ShowQuests();
                         return;
                     case 1:
-                        if(!quests[stagenum].IsAccepted)
+
+                        if (!quests[stagenum].IsAccepted)
                         {
                             Console.WriteLine("\n\n퀘스트를 수락했습니다!");
                             quests[stagenum].IsAccepted = true;
+                            Manager.Instance.fileManager.SaveData();
                             Console.WriteLine("돌아가려면 아무 키나 누르세요");
                             Console.ReadKey();
                         }
@@ -89,15 +96,15 @@ namespace A14_TextDungeon
                         return;
 
                     case 2:
-                        if(!quests[stagenum].IsAccepted)
+                        if (!quests[stagenum].IsAccepted)
                         {
                             Console.WriteLine("\n\n퀘스트를 거절했습니다.");
                             Console.WriteLine("돌아가려면 아무 키나 누르세요");
-                            Console.ReadKey();;
+                            Console.ReadKey(); ;
                         }
                         Manager.Instance.questManager.ShowQuests();
                         return;
-                    default: 
+                    default:
                         Console.WriteLine("잘못된 입력입니다.");
                         Console.ReadKey();
                         break;
@@ -122,10 +129,11 @@ namespace A14_TextDungeon
 
         public void QuestClear(int num)
         {
-            if(quests[num].IsAccepted && quests[num].IsWaiting == false)
+            if (quests[num].IsAccepted && quests[num].IsWaiting == false)
             {
                 quests[num].IsCompleted = true;
                 quests[num].IsWaiting = true;
+                Manager.Instance.fileManager.SaveData();
                 Console.WriteLine("\n\n----------------------\n");
                 Console.WriteLine("|||[퀘스트 완료] 퀘스트 창에서 보상을 확인하세요|||");
                 Console.WriteLine("\n----------------------\n\n");
@@ -142,25 +150,25 @@ namespace A14_TextDungeon
             Console.WriteLine("- 보상 -");
             foreach (string s in quests[stagenum].Rewards)
             {
-                 Console.WriteLine($"{s}");
+                Console.WriteLine($"{s}");
             }
 
-            switch(stagenum)
+            switch (stagenum)
             {
                 case 0:
-                    Item questReward = new Item("쓸만한 갑옷",5,Item.ItemType.Armor,"범부에 불과했던 남자가, 오직 한 사람만을 떠올리며 만든 갑옷이다. 제법 쓸만하다."); // 아이템 생성
-                    
+                    Item questReward = new Item("쓸만한 갑옷", "범부에 불과했던 남자가, 오직 한 사람만을 떠올리며 만든 갑옷이다. 제법 쓸만하다.", Item.ItemType.Armor, 5); // 아이템 생성
+
                     Manager.Instance.inventoryManager.AddItem(questReward);
                     Manager.Instance.gameManager.user.AddGold(5); // AddGold()대신, Quest Gold로 넣기
                     break;
                 case 1:
-                    Item questReward1 = new Item("여신의 축복",30,Item.ItemType.HPPotion,"이 갑옷에는 알 수 없는 힘이 깃들어 있다.");
+                    Item questReward1 = new Item("여신의 축복", "이 갑옷에는 알 수 없는 힘이 깃들어 있다.", Item.ItemType.HPPotion, 30);
 
                     Manager.Instance.inventoryManager.AddItem(questReward1);
                     Manager.Instance.gameManager.user.AddGold(5);
                     break;
                 case 2:
-                    Item questReward2 = new Item("강화된 마체테",5, Item.ItemType.Weapon,"피에 젖어 있다.");
+                    Item questReward2 = new Item("강화된 마체테", "피에 젖어 있다.", Item.ItemType.Weapon, 5);
 
                     Manager.Instance.inventoryManager.AddItem(questReward2);
                     Manager.Instance.gameManager.user.AddGold(5);
@@ -168,20 +176,21 @@ namespace A14_TextDungeon
             }
             //퀘스트 반복
             //다시 false 넣기
-            quests[stagenum].IsAccepted =false;
+            quests[stagenum].IsAccepted = false;
             quests[stagenum].IsCompleted = false;
             quests[stagenum].IsWaiting = false;
-            Console.WriteLine("보상을 받으려면 Enter를 누르세요"); 
+            Manager.Instance.fileManager.SaveData();
+            Console.WriteLine("보상을 받으려면 Enter를 누르세요");
             Console.ReadLine();
             Manager.Instance.gameManager.village.ShowVillage();
         }
 
         public void InputQuestNumber(int stagenum)
         {
-            while(true)
+            while (true)
             {
-                var isSuccess = int.TryParse(Console.ReadLine(),out int input);
-                if(!isSuccess)
+                var isSuccess = int.TryParse(Console.ReadLine(), out int input);
+                if (!isSuccess)
                 {
                     Console.WriteLine("잘못된 입력입니다");
                 }
@@ -194,7 +203,7 @@ namespace A14_TextDungeon
         //퀘스트 1: 미니언 잡기
         public void ShowMinionQuest()
         {
-            if(quests[0].IsCompleted)
+            if (quests[0].IsCompleted)
             {
                 ClaimRewards(0);
             }
@@ -202,9 +211,9 @@ namespace A14_TextDungeon
             {
                 Console.Clear();
                 Console.WriteLine("Quest!!\n\n");
-                Console.WriteLine(quests[0].Name,"\n");
+                Console.WriteLine(quests[0].Name, "\n");
                 Console.WriteLine($"미니언 {quests[0].TargetCount}마리 처치 ({quests[0].CurrentCount}/{Manager.Instance.questManager.quests[0].TargetCount})\n");
-                Console.WriteLine(quests[0].Description,"\n\n");
+                Console.WriteLine(quests[0].Description, "\n\n");
                 Console.WriteLine("\n- 보상 -");
                 foreach (string s in quests[0].Rewards)
                 {
@@ -218,7 +227,7 @@ namespace A14_TextDungeon
         //퀘스트 2: 장비 장착하기 
         public void ShowEquipmentQuest(Item item)
         {
-            if(quests[1].IsCompleted)
+            if (quests[1].IsCompleted)
             {
                 ClaimRewards(1);
                 Manager.Instance.questManager.ShowQuests();
@@ -227,9 +236,9 @@ namespace A14_TextDungeon
             {
                 Console.Clear();
                 Console.WriteLine("Quest!!\n\n");
-                Console.WriteLine(quests[1].Name,"\n");
+                Console.WriteLine(quests[1].Name, "\n");
                 Console.WriteLine($"(인벤토리에서 아무 장비나 {quests[0].TargetCount}개 이상 장착하기)\n");
-                Console.WriteLine(quests[1].Description,"\n");
+                Console.WriteLine(quests[1].Description, "\n");
                 Console.WriteLine("\n- 보상 -");
                 foreach (string s in quests[1].Rewards)
                 {
@@ -251,9 +260,9 @@ namespace A14_TextDungeon
             {
                 Console.Clear();
                 Console.WriteLine("Quest!!\n\n");
-                Console.WriteLine(quests[2].Name,"\n");
+                Console.WriteLine(quests[2].Name, "\n");
                 Console.WriteLine($"({quests[2].TargetCount}레벨업 하기)\n");
-                Console.WriteLine(quests[2].Description,"\n");
+                Console.WriteLine(quests[2].Description, "\n");
                 Console.WriteLine("\n- 보상 -");
                 foreach (string s in quests[2].Rewards)
                 {
@@ -262,7 +271,6 @@ namespace A14_TextDungeon
                 DisplayQuestOptions(2);
                 InputQuestNumber(2);
             }
-            
         }
     }
 }
