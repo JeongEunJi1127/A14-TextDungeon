@@ -1,4 +1,6 @@
-﻿namespace A14_TextDungeon
+﻿using System.Reflection.Emit;
+
+namespace A14_TextDungeon
 {
     public class GameManager
     {
@@ -23,6 +25,11 @@
            new Skill ("도둑질", "공격력 * 1.5 만큼의 피해를 주고 피해량 만큼의 골드를 획득합니다.", 20)
         };
 
+        public User[] jobStat = new User[]
+        {
+            new User("전사", 1 , User.UserJob.Warrior, 10 , 5, 100, 50 , 1500, false),
+            new User("도적", 1 , User.UserJob.Rogue, 15 , 3, 60, 70 , 1500, false)
+        };
         public List<Skill[]> skillList = new List<Skill[]>();
 
         // 저장해야 할 파일 초기화 - 유저 정보, 인벤토리 정보, 상점 정보 등?

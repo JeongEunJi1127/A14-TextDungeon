@@ -21,8 +21,16 @@
         {
             Console.Clear();
             Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 직업을 설정해주세요.\n");
-            Console.WriteLine("1. 전사\tHP:100\tMP:50\t공격력:10   방어력:5");
-            Console.WriteLine("2. 도적\tHP:60\tMP:70\t공격력:15   방어력:3\n");
+            Console.WriteLine($"1. {Manager.Instance.gameManager.jobStat[0].Name}" +
+                            $"\tHP:{Manager.Instance.gameManager.jobStat[0].HP}" +
+                            $"\tMP:{Manager.Instance.gameManager.jobStat[0].MP}" +
+                            $"\t공격력:{Manager.Instance.gameManager.jobStat[0].AttackPower}" +
+                            $"   방어력:{Manager.Instance.gameManager.jobStat[0].Defense}");
+            Console.WriteLine($"2. {Manager.Instance.gameManager.jobStat[1].Name}" +
+                            $"\tHP:{Manager.Instance.gameManager.jobStat[1].HP}" +
+                            $"\tMP:{Manager.Instance.gameManager.jobStat[1].MP}" +
+                            $"\t공격력:{Manager.Instance.gameManager.jobStat[1].AttackPower}" +
+                            $"   방어력:{Manager.Instance.gameManager.jobStat[1].Defense}");
 
             SetJobInput();
         }
@@ -64,37 +72,23 @@
             bool isValidNum = int.TryParse(Console.ReadLine(), out input);
 
             if (isValidNum)
-            {
-                int level = 1;
-                User.UserJob userJob = (User.UserJob)input;
-                string job;
-                float attackPower;
-                float defense;
-                float hp;
-                int mp;
+            {                
+                User selectJob = Manager.Instance.gameManager.jobStat[input - 1];
 
-                int gold = 1500;
-                bool isdead = false;
+                int level = selectJob.Level;
+                User.UserJob userJob = selectJob.Job;                
+                float attackPower = selectJob.AttackPower;
+                float defense = selectJob.Defense;
+                float hp = selectJob.HP;
+                float mp = selectJob.MP;
+                int gold = selectJob.Gold;
+                bool isdead = selectJob.IsDead;
 
                 switch (userJob)
                 {
-                    case User.UserJob.Warrior:
-                        job = "전사";
-                        attackPower = 10;
-                        defense = 5;
-                        hp = 100;
-                        mp = 50;
-
-                        CreateUser(level, User.UserJob.Warrior, attackPower, defense, hp, mp, gold, isdead);
-                        return;
-                    case User.UserJob.Rogue:
-                        job = "도적";
-                        attackPower = 15;
-                        defense = 3;
-                        hp = 60;
-                        mp = 70;
-
-                        CreateUser(level, User.UserJob.Rogue, attackPower, defense, hp, mp, gold, isdead);
+                    case User.UserJob.Warrior: 
+                    case User.UserJob.Rogue:                        
+                        CreateUser(level, userJob, attackPower, defense, hp, mp, gold, isdead);
                         return;
                     default:
                         Console.WriteLine("\n잘못된 입력입니다.\n");
@@ -109,7 +103,7 @@
             }
         }
 
-        public void CreateUser(int level, User.UserJob job, float attackPower, float defense, float hp, int mp, int gold, bool isdead)
+        public void CreateUser(int level, User.UserJob job, float attackPower, float defense, float hp, float mp, int gold, bool isdead)
         {
             Console.Clear();
             Manager.Instance.gameManager.user = new User(saveName, level, job, attackPower, defense, hp, mp, gold, isdead);
