@@ -27,7 +27,7 @@ namespace A14_TextDungeon
             if (CurrentCount >= TargetCount)
             {
                 IsCompleted = true;
-                Manager.Instance.questManager.ClaimRewards(0);
+                Manager.Instance.questManager.QuestClear(0);
             }
         }
 
