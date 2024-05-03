@@ -8,9 +8,10 @@ namespace A14_TextDungeon
         public int CurrentCount { get; private set; }
         public bool IsAccepted {get; set;}
         public bool IsCompleted { get; set; }
+        public bool IsWaiting {get; set;}
         public string[] Rewards { get; private set; }
 
-        public Quest(string name, string description, int targetCount, bool IsAccepted, bool IsCompleted, string[] rewards)
+        public Quest(string name, string description, int targetCount, bool IsAccepted, bool IsCompleted, bool IsWaiting, string[] rewards)
         {
             Name = name;
             Description = description;
@@ -18,6 +19,7 @@ namespace A14_TextDungeon
             CurrentCount = 0;
             IsCompleted = false;
             IsAccepted = false;
+            IsWaiting = false;
             Rewards = rewards;
         }
 

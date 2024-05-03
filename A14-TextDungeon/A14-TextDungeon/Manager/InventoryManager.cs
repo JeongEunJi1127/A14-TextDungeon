@@ -50,13 +50,12 @@ namespace A14_TextDungeon
         }
 
         //아이템 장착
-        //장착 퀘스트 클리어 조건
         public void EquipItem(Item item)
         {            
             item.IsEquippd = true;
 
+            //장착 퀘스트 클리어 조건
             Manager.Instance.questManager.QuestClear(1);
-
         }
         //장비아이템 중복 장착 방지 로직
         public void EquippedItemCheck(Item item)
