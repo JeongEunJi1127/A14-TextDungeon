@@ -73,22 +73,24 @@
 
             if (isValidNum)
             {
-                User selectJob = Manager.Instance.gameManager.jobStat[input - 1];
-
-                int level = selectJob.Level;
-                User.UserJob userJob = selectJob.Job;                
-                float attackPower = selectJob.AttackPower;
-                float defense = selectJob.Defense;
-                float hp = selectJob.HP;
-                float mp = selectJob.MP;
-                int gold = selectJob.Gold;
-                bool isdead = selectJob.IsDead;
-
-                switch (userJob)
+                
+                switch (input)
                 {
-                    case User.UserJob.Warrior:
-                    case User.UserJob.Rogue:
-                        CreateUser(level, User.UserJob.Rogue, attackPower, defense, hp, mp, gold, isdead);
+                    case (int)User.UserJob.Warrior:
+                    case (int)User.UserJob.Rogue:
+
+                        User selectJob = Manager.Instance.gameManager.jobStat[input - 1];
+
+                        int level = selectJob.Level;
+                        User.UserJob userJob = selectJob.Job;
+                        float attackPower = selectJob.AttackPower;
+                        float defense = selectJob.Defense;
+                        float hp = selectJob.HP;
+                        float mp = selectJob.MP;
+                        int gold = selectJob.Gold;
+                        bool isdead = selectJob.IsDead;
+
+                        CreateUser(level, userJob, attackPower, defense, hp, mp, gold, isdead);
                         return;
                     default:
                         Console.WriteLine("\n잘못된 입력입니다.\n");
