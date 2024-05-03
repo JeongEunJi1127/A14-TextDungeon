@@ -114,7 +114,7 @@
                 AttackPower += 0.5f;
                 Defense += 1f;
                 //QuestManger로 함수 만들어서 빼기
-                Manager.Instance.questManager.LevelQuestClear();
+                Manager.Instance.questManager.QuestClear(2);
             }
         }
     }

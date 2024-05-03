@@ -63,34 +63,33 @@ namespace A14_TextDungeon
             }
         }
 
-        public void AcceptOrRejectQuest(string input, int stagenum)
+        public bool AcceptOrRejectQuest(int input, int stagenum)
         {
             switch (input)
             {
-                case "0":
-                    Manager.Instance.gameManager.village.ShowVillage();
-                    return;
-                case "1":
-                    
-                    //if문으로 해서 처리하기
-                    Console.WriteLine("\n\n퀘스트를 수락했습니다!");
-                    quests[stagenum].IsAccepted = true;
-                    Console.WriteLine("돌아가려면 Enter를 누르세요");
-                    Console.ReadLine();
-                    Manager.Instance.gameManager.village.ShowVillage();
-                    return;
-                case "2":
-                    //if문으로 해서 처리하기
-                    Console.WriteLine("\n\n퀘스트를 거절했습니다.");
-                    Console.WriteLine("돌아가려면 Enter를 누르세요");
-                    Console.ReadLine();
-                    Manager.Instance.gameManager.village.ShowVillage();
+                case 0:
+                    return true;
+                case 1:
+                    if(!quests[stagenum].IsAccepted)
+                    {
+                        Console.WriteLine("\n\n퀘스트를 수락했습니다!");
+                        quests[stagenum].IsAccepted = true;
+                        Console.WriteLine("돌아가려면 아무 키나 누르세요");
+                        Console.ReadKey();
+                    }
+                    return false;
+
+                case 2:
+                    if(!quests[stagenum].IsAccepted)
+                    {
+                        Console.WriteLine("\n\n퀘스트를 거절했습니다.");
+                        Console.WriteLine("돌아가려면 아무 키나 누르세요");
+                        Console.ReadKey();
+                    }
                     //함수를 끝낼 때는 return;
-                    return;
+                    return false;
                 default:
-                    Console.WriteLine("잘못된 선택입니다.");
-                    Console.ReadLine();
-                    break;
+                    return false; 
             }
         }
 
@@ -161,19 +160,17 @@ namespace A14_TextDungeon
         //퀘스트 1: 미니언 잡기
         public void ShowMinionQuest()
         {
-            Console.Clear();
-            Console.WriteLine("Quest!!\n\n");
-            Console.WriteLine(quests[0].Name,"\n");
-            Console.WriteLine(quests[0].Description,"\n");
-            Console.WriteLine($"미니언 {quests[0].TargetCount}마리 처치 ({quests[0].CurrentCount}/{Manager.Instance.questManager.quests[0].TargetCount})\n");
-            Console.WriteLine("- 보상 -");
-            foreach (string s in quests[0].Rewards)
-            {
-                Console.WriteLine(s);
-            }
-            DisplayQuestOptions(0);
-            string input = Console.ReadLine();
-            AcceptOrRejectQuest(input, 0);
+                Console.Clear();
+                Console.WriteLine("Quest!!\n\n");
+                Console.WriteLine(quests[0].Name,"\n");
+                Console.WriteLine(quests[0].Description,"\n");
+                Console.WriteLine($"미니언 {quests[0].TargetCount}마리 처치 ({quests[0].CurrentCount}/{Manager.Instance.questManager.quests[0].TargetCount})\n");
+                Console.WriteLine("- 보상 -");
+                foreach (string s in quests[0].Rewards)
+                {
+                    Console.WriteLine(s);
+                }
+                DisplayQuestOptions(0);
         }
 
         //퀘스트 2: 장비 장착하기 
@@ -191,7 +188,7 @@ namespace A14_TextDungeon
             }
             DisplayQuestOptions(1);
             string input = Console.ReadLine();
-            AcceptOrRejectQuest(input,1); 
+            //AcceptOrRejectQuest(input,1); 
         }
 
         //퀘스트 3: 레벨업 
@@ -209,7 +206,7 @@ namespace A14_TextDungeon
             }
             DisplayQuestOptions(2);
             string input = Console.ReadLine();
-            AcceptOrRejectQuest(input,2);
+            //AcceptOrRejectQuest(input,2);
         }
     }
 }
