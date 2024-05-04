@@ -35,9 +35,12 @@ namespace A14_TextDungeon
         public void ShopInput()
         {
             int input;
-            Console.WriteLine("\n1. 아이템 구매\n");
-            Console.WriteLine("2. 아이템 판매\n");
+            Console.WriteLine("-------------------------------------------------------------------");
+            Console.WriteLine("\n1. 아이템 구매");
+            Console.WriteLine("2. 아이템 판매\n\n");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("0. 나가기\n");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("원하는 행동을 입력하세요");
             bool isValidNum = int.TryParse(Console.ReadLine(), out input);
             if (isValidNum)

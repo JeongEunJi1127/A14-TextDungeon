@@ -27,8 +27,10 @@
             // 입력값 받기
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
-            Console.WriteLine("3. 포션 먹기");
+            Console.WriteLine("3. 포션 먹기\n");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("4. 도망가기\n");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
             ShowBattleInput();

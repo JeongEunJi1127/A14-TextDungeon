@@ -6,7 +6,9 @@
         {           
             Manager.Instance.inventoryManager.RefrshInventory(true);
             Console.WriteLine("장착하거나 장착을 해제하고싶은 장비의 번호를 입력하세요\n");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("0. 나가기\n");
+            Console.ForegroundColor = ConsoleColor.White;
             ShowEquipPageInput();
             Item selectedItem = Manager.Instance.inventoryManager.items[Manager.Instance.inventoryManager.selectItemIndex];
             //items = 인벤토리 스크립트 안에 모여있는 것들(리스트)
@@ -42,7 +44,9 @@
         {
             Manager.Instance.inventoryManager.RefrshInventory(false);
             Console.WriteLine("\n1. 장착관리\n");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("0. 나가기\n");
+            Console.ForegroundColor = ConsoleColor.White;
             ShowInventoryInput();
         }
 

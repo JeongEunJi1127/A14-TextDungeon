@@ -81,7 +81,9 @@
             Console.WriteLine($"Gold : {Manager.Instance.gameManager.user.Gold} G");
             Console.WriteLine($"EXP : {Manager.Instance.gameManager.user.Exp}/{Manager.Instance.gameManager.user.MaxExp}\n\n");
 
-            Console.WriteLine("0. 나가기");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("0. 나가기\n");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
