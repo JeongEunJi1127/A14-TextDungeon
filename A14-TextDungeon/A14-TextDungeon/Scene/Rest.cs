@@ -13,7 +13,7 @@
         {
             hpPotionCount = 0;
             mpPotionCount = 0;
-            Console.WriteLine("\n[회복]\n");
+            Console.WriteLine("\n== 회복 ==\n");
             Console.WriteLine("1000G를 내거나 보유중인 포션을 이용해 회복을 할 수 있습니다.\n");
             CheckPotionAmount();
             Console.WriteLine("[소지금]\n");
@@ -47,7 +47,7 @@
         {
             User user = Manager.Instance.gameManager.user;
 
-            Console.WriteLine("원하는 행동을 입력해 주세요\n");
+            Console.WriteLine("\n원하는 행동을 입력해 주세요\n");
             Console.WriteLine("1. 1000G를 내고 휴식");
             Console.WriteLine("2. 보유중인 HP포션을 사용해 HP회복");
             Console.WriteLine("3. 보유중인 MP포션을 사용해 MP회복\n\n");

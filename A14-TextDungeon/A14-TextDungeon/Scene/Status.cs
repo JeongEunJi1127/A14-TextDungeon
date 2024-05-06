@@ -54,7 +54,7 @@
             }
 
             Console.WriteLine("\n== 상태창 ==\n");
-            Console.WriteLine($"LV. {Manager.Instance.gameManager.user.Level}");
+            Console.WriteLine($"LV. {Manager.Instance.gameManager.user.Level}\n");
             Console.WriteLine($"{Manager.Instance.gameManager.user.Name} ({Manager.Instance.gameManager.user.Job})");
 
             if( weaponAttack > 0 )
@@ -79,7 +79,7 @@
             Console.WriteLine($"MP: {Manager.Instance.gameManager.user.MP} / {Manager.Instance.gameManager.user.MaxMP} ");
 
             Console.WriteLine($"Gold : {Manager.Instance.gameManager.user.Gold} G");
-            Console.WriteLine($"EXP : {Manager.Instance.gameManager.user.Exp}/{Manager.Instance.gameManager.user.MaxExp}\n\n");
+            Console.WriteLine($"EXP : {Manager.Instance.gameManager.user.Exp}/{Manager.Instance.gameManager.user.MaxExp}\n");
 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("0. 나가기\n");
