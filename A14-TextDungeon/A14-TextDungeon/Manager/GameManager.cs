@@ -35,8 +35,6 @@ namespace A14_TextDungeon
 
         public void Init()
         { 
-            skillList.Add(warriorSkills);
-            skillList.Add(rogueSkills);
 #region 상점 아이템 추가   
             Manager.Instance.shopManager.AddProduct(new ShopProduct("수련자 갑옷", "수련에 도움을 주는 갑옷입니다.", Item.ItemType.Armor, 5, 1000));
             Manager.Instance.shopManager.AddProduct(new ShopProduct("무쇠갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", Item.ItemType.Armor, 9, 1500));
@@ -53,6 +51,9 @@ namespace A14_TextDungeon
 
         static void Main(string[] args)
         {
+            Manager.Instance.gameManager.skillList.Add(Manager.Instance.gameManager.warriorSkills);
+            Manager.Instance.gameManager.skillList.Add(Manager.Instance.gameManager.rogueSkills);
+
             Manager.Instance.fileManager.LoadData();
             Manager.Instance.gameManager.village.ShowVillage();
         }         
