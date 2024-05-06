@@ -6,7 +6,7 @@
         public void ShowBattle(bool isFirst)
         {
             Console.Clear();
-            Console.WriteLine("Battle!!\n");
+            Console.WriteLine("\n== Battle ==\n");
 
             // Battle 화면으로 돌아올 때마다 랜덤한 몬스터 값이 뽑히는 경우 방지
             if (isFirst)
@@ -40,7 +40,7 @@
         public void PlayerPhase()
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - 나의 턴\n");
+            Console.WriteLine("\n== Battle == \n\n== 나의 턴 ==\n");
 
             ShowMonsterStat(true);
             ShowPlayerStat();
@@ -75,7 +75,7 @@
         public void SkillStatus()
         {
             Console.Clear();
-            Console.WriteLine("Battle!!\n");
+            Console.WriteLine("\n== Battle ==\n");
 
             Manager.Instance.gameManager.battle.ShowMonsterStat(true);
             Manager.Instance.gameManager.battle.ShowPlayerStat();
@@ -117,7 +117,7 @@
         // 플레이어 스탯 보여주는 함수
         public void ShowPlayerStat()
         {
-            Console.WriteLine("\n[내정보]");
+            Console.WriteLine("\n[내정보]\n");
             Console.WriteLine($"LV.{Manager.Instance.gameManager.user.Level} {Manager.Instance.gameManager.user.Name} ({Manager.Instance.gameManager.user.Job})");
             Console.WriteLine($"HP {Manager.Instance.gameManager.user.HP}/{Manager.Instance.gameManager.user.MaxHP}");
             Console.WriteLine($"MP {Manager.Instance.gameManager.user.MP}/{Manager.Instance.gameManager.user.MaxMP}\n");
@@ -162,13 +162,13 @@
         public void BattleResult(bool isWin)
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - Result\n");
+            Console.WriteLine("\n== Battle ==\n\n== 배틀 결과 ==\n");
 
             // 플레이어가 이기면
             if (isWin)
             {
                 Manager.Instance.gameManager.user.StageNum++;
-                Console.WriteLine("Victory\n");
+                Console.WriteLine("\n== Victory ==\n");
                 Console.WriteLine($"던전에서 몬스터 {Manager.Instance.battleManager.monsterCount}마리를 잡았습니다.");
                 Manager.Instance.battleManager.ShowReward();
                 Console.WriteLine("\n전투가 끝나 MP를 10 회복합니다.\n");
@@ -177,7 +177,7 @@
             // 지면
             else
             {
-                Console.WriteLine("You Lose");
+                Console.WriteLine("\n== You Lose ==\n");
                 Console.WriteLine("Game Over");
                 Thread.Sleep(1000);
                 Console.WriteLine("게임이 다시 시작됩니다.");

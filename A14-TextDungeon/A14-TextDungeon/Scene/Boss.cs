@@ -126,12 +126,13 @@
         public void BossBattleResult(bool isWin)
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - Result\n");
+            Console.WriteLine("== Battle ==\n\n== Result ==\n");
 
             // 플레이어가 이기면
             if (isWin)
             {
-                Console.WriteLine("Victory\n");
+
+                Console.WriteLine("\n== Victory ==\n");
                 Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 승리했습니다!\n\n");
                 Console.WriteLine("-------------------------------------------------");
                 Console.WriteLine($"[{bossMon.Name}] : 이번 한 번만 넘어가 드립니다. 다음에 올때는 캠 키셔야 돼요.");
@@ -142,7 +143,7 @@
             // 지면
             else
             {
-                Console.WriteLine("You Lose");
+                Console.WriteLine("\n== You Lose ==");
                 Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 패배했습니다..\n\n");
                 Console.WriteLine("-------------------------------------------------");
                 Console.WriteLine($"[{bossMon.Name}] : 빨리 TIL 쓰러 가시죠. 이따 검사합니다.");

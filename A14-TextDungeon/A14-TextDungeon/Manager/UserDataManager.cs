@@ -6,11 +6,13 @@
         public void SetName()
         {
             Console.Clear();
-            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 이름을 설정해주세요.\n");
-
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("\n세나의 전설");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("에 오신 용사님 환영합니다.\n\n원하시는 이름을 설정해주세요.\n");
             string userName = Console.ReadLine();
 
-            Console.WriteLine($"입력하신 이름은 {userName} 입니다.\n");
+            Console.WriteLine($"\n입력하신 이름은 {userName} 입니다.\n");
             Console.WriteLine("1. 저장");
             Console.WriteLine("2. 취소\n");
 
@@ -20,17 +22,20 @@
         public void SetJob()
         {
             Console.Clear();
-            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 직업을 설정해주세요.\n");
-            Console.WriteLine($"1. {Manager.Instance.gameManager.jobStat[0].Name}" +
-                            $"\tHP:{Manager.Instance.gameManager.jobStat[0].HP}" +
-                            $"\tMP:{Manager.Instance.gameManager.jobStat[0].MP}" +
-                            $"\t공격력:{Manager.Instance.gameManager.jobStat[0].AttackPower}" +
-                            $"   방어력:{Manager.Instance.gameManager.jobStat[0].Defense}");
-            Console.WriteLine($"2. {Manager.Instance.gameManager.jobStat[1].Name}" +
-                            $"\tHP:{Manager.Instance.gameManager.jobStat[1].HP}" +
-                            $"\tMP:{Manager.Instance.gameManager.jobStat[1].MP}" +
-                            $"\t공격력:{Manager.Instance.gameManager.jobStat[1].AttackPower}" +
-                            $"   방어력:{Manager.Instance.gameManager.jobStat[1].Defense}");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("\n세나의 전설");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("에 오신 용사님 환영합니다.\n\n원하시는 직업을 설정해주세요.\n\n");
+            Console.WriteLine($"1. {Manager.Instance.gameManager.jobStat[0].Name}\n" +
+                            $"HP:{Manager.Instance.gameManager.jobStat[0].HP}\n" +
+                            $"MP:{Manager.Instance.gameManager.jobStat[0].MP} \n" +
+                            $"공격력:{Manager.Instance.gameManager.jobStat[0].AttackPower}\n" +
+                            $"방어력:{Manager.Instance.gameManager.jobStat[0].Defense} \n");
+            Console.WriteLine($"2. {Manager.Instance.gameManager.jobStat[1].Name}\n" +
+                            $"HP:{Manager.Instance.gameManager.jobStat[1].HP}\n" +
+                            $"MP:{Manager.Instance.gameManager.jobStat[1].MP}\n" +
+                            $"공격력:{Manager.Instance.gameManager.jobStat[1].AttackPower}\n" +
+                            $"방어력:{Manager.Instance.gameManager.jobStat[1].Defense}\n");
 
             SetJobInput();
         }
@@ -67,7 +72,7 @@
 
         public void SetJobInput()
         {
-            Console.WriteLine("원하는 직업을 입력해주세요.\n");
+            Console.WriteLine("\n원하는 직업을 입력해주세요.\n");
             int input;
             bool isValidNum = int.TryParse(Console.ReadLine(), out input);
 

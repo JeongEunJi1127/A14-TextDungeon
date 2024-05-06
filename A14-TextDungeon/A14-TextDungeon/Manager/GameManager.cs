@@ -42,11 +42,11 @@ namespace A14_TextDungeon
             Manager.Instance.shopManager.AddProduct(new ShopProduct("타락한 검사의 검", "타락한 검사가 사용했던 검. 이 검을 사용하면 왠지 TIL을 써야할 것만 같은 기분이 든다.", Item.ItemType.Weapon, 2, 600));
             Manager.Instance.shopManager.AddProduct(new ShopProduct("빛의 성검", "성직자 정은지가 사용했던 빛의 성검. 이 검을 휘두르면 모든 코딩 오류가 해결될 것 같은 기분이 든다.", Item.ItemType.Weapon, 5, 1500));
             Manager.Instance.shopManager.AddProduct(new ShopProduct("윤세나의 창", "용사 윤세나가 진유록 마왕을 무찌를 때 사용했던 창.", Item.ItemType.Weapon, 7, 2000));
-            #endregion
 
             Manager.Instance.questManager.AddQuest(new Quest("[마왕의 부활: 암흑군단 미니언 처치하라]", "-진유록 마왕의 부활-\n수세기 동안 잠들어 있던 [진유록 마왕]이 갑자기 부활했습니다.\n진유록 마왕은 그의 수하인 미니언들과 함께 세계를 침공하고 있어요.\n윤세나 용사의 동료인 당신께서 암흑군단 미니언을 처치해주시지 않겠습니까? ", 3, false, false, false,new List<string> { "타락한 전사의 갑옷 x 1", "5G" }));
             Manager.Instance.questManager.AddQuest(new Quest("[마왕의 TIL 저주: 장비를 장착해보자]", "-진유록 마왕의 TIL 저주-\n[진유록 마왕]은 극악무도한 TIL 저주로 악명을 떨치고 있습니다.\n그의 저주와 맞서기 위해선 장비를 장착해야합니다.\n당신을 수호해줄 장비를 장착해보세요.", 1, false, false, false, new List<string> { "성직자의 포션 x 1", "5G" }));
             Manager.Instance.questManager.AddQuest(new Quest("[용사의 동료: 더욱 더 강해지기!]", "-윤세나 용사의 전설-\n윤세나 용사는 과거에 진유록 마왕을 물리치고 세상을 구했던 전설적인 용사입니다.\n그녀의 동료로 합류하기 위해 강해지십시오!\n레벨업을 하여 당신의 강인한 용기와 힘을 증명하세요.", 1, false, false, false, new List<string> { "용사의 증표 x 1", "5G" }));
+            #endregion
         }
 
         static void Main(string[] args)

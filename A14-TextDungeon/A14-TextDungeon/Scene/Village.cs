@@ -7,7 +7,7 @@
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.\n");
+                Console.WriteLine("\n== 마을 ==\n");
                 Console.WriteLine("1. 상태 보기");
                 Console.WriteLine($"2. 전투 시작 (현재 진행 : {Manager.Instance.gameManager.user.StageNum}층)");
                 Console.WriteLine("3. 인벤 토리");
