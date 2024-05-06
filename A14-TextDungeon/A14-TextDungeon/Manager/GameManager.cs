@@ -36,17 +36,17 @@ namespace A14_TextDungeon
         public void Init()
         { 
 #region 상점 아이템 추가   
-            Manager.Instance.shopManager.AddProduct(new ShopProduct("수련자 갑옷", "수련에 도움을 주는 갑옷입니다.", Item.ItemType.Armor, 5, 1000));
-            Manager.Instance.shopManager.AddProduct(new ShopProduct("무쇠갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", Item.ItemType.Armor, 9, 1500));
-            Manager.Instance.shopManager.AddProduct(new ShopProduct("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", Item.ItemType.Armor, 15, 2000));
-            Manager.Instance.shopManager.AddProduct(new ShopProduct("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", Item.ItemType.Weapon, 2, 600));
-            Manager.Instance.shopManager.AddProduct(new ShopProduct("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", Item.ItemType.Weapon, 5, 1500));
-            Manager.Instance.shopManager.AddProduct(new ShopProduct("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", Item.ItemType.Weapon, 7, 2000));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct("수련자 갑옷", "수련에 도움을 주는 갑옷.", Item.ItemType.Armor, 5, 1000));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct("대마법사의 지팡이", "마법사 박재균이 사용했던 방패. 강력한 방어력을 제공한다. 진유록 마왕의 저주를 무효화 시킨다.", Item.ItemType.Weapon, 9, 1500));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct("위대한 전사의 갑옷", "전사 이인호의 갑옷. 이 갑옷을 착용하면 왠지 깃허브를 잘 다룰 수 있게 될 것만 같다.", Item.ItemType.Armor, 15, 2000));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct("타락한 검사의 검", "타락한 검사가 사용했던 검. 이 검을 사용하면 왠지 TIL을 써야할 것만 같은 기분이 든다.", Item.ItemType.Weapon, 2, 600));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct("빛의 성검", "성직자 정은지가 사용했던 빛의 성검. 이 검을 휘두르면 모든 코딩 오류가 해결될 것 같은 기분이 든다.", Item.ItemType.Weapon, 5, 1500));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct("윤세나의 창", "용사 윤세나가 진유록 마왕을 무찌를 때 사용했던 창.", Item.ItemType.Weapon, 7, 2000));
             #endregion
 
-            Manager.Instance.questManager.AddQuest(new Quest("[마을을 위협하는 미니언 처치]", "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!", 1, false, false, false,new List<string> { "쓸만한 방패 x 1", "5G" }));
-            Manager.Instance.questManager.AddQuest(new Quest("[장비를 장착해보자!]", "???: 이봐, 먼 길을 떠나려는 그대여.\n자네가 향하려는 길은 아주 험하고 위험한 길이라네. 뭐라도 걸치는 게 어떤가?\n목숨이 아깝지 않다면 말이야..", 1, false, false, false, new List<string> { "여신의 축복 x 1", "5G" }));
-            Manager.Instance.questManager.AddQuest(new Quest("[더욱 더 강해지기!]", "당신의 강함을 증명해 보세요.\n수많은 모험가들이 도전했고 또한 실패했지만, 어쩌면 당신은 다를지도 모르죠.\n행운을 빌어요.", 1, false, false, false, new List<string> { "강화된 마체테 x 1", "5G" }));
+            Manager.Instance.questManager.AddQuest(new Quest("[마왕의 부활: 암흑군단 미니언 처치하라]", "-진유록 마왕의 부활-\n수세기 동안 잠들어 있던 [진유록 마왕]이 갑자기 부활했습니다.\n진유록 마왕은 그의 수하인 미니언들과 함께 세계를 침공하고 있어요.\n윤세나 용사의 동료인 당신께서 암흑군단 미니언을 처치해주시지 않겠습니까? ", 3, false, false, false,new List<string> { "타락한 전사의 갑옷 x 1", "5G" }));
+            Manager.Instance.questManager.AddQuest(new Quest("[마왕의 TIL 저주: 장비를 장착해보자]", "-진유록 마왕의 TIL 저주-\n[진유록 마왕]은 극악무도한 TIL 저주로 악명을 떨치고 있습니다.\n그의 저주와 맞서기 위해선 장비를 장착해야합니다.\n당신을 수호해줄 장비를 장착해보세요.", 1, false, false, false, new List<string> { "성직자의 포션 x 1", "5G" }));
+            Manager.Instance.questManager.AddQuest(new Quest("[용사의 동료: 더욱 더 강해지기!]", "-윤세나 용사의 전설-\n윤세나 용사는 과거에 진유록 마왕을 물리치고 세상을 구했던 전설적인 용사입니다.\n그녀의 동료로 합류하기 위해 강해지십시오!\n레벨업을 하여 당신의 강인한 용기와 힘을 증명하세요.", 1, false, false, false, new List<string> { "용사의 증표 x 1", "5G" }));
         }
 
         static void Main(string[] args)

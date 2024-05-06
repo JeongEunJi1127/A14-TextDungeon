@@ -443,24 +443,24 @@
             else if (itemChance <= 55)
             {
                 // 포션 1개
-                rewards.Add(new Item("HP회복 포션", "HP를 회복해주는 포션이다", Item.ItemType.HPPotion, 30)); 
+                rewards.Add(new Item("HP포션", "HP를 30만큼 회복해주는 포션이다. 누군가 흘렸던 피처럼 붉다.", Item.ItemType.HPPotion, 30)); 
             }
             else if (itemChance <= 80)
             {
-                rewards.Add(new Item("MP회복 포션", "MP를 회복해주는 포션이다", Item.ItemType.MPPotion, 30));
+                rewards.Add(new Item("MP포션", "MP를 30만큼 회복해주는 포션이다. 누군가의 눈물처럼 푸르다.", Item.ItemType.MPPotion, 30));
             }
             else if(itemChance <=100)
             {
                 switch (monster.Name) 
                 {
                     case "미니언":
-                        rewards.Add(new Item("미니언의 지팡이", "미니언이 가지고있던 지팡이이다.", Item.ItemType.Weapon, 3));
+                        rewards.Add(new Item("미니언의 단검", "미니언이 가지고있던 단검이다.", Item.ItemType.Weapon, 3));
                         break;
                     case "공허충":
-                        rewards.Add(new Item("공허충 비늘 갑옷", "공허충의 비늘로 만든 갑옷이다.", Item.ItemType.Armor, 4));
+                        rewards.Add(new Item("배신의 증표", "타락한 검사는 '그 사건' 이후, 공허충의 서식지로 향했다. 인간들의 친우, 공허층. 그들은 현재 [암흑군단 공허층]이라는 이름으로 불리우고 있다. ", Item.ItemType.Armor, 4));
                         break;
                     case "대포미니언":
-                        rewards.Add(new Item("대포미니언의 대포", "대포미니언이 타고있던 대포이다.", Item.ItemType.Weapon, 6));
+                        rewards.Add(new Item("붉게 물든 편지", "사랑하는 ***에게 라고 시작되는 편지. 그러나 편지의 일부가 붉게 물들어 있어 읽을 수 없다.", Item.ItemType.Weapon, 6));
                         break;
 
                 }

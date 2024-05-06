@@ -15,11 +15,11 @@ namespace A14_TextDungeon
 
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Quest!!");
-                Console.WriteLine("1. 마을을 위협하는 미니언 처치" + GetQuestStatusDisplay(0));
+                Console.WriteLine("1. 마왕의 부활: 암흑군단 미니언 처치하라" + GetQuestStatusDisplay(0));
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("2. 장비를 장착해보자" + GetQuestStatusDisplay(1));
+                Console.WriteLine("2. 마왕의 TIL 저주: 장비를 장착해보자" + GetQuestStatusDisplay(1));
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("3. 더욱 더 강해지기!" + GetQuestStatusDisplay(2));
+                Console.WriteLine("3. 용사의 동료: 더욱 더 강해지기!" + GetQuestStatusDisplay(2));
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\n0. 나가기");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -172,19 +172,19 @@ namespace A14_TextDungeon
             switch (stagenum)
             {
                 case 0:
-                    Item questReward = new Item("쓸만한 갑옷", "범부에 불과했던 남자가, 오직 한 사람만을 떠올리며 만든 갑옷이다. 제법 쓸만하다.", Item.ItemType.Armor, 5); // 아이템 생성
+                    Item questReward = new Item("타락한 검사의 갑옷", "그는 용사의 동료였습니다. 하지만 모종의 사건으로 인해 TIL 저주에 걸리게 되었고, 그는 더이상 전사로 불리지 않게 되었습니다.", Item.ItemType.Armor, 5); // 아이템 생성
 
                     Manager.Instance.inventoryManager.AddItem(questReward);
                     Manager.Instance.gameManager.user.AddGold(5); // AddGold()대신, Quest Gold로 넣기
                     break;
                 case 1:
-                    Item questReward1 = new Item("여신의 축복", "이 갑옷에는 알 수 없는 힘이 깃들어 있다.", Item.ItemType.HPPotion, 30);
+                    Item questReward1 = new Item("성직자의 포션", "성직자 정은지의 축복으로 만든 HP 포션. HP를 회복해주고, 용기를 불어 넣는다.", Item.ItemType.HPPotion, 40);
 
                     Manager.Instance.inventoryManager.AddItem(questReward1);
                     Manager.Instance.gameManager.user.AddGold(5);
                     break;
                 case 2:
-                    Item questReward2 = new Item("강화된 마체테", "피에 젖어 있다.", Item.ItemType.Weapon, 5);
+                    Item questReward2 = new Item("용사의 증표", "당신이 용사의 동료임을 증명하는 증표이다. 이 외에 아무런 쓸모가 없지만, 용사란 원래 명예에 살고 명예에 죽는 이들 아닌가! 하하!", Item.ItemType.Weapon, 0);
 
                     Manager.Instance.inventoryManager.AddItem(questReward2);
                     Manager.Instance.gameManager.user.AddGold(5);
