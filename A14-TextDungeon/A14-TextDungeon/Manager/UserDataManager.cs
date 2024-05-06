@@ -9,7 +9,7 @@
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("\n세나의 전설");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("에 오신 용사님 환영합니다.\n\n원하시는 이름을 설정해주세요.\n");
+            Console.Write("에 오신 용사님 환영합니다.\n\n용사님의 이름을 알려주세요.\n");
             string userName = Console.ReadLine();
 
             Console.WriteLine($"\n입력하신 이름은 {userName} 입니다.\n");
@@ -25,7 +25,7 @@
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("\n세나의 전설");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("에 오신 용사님 환영합니다.\n\n원하시는 직업을 설정해주세요.\n\n");
+            Console.Write("에 오신 용사님 환영합니다.\n\n용사님의 직업을 알려주세요.\n\n");
             Console.WriteLine($"1. {Manager.Instance.gameManager.jobStat[0].Name}\n" +
                             $"HP:{Manager.Instance.gameManager.jobStat[0].HP}\n" +
                             $"MP:{Manager.Instance.gameManager.jobStat[0].MP} \n" +
