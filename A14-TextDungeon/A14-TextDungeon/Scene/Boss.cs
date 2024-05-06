@@ -7,24 +7,24 @@
         public void BossInit()
         {
             Manager.Instance.battleManager.monsters.Clear();    
-            Manager.Instance.battleManager.monsters.Add(new Monster("세나몬", 10, 30,15, 100, false));
+            Manager.Instance.battleManager.monsters.Add(new Monster("진유록 마왕", 10, 30,15, 100, false));
             bossMon = Manager.Instance.battleManager.monsters[0];
             BossStage();
         }
 
         public void BossStage()
         {
-            Console.WriteLine("??? : 후후후..");
+            Console.WriteLine("??? : TIL 쓰셨어요?");
             Thread.Sleep(1000);
-            Console.WriteLine("??? : 용케 여기까지 왔구나..");
+            Console.WriteLine("??? : 왜 대답이 없지? 그리고 왜 다들 캠 끄고 계세요?");
             Thread.Sleep(1000);
             Console.WriteLine("??? : .....");
             Thread.Sleep(1000);
             Console.WriteLine("??? : .....");
             Thread.Sleep(1500);
-            Console.WriteLine($"[{bossMon.Name}] : 하지만.... 이제 끝이다!\n");
+            Console.WriteLine($"??? : 대답...안해?\n");
             Thread.Sleep(1000);
-            Console.WriteLine($"[{bossMon.Name}]이 나타났다!");
+            Console.WriteLine($"야생의 [{bossMon.Name}]이 나타났다!");
             Thread.Sleep(1000);
         }
 
@@ -54,11 +54,11 @@
             {
                 case 0:
                     // 기본 공격
-                    Console.WriteLine($"LV.{bossMon.Level} {bossMon.Name}의 펀치!\n");
+                    Console.WriteLine($"LV.{bossMon.Level} {bossMon.Name}의 TIL 저주!\n");
                     break;
                 case 1:
                     // 스킬 공격 데미지 1.5배
-                    Console.WriteLine($"LV.{bossMon.Level} {bossMon.Name}의 파이어볼!\n");
+                    Console.WriteLine($"LV.{bossMon.Level} {bossMon.Name}의 잔소리!\n");
                     monsterDamage *= 1.5f;
                     break;
                 default:
@@ -75,7 +75,10 @@
             // 게임 끝나면 탈출
             if (Manager.Instance.gameManager.user.IsDead)
             {
-                Console.WriteLine($"당신은 {bossMon.Name}에게 패배했습니다..");
+                Console.WriteLine($"당신은 {bossMon.Name}에게 패배했습니다..\n\n");
+                Console.WriteLine("-------------------------------------------------");
+                Console.WriteLine($"[{bossMon.Name}] : 빨리 TIL 쓰러 가시죠. 이따 검사합니다.");
+                Console.WriteLine("-------------------------------------------------");
                 Thread.Sleep(2000);
             }
 
@@ -106,7 +109,7 @@
                 Thread.Sleep(1000);
                 Console.WriteLine($"[{bossMon.Name}] : .....");
                 Thread.Sleep(1000);
-                Console.WriteLine($"[{bossMon.Name}] : .....아직 끝나지 않았다!\n");
+                Console.WriteLine($"[{bossMon.Name}] : .....아직도 캠을 안키셨네요?\n");
                 Thread.Sleep(1000);
                 Console.WriteLine($"[{bossMon.Name}]이 광폭화 합니다.");
                 Thread.Sleep(800);
@@ -129,7 +132,10 @@
             if (isWin)
             {
                 Console.WriteLine("Victory\n");
-                Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 승리했습니다!");
+                Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 승리했습니다!\n\n");
+                Console.WriteLine("-------------------------------------------------");
+                Console.WriteLine($"[{bossMon.Name}] : 이번 한 번만 넘어가 드립니다. 다음에 올때는 캠 키셔야 돼요.");
+                Console.WriteLine("-------------------------------------------------\n\n");
                 Manager.Instance.battleManager.ShowReward();
                 Console.WriteLine("\n게임을 전부 클리어했습니다.\n");
             }
@@ -137,7 +143,10 @@
             else
             {
                 Console.WriteLine("You Lose");
-                Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 패배했습니다..");
+                Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 패배했습니다..\n\n");
+                Console.WriteLine("-------------------------------------------------");
+                Console.WriteLine($"[{bossMon.Name}] : 빨리 TIL 쓰러 가시죠. 이따 검사합니다.");
+                Console.WriteLine("-------------------------------------------------\n\n");
                 Console.WriteLine("Game Over");
             }
             Thread.Sleep(1000);
