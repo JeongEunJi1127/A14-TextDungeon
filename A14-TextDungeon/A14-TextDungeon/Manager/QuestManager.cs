@@ -14,12 +14,12 @@ namespace A14_TextDungeon
                 Console.Clear();
 
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Quest!!");
-                Console.WriteLine("1. 마을을 위협하는 미니언 처치" + GetQuestStatusDisplay(0));
+                Console.WriteLine("\n== Quest ==\n");
+                Console.WriteLine("1. 마을을 위협하는 미니언 처치" + GetQuestStatusDisplay(0)+"\n");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("2. 장비를 장착해보자" + GetQuestStatusDisplay(1));
+                Console.WriteLine("2. 장비를 장착해보자" + GetQuestStatusDisplay(1) + "\n");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("3. 더욱 더 강해지기!" + GetQuestStatusDisplay(2));
+                Console.WriteLine("3. 더욱 더 강해지기!" + GetQuestStatusDisplay(2) + "\n");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\n0. 나가기");
                 Console.ForegroundColor = ConsoleColor.White;

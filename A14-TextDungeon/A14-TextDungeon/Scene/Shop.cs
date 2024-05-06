@@ -14,8 +14,8 @@ namespace A14_TextDungeon
         public void DisplayShopProducts()
         {
             Console.Clear();
-            Console.WriteLine("\n[상점]\n");
-            Console.WriteLine("\n[보유 골드]\n");
+            Console.WriteLine("\n== 상점 ==\n");
+            Console.WriteLine("[보유 골드]\n");
             Console.WriteLine($"{Manager.Instance.gameManager.user.Gold} G\n");
             Console.WriteLine("[아이템 목록]\n");
 
@@ -37,7 +37,7 @@ namespace A14_TextDungeon
             int input;
             Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine("\n1. 아이템 구매");
-            Console.WriteLine("2. 아이템 판매\n\n");
+            Console.WriteLine("\n2. 아이템 판매\n\n");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("0. 나가기\n");
             Console.ForegroundColor = ConsoleColor.White;
@@ -75,10 +75,10 @@ namespace A14_TextDungeon
         void BuyProducts()
         {
             Console.Clear();
-            Console.WriteLine("\n[상점 - 구매]\n");
+            Console.WriteLine("\n== 상점 ==\n\n== 구매 ==\n");
             Console.WriteLine("\n[보유 골드]\n");
             Console.WriteLine($"{Manager.Instance.gameManager.user.Gold} G\n");
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[아이템 목록]\n");
             if (Manager.Instance.shopManager.products == null || Manager.Instance.shopManager.products.Count == 0)
             {
                 Console.WriteLine("현재 판매중인 상품이 없습니다.");
@@ -95,8 +95,10 @@ namespace A14_TextDungeon
         void BuyProductsInput()
         {
             int input;
-            Console.WriteLine("\n구매하고 싶은 아이템을 선택하세요 :");
-            Console.WriteLine("0 : 나가기");
+            Console.WriteLine("\n구매하고 싶은 아이템을 선택하세요");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n0 : 나가기");
+            Console.ForegroundColor = ConsoleColor.White;
             bool isValidNum = int.TryParse(Console.ReadLine(), out input);
             if (isValidNum)
             {
@@ -151,10 +153,10 @@ namespace A14_TextDungeon
             
             RefreshShopProducts();
             Console.Clear();
-            Console.WriteLine("\n[상점 - 판매]\n");
+            Console.WriteLine("\n== 상점 ==\n\n== 판매 ==\n");
             Console.WriteLine("\n[보유 골드]\n");
             Console.WriteLine($"{Manager.Instance.gameManager.user.Gold} G\n");
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[아이템 목록]\n");
             if(Manager.Instance.inventoryManager.items.Count ==0 || Manager.Instance.inventoryManager.items == null)
             {
                 Console.WriteLine("인벤토리에 판매할 아이템이 없습니다.");
@@ -174,8 +176,10 @@ namespace A14_TextDungeon
         void SellProductsInput()
         {
             int input;
-            Console.WriteLine("\n판매하고 싶은 아이템을 선택하세요 :");
-            Console.WriteLine("0 : 나가기");
+            Console.WriteLine("\n판매하고 싶은 아이템을 선택하세요");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n0 : 나가기");
+            Console.ForegroundColor = ConsoleColor.White;
             bool isValidNum = int.TryParse(Console.ReadLine(), out input);
             if (isValidNum)
             {

@@ -28,7 +28,7 @@ namespace A14_TextDungeon
         public void RefrshInventory(bool isEquipPage)
         {
             Console.Clear();
-            Console.WriteLine("\n인벤토리\n");
+            Console.WriteLine("\n== 인벤토리 == \n");
             Console.WriteLine("[아이템 목록]\n");
 
             if (items == null || items.Count == 0)

@@ -94,7 +94,7 @@
         public void PlayerAttack(int monsterNum)
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - 나의 턴\n");
+            Console.WriteLine("\n== Battle ==\n\n== 나의 턴 ==\n");
             Console.WriteLine($"{Manager.Instance.gameManager.user.Name}의 공격!");
 
             float damage = Manager.Instance.gameManager.user.AttackDamage(Manager.Instance.gameManager.user.AttackPower);
@@ -137,7 +137,7 @@
 
                 if (!monsters[i].IsDead)
                 {
-                    Console.WriteLine("Battle!! - 몬스터 턴\n");
+                    Console.WriteLine("\n== Battle ==\n\n== 몬스터 턴 ==\n");
                     Console.WriteLine($"LV.{monsters[i].Level} {monsters[i].Name}의 공격 !");
                     Console.WriteLine($"{Manager.Instance.gameManager.user.Name}을(를) 맞췄습니다. [데미지 : {monsterDamage}]\n");
                     Console.WriteLine($"LV.{Manager.Instance.gameManager.user.Level} {Manager.Instance.gameManager.user.Name}");
@@ -180,7 +180,7 @@
         public void PlayerSkill(List<int> monsterNum, int skillNum)
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - 나의 턴\n");
+            Console.WriteLine("\n== Battle ==\n\n== 나의 턴 ==\n");
             Console.WriteLine($"{Manager.Instance.gameManager.user.Name}의 스킬 공격!\n");
 
             float damage = 0.0f;
@@ -276,9 +276,11 @@
             // 몬스터 잡으면 보상 바로 들어가는지 확인 -> 바로 들어가면 리스트로 관리
             Manager.Instance.gameManager.battle.ShowPlayerStat();
 
-            Console.WriteLine("1. HP 포션 먹기");
-            Console.WriteLine("2. MP 포션 먹기");
+            Console.WriteLine("1. HP 포션 먹기\n");
+            Console.WriteLine("2. MP 포션 먹기\n");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("0. 뒤로가기");
+            Console.ForegroundColor = ConsoleColor.White;
 
             while (true)
             {
@@ -470,7 +472,7 @@
         public void ShowReward()
         {
             Console.WriteLine("\n[보상 목록]\n");
-            Console.WriteLine($"몬스터를 잡고 경험치를 {monsterExp}획득했습니다!");
+            Console.WriteLine($"몬스터를 잡고 경험치를 {monsterExp}획득했습니다!\n");
             Console.WriteLine($"몬스터를 잡고 골드를 {totalGoldReward}획득했습니다!\n");
             Manager.Instance.gameManager.user.Gold += totalGoldReward;
             Console.WriteLine("\n[획득 아이템]\n");         

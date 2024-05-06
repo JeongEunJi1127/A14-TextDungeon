@@ -34,14 +34,14 @@ namespace A14_TextDungeon
         public List<Skill[]> skillList = new List<Skill[]>();
 
         public void Init()
-        { 
-#region 상점 아이템 추가   
+        {
+            #region 상점 아이템 추가   
+            Manager.Instance.shopManager.AddProduct(new ShopProduct("HP 물약", "HP를 30 회복 할 수 있는 물약입니다.", Item.ItemType.HPPotion, 30, 200));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct("MP 물약", "MP를 30 회복 할 수 있는 물약입니다.", Item.ItemType.MPPotion, 30, 200));
             Manager.Instance.shopManager.AddProduct(new ShopProduct("수련자 갑옷", "수련에 도움을 주는 갑옷입니다.", Item.ItemType.Armor, 5, 1000));
-            Manager.Instance.shopManager.AddProduct(new ShopProduct("무쇠갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", Item.ItemType.Armor, 9, 1500));
-            Manager.Instance.shopManager.AddProduct(new ShopProduct("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", Item.ItemType.Armor, 15, 2000));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct("무쇠갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", Item.ItemType.Armor, 9, 1500));           
             Manager.Instance.shopManager.AddProduct(new ShopProduct("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", Item.ItemType.Weapon, 2, 600));
-            Manager.Instance.shopManager.AddProduct(new ShopProduct("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", Item.ItemType.Weapon, 5, 1500));
-            Manager.Instance.shopManager.AddProduct(new ShopProduct("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", Item.ItemType.Weapon, 7, 2000));
+            Manager.Instance.shopManager.AddProduct(new ShopProduct("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", Item.ItemType.Weapon, 5, 1500));           
             #endregion
 
             Manager.Instance.questManager.AddQuest(new Quest("[마을을 위협하는 미니언 처치]", "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!", 1, false, false, false,new List<string> { "쓸만한 방패 x 1", "5G" }));
