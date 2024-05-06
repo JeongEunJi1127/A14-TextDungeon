@@ -24,8 +24,9 @@
             Thread.Sleep(1500);
             Console.WriteLine($"??? : 대답...안해?\n");
             Thread.Sleep(1000);
-            Console.WriteLine($"야생의 [{bossMon.Name}]이 나타났다!");
-            Thread.Sleep(1000);
+            Console.WriteLine($"야생의 [{bossMon.Name}]이 나타났다!\n");
+            Thread.Sleep(2000);
+            Console.WriteLine("----------------------------------------------------------");
         }
 
         public void BossPhase()
@@ -115,7 +116,7 @@
                 Thread.Sleep(800);
                 Console.WriteLine($"[{bossMon.Name}]의 Hp가 가득 찹니다.");
                 Thread.Sleep(800);
-                Console.WriteLine($"[{bossMon.Name}]의 의 공격력이 20 오릅니다.\n");
+                Console.WriteLine($"[{bossMon.Name}]의 공격력이 20 오릅니다.\n");
                 Thread.Sleep(800);
 
                 bossMon.Berserk();
@@ -131,8 +132,9 @@
             // 플레이어가 이기면
             if (isWin)
             {
-
-                Console.WriteLine("\n== Victory ==\n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("== Victory ==\n");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 승리했습니다!\n\n");
                 Console.WriteLine("-------------------------------------------------");
                 Console.WriteLine($"[{bossMon.Name}] : 이번 한 번만 넘어가 드립니다. 다음에 올때는 캠 키셔야 돼요.");
@@ -143,7 +145,9 @@
             // 지면
             else
             {
-                Console.WriteLine("\n== You Lose ==");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("== You Lose ==\n");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 패배했습니다..\n\n");
                 Console.WriteLine("-------------------------------------------------");
                 Console.WriteLine($"[{bossMon.Name}] : 빨리 TIL 쓰러 가시죠. 이따 검사합니다.");
@@ -160,7 +164,7 @@
             Console.WriteLine("1");
             Thread.Sleep(1000);
             Manager.Instance.fileManager.ResetData();
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             return;
         }
     }

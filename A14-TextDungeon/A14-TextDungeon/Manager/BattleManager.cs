@@ -53,17 +53,17 @@
                 // percent[0] 확률로 대포미니언
                 if (randomMonsterNum < percent[0])
                 {
-                    monsters.Add(new Monster("대포미니언 ", 5, 25, 8,20, false));
+                    monsters.Add(new Monster("대포미니언 ", 5, 25, 8,40, false));
                 }
                 // percent[1] - percent[0] 확률로 공허충
                 else if (randomMonsterNum < percent[1])
                 {
-                    monsters.Add(new Monster("공허충", 3, 20, 7, 10, false));
+                    monsters.Add(new Monster("공허충", 3, 20, 7, 20, false));
                 }
                 // 100 - percent[1] - percent[0] 확률로 미니언
                 else
                 {
-                    monsters.Add(new Monster("미니언", 2, 15, 5, 15, false));
+                    monsters.Add(new Monster("미니언", 2, 15, 5, 30, false));
                 }
             }
         }
@@ -464,7 +464,9 @@
                     case "대포미니언":
                         rewards.Add(new Item("붉게 물든 편지", "사랑하는 ***에게 라고 시작되는 편지. 그러나 편지의 일부가 붉게 물들어 있어 읽을 수 없다.", Item.ItemType.Weapon, 6));
                         break;
-
+                    case "진유록 마왕":
+                        rewards.Add(new Item("회초리", "마왕의 회초리", Item.ItemType.Weapon, 10));
+                        break;
                 }
             }
         }

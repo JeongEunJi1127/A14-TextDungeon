@@ -28,11 +28,16 @@
         public void TakeDamage(float damage)
         {
             int hitDamage = 0;
-            hitDamage = (int)(damage - Defense);
-            if(hitDamage <= 0) 
+            if (damage != 0)
             {
-                hitDamage = 1;
+                hitDamage = (int)(damage - Defense);
+
+                if (hitDamage < 0)
+                {
+                    hitDamage = 1;
+                }
             }
+
             HP -= hitDamage;
             if (HP <= 0)
             {

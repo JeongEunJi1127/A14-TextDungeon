@@ -172,7 +172,7 @@ namespace A14_TextDungeon
             switch (stagenum)
             {
                 case 0:
-                    Item questReward = new Item("타락한 검사의 갑옷", "그는 용사의 동료였습니다. 하지만 모종의 사건으로 인해 TIL 저주에 걸리게 되었고, 그는 더이상 전사로 불리지 않게 되었습니다.", Item.ItemType.Armor, 5); // 아이템 생성
+                    Item questReward = new Item("타락한 검사의 검", "그는 용사의 동료였습니다. 하지만 모종의 사건으로 인해 TIL 저주에 걸리게 되었고, 그는 더이상 전사로 불리지 않게 되었습니다.", Item.ItemType.Weapon, 5); // 아이템 생성
 
                     Manager.Instance.inventoryManager.AddItem(questReward);
                     Manager.Instance.gameManager.user.AddGold(5); // AddGold()대신, Quest Gold로 넣기

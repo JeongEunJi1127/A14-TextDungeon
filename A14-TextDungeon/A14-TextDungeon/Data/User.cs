@@ -44,17 +44,18 @@
 
         public float AttackDamage(float damage)
         {
-            int weaponAttackDamage = 0;
+            float hitDamage = 0;
+            float weaponAttackDamage = 0;
             for(int i = 0; i < Manager.Instance.inventoryManager.items.Count; i++) 
             {
-                if (Manager.Instance.inventoryManager.items[i].Itemtype == Item.ItemType.Weapon)
+                if (Manager.Instance.inventoryManager.items[i].IsEquippd && Manager.Instance.inventoryManager.items[i].Itemtype == Item.ItemType.Weapon)
                 {
                     weaponAttackDamage += Manager.Instance.inventoryManager.items[i].ItemStat;
                 }
             }
 
-            damage = damage * (1 + weaponAttackDamage);
-            return damage;
+            hitDamage = damage * (1 +(weaponAttackDamage/10));
+            return hitDamage;
         }
 
         public void TakeDamage(float damage)
@@ -114,8 +115,8 @@
                 temp = Exp - MaxExp;
                 Exp = temp;
                 MaxExp = CalculateMaxExp();
-                AttackPower += 0.5f;
-                Defense += 1f;
+                AttackPower += 3f;
+                Defense += 2f;
                 Manager.Instance.questManager.QuestClear(2);
             }
             Manager.Instance.fileManager.SaveData();
