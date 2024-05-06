@@ -102,7 +102,7 @@ namespace A14_TextDungeon
             bool isValidNum = int.TryParse(Console.ReadLine(), out input);
             if (isValidNum)
             {
-                if (input > 0 && input < Manager.Instance.shopManager.products.Count)
+                if (input > 0 && input < Manager.Instance.shopManager.products.Count + 1)
                 {
                     //아이템 구매
                     BuyItems(input);
@@ -251,20 +251,32 @@ namespace A14_TextDungeon
 
                     switch (Manager.Instance.inventoryManager.items[i].ItemName)
                     {
-                        case "미니언의 지팡이":
-                            inventoryProducts.Add(new ShopProduct(itemName,itemDescription,itemType, itemStat, 300, isEquippd));
+                        case "미니언의 단검":
+                            inventoryProducts.Add(new ShopProduct(itemName,itemDescription,itemType, itemStat, 1000, isEquippd));
                             break;
-                        case "공허충 비늘 갑옷":
-                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 400, isEquippd));
+                        case "배신의 증표":
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 1200, isEquippd));
                             break;
-                        case "대포미니언의 대포":
+                        case "붉게 물든 편지":
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 1500, isEquippd));
+                            break;
+                        case "HP포션":
                             inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 500, isEquippd));
                             break;
-                        case "HP회복 포션":
-                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 200, isEquippd));
+                        case "MP포션":
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 500, isEquippd));
                             break;
-                        case "MP회복 포션":
-                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 200, isEquippd));
+                        case "회초리":
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 1000, isEquippd));
+                            break;
+                        case "타락한 검사의 검":
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 900, isEquippd));
+                            break;
+                        case "성직자의 포션":
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 600, isEquippd));
+                            break;
+                        case "용사의 증표":
+                            inventoryProducts.Add(new ShopProduct(itemName, itemDescription, itemType, itemStat, 1000, isEquippd));
                             break;
                         default:
                             for(int j = 0; j < Manager.Instance.shopManager.products.Count; j++)

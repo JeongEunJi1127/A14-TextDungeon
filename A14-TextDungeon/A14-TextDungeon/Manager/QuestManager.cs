@@ -28,27 +28,35 @@ namespace A14_TextDungeon
                 int input;
                 bool isValidNum = int.TryParse(Console.ReadLine(), out input);
 
-                switch (input)
+                if (isValidNum )
                 {
-                    case 0:
-                        Manager.Instance.gameManager.village.ShowVillage();
-                        return;
-                    case 1:
-                        //매개변수? 메소드로 선언? 싱글톤?->하나의 정보를 소지
-                        //인스턴스 선언?
-                        //퀘스트가 객체여서 list 이름
-                        ShowMinionQuest();
-                        return;
-                    case 2:
-                        ShowEquipmentQuest(item);
-                        return;
-                    case 3:
-                        ShowLevelUpQuest();
-                        return;
-                    default:
-                        Console.WriteLine("잘못된 입력입니다.");
-                        ShowQuests();
-                        break;
+                    switch (input)
+                    {
+                        case 0:
+                            Manager.Instance.gameManager.village.ShowVillage();
+                            return;
+                        case 1:
+                            //매개변수? 메소드로 선언? 싱글톤?->하나의 정보를 소지
+                            //인스턴스 선언?
+                            //퀘스트가 객체여서 list 이름
+                            ShowMinionQuest();
+                            return;
+                        case 2:
+                            ShowEquipmentQuest(item);
+                            return;
+                        case 3:
+                            ShowLevelUpQuest();
+                            return;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
+                            ShowQuests();
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요.");
+                    ShowQuests();
                 }
             }
         }
@@ -175,19 +183,19 @@ namespace A14_TextDungeon
                     Item questReward = new Item("타락한 검사의 검", "그는 용사의 동료였습니다. 하지만 모종의 사건으로 인해 TIL 저주에 걸리게 되었고, 그는 더이상 전사로 불리지 않게 되었습니다.", Item.ItemType.Weapon, 5); // 아이템 생성
 
                     Manager.Instance.inventoryManager.AddItem(questReward);
-                    Manager.Instance.gameManager.user.AddGold(5); // AddGold()대신, Quest Gold로 넣기
+                    Manager.Instance.gameManager.user.AddGold(500); // AddGold()대신, Quest Gold로 넣기
                     break;
                 case 1:
                     Item questReward1 = new Item("성직자의 포션", "성직자 정은지의 축복으로 만든 HP 포션. HP를 회복해주고, 용기를 불어 넣는다.", Item.ItemType.HPPotion, 40);
 
                     Manager.Instance.inventoryManager.AddItem(questReward1);
-                    Manager.Instance.gameManager.user.AddGold(5);
+                    Manager.Instance.gameManager.user.AddGold(500);
                     break;
                 case 2:
                     Item questReward2 = new Item("용사의 증표", "당신이 용사의 동료임을 증명하는 증표이다. 이 외에 아무런 쓸모가 없지만, 용사란 원래 명예에 살고 명예에 죽는 이들 아닌가! 하하!", Item.ItemType.Weapon, 0);
 
                     Manager.Instance.inventoryManager.AddItem(questReward2);
-                    Manager.Instance.gameManager.user.AddGold(5);
+                    Manager.Instance.gameManager.user.AddGold(500);
                     break;
             }
             //퀘스트 반복

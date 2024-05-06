@@ -75,6 +75,11 @@
                     Manager.Instance.inventoryManager.selectItemIndex = index;
                 }
             }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+                ShowEquipPageInput();
+            }
         }
 
         public void ShowInventoryInput()
