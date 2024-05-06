@@ -12,11 +12,17 @@ namespace A14_TextDungeon
             while (true)
             {
                 Console.Clear();
+
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Quest!!");
                 Console.WriteLine("1. 마을을 위협하는 미니언 처치" + GetQuestStatusDisplay(0));
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("2. 장비를 장착해보자" + GetQuestStatusDisplay(1));
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("3. 더욱 더 강해지기!" + GetQuestStatusDisplay(2));
-                Console.WriteLine("\n0. 나가기\n\n");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\n0. 나가기");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("\n원하시는 퀘스트를 선택해주세요.\n");
 
                 int input;
@@ -61,11 +67,14 @@ namespace A14_TextDungeon
         {
             if (quests[stagenum].IsCompleted)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 return " (완료)";
             }
             else if (quests[stagenum].IsAccepted)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 return " (진행중)";
+                
             }
             else
             {
@@ -116,14 +125,16 @@ namespace A14_TextDungeon
         {
             if (quests[stagenum].IsAccepted)
             {
-                Console.WriteLine("이미 진행중인 퀘스트 입니다");
+                Console.WriteLine("이미 진행중인 퀘스트 입니다\n\n");
             }
             else
             {
                 Console.WriteLine("\n1. 수락");
                 Console.WriteLine("2. 거절\n");
             }
-            Console.WriteLine("0. 나가기");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n0. 나가기");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("--------------------");
         }
 
@@ -134,9 +145,13 @@ namespace A14_TextDungeon
                 quests[num].IsCompleted = true;
                 quests[num].IsWaiting = true;
                 Manager.Instance.fileManager.SaveData();
-                Console.WriteLine("\n\n----------------------\n");
+                
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\n\n-----------------------------------------\n");
                 Console.WriteLine("|||[퀘스트 완료] 퀘스트 창에서 보상을 확인하세요|||");
-                Console.WriteLine("\n----------------------\n\n");
+                Console.WriteLine("\n-----------------------------------------\n\n");
+                Console.ForegroundColor = ConsoleColor.White;
+
                 Console.ReadLine();
             }
         }
@@ -144,6 +159,7 @@ namespace A14_TextDungeon
         // 보상을 주는 로직
         public void ClaimRewards(int stagenum)
         {
+            Console.Clear();
             Console.WriteLine("----------------------\n\n");
             Console.WriteLine($"[{quests[stagenum].Name}]");
             Console.WriteLine("퀘스트를 완료하였습니다. 보상을 획득합니다\n");
@@ -211,8 +227,10 @@ namespace A14_TextDungeon
             {
                 Console.Clear();
                 Console.WriteLine("Quest!!\n\n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(quests[0].Name, "\n");
                 Console.WriteLine($"미니언 {quests[0].TargetCount}마리 처치 ({quests[0].CurrentCount}/{Manager.Instance.questManager.quests[0].TargetCount})\n");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(quests[0].Description, "\n\n");
                 Console.WriteLine("\n- 보상 -");
                 foreach (string s in quests[0].Rewards)
@@ -236,8 +254,12 @@ namespace A14_TextDungeon
             {
                 Console.Clear();
                 Console.WriteLine("Quest!!\n\n");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(quests[1].Name, "\n");
                 Console.WriteLine($"(인벤토리에서 아무 장비나 {quests[0].TargetCount}개 이상 장착하기)\n");
+                
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(quests[1].Description, "\n");
                 Console.WriteLine("\n- 보상 -");
                 foreach (string s in quests[1].Rewards)
@@ -260,8 +282,12 @@ namespace A14_TextDungeon
             {
                 Console.Clear();
                 Console.WriteLine("Quest!!\n\n");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(quests[2].Name, "\n");
                 Console.WriteLine($"({quests[2].TargetCount}레벨업 하기)\n");
+                
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(quests[2].Description, "\n");
                 Console.WriteLine("\n- 보상 -");
                 foreach (string s in quests[2].Rewards)

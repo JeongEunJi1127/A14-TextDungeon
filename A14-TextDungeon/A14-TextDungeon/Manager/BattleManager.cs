@@ -121,7 +121,10 @@
                  AttackMonster(monsters[monsterNum], damage);
             }
 
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("0. 다음\n");
+            Console.ForegroundColor = ConsoleColor.White;
             Manager.Instance.gameManager.battle.PlayerAttackInput();
         }
 
@@ -164,7 +167,10 @@
                     }
 
                     // 입력값
-                    Console.WriteLine("0. 다음");
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("0. 다음\n");
+                    Console.ForegroundColor = ConsoleColor.White;
                     Manager.Instance.gameManager.battle.EnemyPhaseInput();
                 }
             }
@@ -221,7 +227,9 @@
                 AttackMonster(monsters[i], skillDamage);
             }
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("0. 다음\n");
+            Console.ForegroundColor = ConsoleColor.White;
             Manager.Instance.gameManager.battle.PlayerAttackInput();
         }
 
@@ -229,8 +237,11 @@
         public void GiveUP()
         {
             // 몬스터 잡으면 보상 바로 들어가는지 확인 -> 바로 들어가면 리스트로 관리
-            Console.WriteLine("전투를 포기하시겠습니까? HP가 회복되지 않으며 보상을 얻을 수 없습니다.");
-            Console.WriteLine("0. 포기하기 1. 계속하기");
+            Console.WriteLine("전투를 포기하시겠습니까?\nHP가 회복되지 않으며 보상을 얻을 수 없습니다.\n");
+            Console.WriteLine("1. 계속하기");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("0. 포기하기");
+            Console.ForegroundColor = ConsoleColor.White;
 
             while (true)
             {
