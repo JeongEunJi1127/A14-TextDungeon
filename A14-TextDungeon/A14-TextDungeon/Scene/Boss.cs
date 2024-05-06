@@ -123,12 +123,12 @@
         public void BossBattleResult(bool isWin)
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - Result\n");
+            Console.WriteLine("== Battle ==\n\n== Result ==\n");
 
             // 플레이어가 이기면
             if (isWin)
             {
-                Console.WriteLine("Victory\n");
+                Console.WriteLine("\n== Victory ==\n");
                 Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 승리했습니다!");
                 Manager.Instance.battleManager.ShowReward();
                 Console.WriteLine("\n게임을 전부 클리어했습니다.\n");
@@ -136,7 +136,7 @@
             // 지면
             else
             {
-                Console.WriteLine("You Lose");
+                Console.WriteLine("\n== You Lose ==");
                 Console.WriteLine($"보스 [{bossMon.Name}]과의 전투에서 패배했습니다..");
                 Console.WriteLine("Game Over");
             }
