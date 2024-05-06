@@ -7,7 +7,7 @@
         public void BossInit()
         {
             Manager.Instance.battleManager.monsters.Clear();    
-            Manager.Instance.battleManager.monsters.Add(new Monster("세나몬", 10, 30,15, 100, false));
+            Manager.Instance.battleManager.monsters.Add(new Monster("진유록 마왕", 10, 30,15, 100, false));
             bossMon = Manager.Instance.battleManager.monsters[0];
             BossStage();
         }
@@ -54,11 +54,11 @@
             {
                 case 0:
                     // 기본 공격
-                    Console.WriteLine($"LV.{bossMon.Level} {bossMon.Name}의 펀치!\n");
+                    Console.WriteLine($"LV.{bossMon.Level} {bossMon.Name}의 TIL 저주!\n");
                     break;
                 case 1:
                     // 스킬 공격 데미지 1.5배
-                    Console.WriteLine($"LV.{bossMon.Level} {bossMon.Name}의 파이어볼!\n");
+                    Console.WriteLine($"LV.{bossMon.Level} {bossMon.Name}의 잔소리!\n");
                     monsterDamage *= 1.5f;
                     break;
                 default:
