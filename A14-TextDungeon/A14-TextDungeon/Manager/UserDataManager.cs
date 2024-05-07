@@ -1,128 +1,120 @@
-﻿using A14_TextDungeon.Data;
-using A14_TextDungeon.Scene;
-using static A14_TextDungeon.Data.User;
-
-namespace A14_TextDungeon.Manager
+﻿namespace A14_TextDungeon
 {
-    internal class UserDataManager
+    public class UserDataManager
     {
-        public static string saveName;
-        public static void SetName()
+        public string saveName;
+        public void SetName()
         {
             Console.Clear();
-            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 이름을 설정해주세요.\n");
-
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("\n세나의 전설");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("에 오신 용사님 환영합니다.\n\n용사님의 이름을 알려주세요.\n");
             string userName = Console.ReadLine();
 
-            Console.WriteLine($"입력하신 이름은 {userName} 입니다.\n");
+            Console.WriteLine($"\n입력하신 이름은 {userName} 입니다.\n");
             Console.WriteLine("1. 저장");
             Console.WriteLine("2. 취소\n");
 
             SetNameInput(userName);
         }
 
-        public static void SetJob()
+        public void SetJob()
         {
             Console.Clear();
-            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 직업을 설정해주세요.\n");
-            Console.WriteLine("1. 전사");
-            Console.WriteLine("2. 도적\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("\n세나의 전설");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("에 오신 용사님 환영합니다.\n\n용사님의 직업을 알려주세요.\n\n");
+            Console.WriteLine($"1. {Manager.Instance.gameManager.jobStat[0].Name}\n" +
+                            $"HP:{Manager.Instance.gameManager.jobStat[0].HP}\n" +
+                            $"MP:{Manager.Instance.gameManager.jobStat[0].MP} \n" +
+                            $"공격력:{Manager.Instance.gameManager.jobStat[0].AttackPower}\n" +
+                            $"방어력:{Manager.Instance.gameManager.jobStat[0].Defense} \n");
+            Console.WriteLine($"2. {Manager.Instance.gameManager.jobStat[1].Name}\n" +
+                            $"HP:{Manager.Instance.gameManager.jobStat[1].HP}\n" +
+                            $"MP:{Manager.Instance.gameManager.jobStat[1].MP}\n" +
+                            $"공격력:{Manager.Instance.gameManager.jobStat[1].AttackPower}\n" +
+                            $"방어력:{Manager.Instance.gameManager.jobStat[1].Defense}\n");
 
             SetJobInput();
         }
 
-        public static void SetNameInput(string userName)
+        public void SetNameInput(string userName)
         {
-            while (true)
-            {
-                int input;
-                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+            int input;
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
 
-                if (isValidNum)
+            if (isValidNum)
+            {
+                switch (input)
                 {
-                    switch (input)
-                    {
-                        case 1:
-                            saveName = userName;
-                            SetJob();
-                            break;
-                        case 2:
-                            SetName();
-                            break;
-                        default:
-                            Console.WriteLine("\n잘못된 입력입니다.\n");
-                            break;
-                    }
+                    case 1:
+                        saveName = userName;
+                        SetJob();
+                        return;
+                    case 2:
+                        SetName();
+                        return;
+                    default:
+                        Console.WriteLine("\n잘못된 입력입니다.\n");
+                        SetNameInput(userName);
+                        break;
                 }
-                else
-                {
-                    Console.WriteLine("\n숫자를 입력해주세요.\n");
-                }
+            }
+            else
+            {
+                Console.WriteLine("\n숫자를 입력해주세요.\n");
+                SetNameInput(userName);
             }
         }
 
 
-        public static void SetJobInput()
+        public void SetJobInput()
         {
-            while (true)
+            Console.WriteLine("\n원하는 직업을 입력해주세요.\n");
+            int input;
+            bool isValidNum = int.TryParse(Console.ReadLine(), out input);
+
+            if (isValidNum)
             {
-                Console.WriteLine("원하시는 행동을 입력해주세요.\n");
-                int input;
-                bool isValidNum = int.TryParse(Console.ReadLine(), out input);
-
-                UserJob userJob = (UserJob)input;
-
-                if (isValidNum)
+                
+                switch (input)
                 {
-                    int level = 1;
+                    case (int)User.UserJob.Warrior:
+                    case (int)User.UserJob.Rogue:
 
-                    string job;
-                    float attackPower;
-                    float defense;
-                    float hp;
-                    int mp;
+                        User selectJob = Manager.Instance.gameManager.jobStat[input - 1];
 
-                    int gold = 1500;
-                    bool isdead = false;
+                        int level = selectJob.Level;
+                        User.UserJob userJob = selectJob.Job;
+                        float attackPower = selectJob.AttackPower;
+                        float defense = selectJob.Defense;
+                        float hp = selectJob.HP;
+                        float mp = selectJob.MP;
+                        int gold = selectJob.Gold;
+                        bool isdead = selectJob.IsDead;
 
-                    switch (userJob)
-                    {
-                        case UserJob.Warrior:
-                            job = "전사";
-                            attackPower = 10;
-                            defense = 5;
-                            hp = 100;
-                            mp = 50;
-
-                            CreateUser(level, job, attackPower, defense, hp, mp, gold, isdead);
-                            break;
-                        case UserJob.Rogue:
-                            job = "도적";
-                            attackPower = 15;
-                            defense = 3;
-                            hp = 800;
-                            mp = 70;
-
-                            CreateUser(level, job, attackPower, defense, hp, mp, gold, isdead);
-                            break;
-                        default:
-                            Console.WriteLine("\n잘못된 입력입니다.\n");
-                            break;
-                    }
+                        CreateUser(level, userJob, attackPower, defense, hp, mp, gold, isdead);
+                        return;
+                    default:
+                        Console.WriteLine("\n잘못된 입력입니다.\n");
+                        SetJobInput();
+                        break;
                 }
-                else
-                {
-                    Console.WriteLine("\n숫자를 입력해주세요.\n");
-                }
+            }
+            else
+            {
+                Console.WriteLine("\n숫자를 입력해주세요.\n");
+                SetJobInput();
             }
         }
 
-        public static void CreateUser(int level, string job, float attackPower, float defense, float hp, int mp, int gold, bool isdead)
+        public void CreateUser(int level, User.UserJob job, float attackPower, float defense, float hp, float mp, int gold, bool isdead)
         {
             Console.Clear();
-            GameManager.user = new User(saveName, level, job, attackPower, defense, hp, mp, gold, isdead);
-            GameManager.Init();
-            Village.ShowVillage();
+            Manager.Instance.gameManager.user = new User(saveName, level, job, attackPower, defense, hp, mp, gold, 1, isdead);
+            Manager.Instance.fileManager.SaveData();
         }
     }
 }
