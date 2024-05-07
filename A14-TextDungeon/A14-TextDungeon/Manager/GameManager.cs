@@ -47,6 +47,7 @@ namespace A14_TextDungeon
             Manager.Instance.questManager.AddQuest(new Quest("[마왕의 TIL 저주: 장비를 장착해보자]", "-진유록 마왕의 TIL 저주-\n[진유록 마왕]은 극악무도한 TIL 저주로 악명을 떨치고 있습니다.\n그의 저주와 맞서기 위해선 장비를 장착해야합니다.\n당신을 수호해줄 장비를 장착해보세요.", 1, false, false, false, new List<string> { "성직자의 포션 x 1", "500G" }));
             Manager.Instance.questManager.AddQuest(new Quest("[용사의 동료: 더욱 더 강해지기!]", "-윤세나 용사의 전설-\n윤세나 용사는 과거에 진유록 마왕을 물리치고 세상을 구했던 전설적인 용사입니다.\n그녀의 동료로 합류하기 위해 강해지십시오!\n레벨업을 하여 당신의 강인한 용기와 힘을 증명하세요.", 1, false, false, false, new List<string> { "용사의 증표 x 1", "500G" }));
             #endregion
+            Manager.Instance.gameManager.boss.isFirst = true;
         }
 
         static void Main(string[] args)
