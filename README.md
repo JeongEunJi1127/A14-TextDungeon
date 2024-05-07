@@ -24,7 +24,7 @@
 
 ## :bulb: 플레이 영상 
 
-
+[세나의 전설 플레이 영상](https://www.youtube.com/watch?v=ZnSryr76B08)
 
 <br/>
 
